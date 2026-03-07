@@ -1088,12 +1088,12 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <strong>Step 3:</strong> Caroline finishes at $t=10$, Aline at $t=5$. Aline always leaves first.<br>
     $$P(\text{Caroline before Aline}) = 0$$</p>
 
-    <p><strong>Scenario 2: Discrete service times $\{4, 5, 6\}$ each with probability $1/3$.</strong></p>
+    <p><strong>Scenario 2: Discrete service times $\{1, 2, 3\}$ each with probability $1/3$.</strong></p>
     <p><strong>Step 1:</strong> For Caroline to leave before Aline, we need Bert's time + Caroline's time &lt; Aline's time, i.e., $B + C &lt; A$.<br>
-    <strong>Step 2:</strong> The minimum of $B + C$ is $4 + 4 = 8$, and the maximum of $A$ is $6$. Since $8 > 6$, it's impossible for $B + C &lt; A$.<br>
-    Wait &mdash; actually we need $B + C &lt; A$. The smallest $B + C = 8$ but largest $A = 6$. So this is impossible!<br>
-    $$P(\text{Caroline before Aline}) = 0$$
-    (Note: some versions of this problem have different service time ranges where $P = 1/27$.)</p>
+    <strong>Step 2:</strong> There are $3^3 = 27$ equally likely $(B, C, A)$ triples. We need $B + C &lt; A$.<br>
+    The smallest possible $B + C = 1 + 1 = 2$, and the largest $A = 3$. So $B + C &lt; A$ is possible only when $B = 1, C = 1, A = 3$.<br>
+    (All other combinations have $B + C \geq A$: e.g. $B=1, C=2 \Rightarrow B+C=3$, which is not strictly less than $A=3$.)<br>
+    $$P(\text{Caroline before Aline}) = \frac{1}{27}$$</p>
 
     <p><strong>Scenario 3: Exponential service $\text{Exp}(\mu)$.</strong></p>
     <p><strong>Step 1: Set up the problem.</strong><br>
