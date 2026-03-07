@@ -1206,14 +1206,14 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     Blue + red together arrive at 110/hr. Since red alone is 30/hr:
     $$\lambda_B = 110 - \lambda_R = 110 - 30 = 80 \text{ per hour}$$
     The mean interarrival time for blue sweaters is:
-    $$E[T_B] = \frac{1}{\lambda_B} = \frac{1}{80} \text{ hours} = \frac{60}{80} = 0.75 \text{ minutes} = 45 \text{ seconds}$$</p>
+    $$E[T_B] = \frac{1}{\lambda_B} = \frac{1}{80} \text{ hours} = \frac{1}{80} \times 60 = 0.75 \text{ minutes} = 45 \text{ seconds}$$</p>
 
     <p><strong>Step 3: Find the total arrival rate (merging).</strong><br>
     When you merge independent Poisson processes, you add the rates:
     $$\lambda_{\text{total}} = \lambda_W + \lambda_R + \lambda_B = 10 + 30 + 80 = 120 \text{ per hour}$$</p>
 
     <p><strong>Step 4: Number of packing devices.</strong><br>
-    Utilization $\rho = \lambda \cdot E[S] / N$ where $E[S]$ is the mean service time per item and $N$ is the number of devices.<br>
+    Utilization is not on the formula sheet &mdash; from lectures: $\rho = \lambda \cdot E[S] / N$, where $\rho$ is the fraction of time a device is busy, $E[S]$ is the mean service time, and $N$ is the number of devices.<br>
     Each order takes 4 min $= 4/60 = 1/15$ hour to pack:
     $$\rho = \frac{\lambda_{\text{total}} \cdot E[S]}{N} = \frac{120 \times 1/15}{N} = \frac{8}{N}$$
     We need $\rho = 0.8$:
