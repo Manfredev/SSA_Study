@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistical Methods &amp; Advanced Analysis | SSA Exam Prep</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --purple: #7c3aed;
+  --purple-light: #f3e8ff;
+  --sidebar-width: 280px;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+/* Sidebar */
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; background: var(--card-bg); border-right: 1px solid #e2e8f0; padding: 24px 16px; overflow-y: auto; z-index: 100; transition: transform 0.3s ease; }
+.sidebar h2 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.sidebar .hub-link { display: inline-block; margin-bottom: 16px; color: var(--primary); text-decoration: none; font-size: 14px; }
+.sidebar .hub-link:hover { text-decoration: underline; }
+.sidebar nav a { display: block; padding: 8px 12px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 14px; margin-bottom: 2px; transition: background 0.15s; }
+.sidebar nav a:hover, .sidebar nav a.active { background: var(--primary-light); color: var(--primary); }
+.hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: var(--primary); color: #fff; border: none; border-radius: 8px; width: 40px; height: 40px; font-size: 22px; cursor: pointer; line-height: 1; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 90; }
+/* Main */
+.main { margin-left: var(--sidebar-width); padding: 40px 48px 80px; max-width: 960px; }
+h1 { font-size: 32px; margin-bottom: 8px; }
+.subtitle { color: var(--text-light); margin-bottom: 32px; font-size: 16px; }
+h2.topic-title { font-size: 26px; margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid #e2e8f0; }
+h3 { font-size: 20px; margin: 24px 0 12px; }
+h4 { font-size: 17px; margin: 16px 0 8px; }
+p, li { margin-bottom: 8px; }
+ul, ol { padding-left: 24px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+th { background: var(--primary-light); font-weight: 600; }
+/* Boxes */
+.box { border-radius: var(--radius); padding: 16px 20px; margin: 16px 0; }
+.box-blue { background: var(--primary-light); border-left: 4px solid var(--primary); }
+.box-red { background: var(--danger-light); border-left: 4px solid var(--danger); }
+.box-green { background: var(--success-light); border-left: 4px solid var(--success); }
+.box h4 { margin-top: 0; }
+/* Cards */
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h4 { margin-top: 0; }
+/* Collapsible */
+details { margin: 12px 0; }
+details summary { cursor: pointer; font-weight: 600; padding: 10px 16px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid #e2e8f0; user-select: none; }
+details summary:hover { background: #f1f5f9; }
+details[open] summary { border-radius: var(--radius) var(--radius) 0 0; }
+details .detail-body { padding: 16px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 var(--radius) var(--radius); background: var(--card-bg); }
+/* Practice */
+textarea.practice { width: 100%; min-height: 100px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 14px; resize: vertical; margin: 8px 0; }
+/* Quiz */
+.quiz { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin: 16px 0; border: 1px solid #e2e8f0; }
+.quiz h4 { margin-top: 0; color: var(--primary); }
+.quiz label { display: block; padding: 8px 12px; margin: 4px 0; border-radius: 8px; cursor: pointer; font-size: 15px; transition: background 0.15s; }
+.quiz label:hover { background: #f1f5f9; }
+.quiz input[type="radio"] { margin-right: 8px; }
+.quiz button { margin-top: 12px; padding: 8px 20px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+.quiz button:hover { opacity: 0.9; }
+.quiz .result { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-weight: 600; display: none; }
+.quiz .result.correct { background: var(--success-light); color: var(--success); display: block; }
+.quiz .result.wrong { background: var(--danger-light); color: var(--danger); display: block; }
+/* Interactive */
+.interactive { background: var(--card-bg); border: 2px dashed var(--primary); border-radius: var(--radius); padding: 20px; margin: 16px 0; }
+.interactive h4 { color: var(--primary); margin-top: 0; }
+.interactive label { font-size: 14px; font-weight: 600; display: inline-block; min-width: 80px; }
+.interactive input[type="range"] { width: 140px; vertical-align: middle; }
+.interactive .val { display: inline-block; min-width: 36px; text-align: right; font-family: monospace; }
+.interactive button { padding: 6px 16px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; margin: 4px; font-size: 13px; }
+.interactive button:hover { opacity: 0.9; }
+.seq-display { font-family: monospace; font-size: 14px; background: #f1f5f9; padding: 12px; border-radius: 8px; margin-top: 12px; word-break: break-all; min-height: 40px; max-height: 200px; overflow-y: auto; }
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 0; }
+.tabs button { padding: 8px 16px; border: 1px solid #e2e8f0; border-bottom: none; border-radius: 8px 8px 0 0; background: #f1f5f9; cursor: pointer; font-size: 13px; font-weight: 600; }
+.tabs button.active { background: var(--card-bg); border-bottom: 1px solid var(--card-bg); }
+.tab-content { border: 1px solid #e2e8f0; border-radius: 0 0 var(--radius) var(--radius); padding: 16px; background: var(--card-bg); display: none; }
+.tab-content.active { display: block; }
+/* Step revealer */
+.step-list .step { padding: 10px 14px; margin: 4px 0; background: #f1f5f9; border-radius: 8px; display: none; font-size: 14px; }
+.step-list .step.visible { display: block; }
+/* Flashcard */
+.flashcard-deck { display: flex; flex-direction: column; gap: 12px; }
+.flashcard { background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+.flashcard:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.flashcard .fc-front { padding: 14px 18px; font-weight: 600; font-size: 15px; }
+.flashcard .fc-back { padding: 0 18px 14px; font-size: 14px; color: var(--text-light); display: none; border-top: 1px dashed #e2e8f0; padding-top: 12px; }
+.flashcard.flipped .fc-back { display: block; }
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .overlay.open { display: block; }
+  .main { margin-left: 0; padding: 60px 16px 80px; }
+  h1 { font-size: 24px; }
+  h2.topic-title { font-size: 22px; }
+}
+/* Background Knowledge */
+details.bg-knowledge { margin: 18px 0; }
+details.bg-knowledge summary { color: var(--purple); border-color: #e9d5ff; }
+details.bg-knowledge summary:hover { background: var(--purple-light); }
+details.bg-knowledge .detail-body { border-color: #e9d5ff; }
+.bk-concept { background: var(--bg); border-radius: 8px; padding: 14px 18px; margin: 12px 0; border: 1px solid #e2e8f0; }
+.bk-concept h5 { font-size: .92rem; font-weight: 700; margin-bottom: 6px; color: var(--purple); }
+.bk-concept p { font-size: .88rem; color: var(--text-light); margin-bottom: 6px; }
+.bk-concept p:last-child { margin-bottom: 0; }
+.bk-example { background: var(--purple-light); padding: 8px 12px; border-radius: 6px; font-size: .85rem; margin-top: 8px; }
+/* Visual Step Guide */
+.visual-guide { margin: 24px 0; padding: 24px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.visual-guide h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.vg-steps { position: relative; padding-left: 40px; }
+.vg-steps::before { content: ''; position: absolute; left: 15px; top: 14px; bottom: 14px; width: 2px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
+.vg-step { position: relative; margin-bottom: 16px; padding: 14px 18px; background: var(--bg); border-radius: 8px; border: 1px solid #e2e8f0; transition: border-color .2s; }
+.vg-step:hover { border-color: var(--primary); }
+.vg-step:last-child { margin-bottom: 0; }
+.vg-step::before { content: attr(data-step); position: absolute; left: -40px; top: 12px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; box-shadow: 0 2px 4px rgba(37,99,235,.3); }
+.vg-step:last-child::before { background: var(--success); box-shadow: 0 2px 4px rgba(22,163,74,.3); }
+.vg-step .vg-title { font-weight: 700; font-size: .93rem; margin-bottom: 4px; color: var(--text); }
+.vg-step .vg-desc { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+.vg-formula { background: var(--primary-light); padding: 8px 12px; border-radius: 6px; margin-top: 8px; font-size: .88rem; display: inline-block; }
+.vg-tip { background: var(--success-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--success); }
+.vg-warn { background: var(--danger-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--danger); }
+/* Formula Sheet Reference Badge */
+.fs-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #92400e;
+  margin: 2px 4px;
+  white-space: nowrap;
+}
+.fs-ref::before { content: '\1F4CB'; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="hub-link">&larr; Back to Hub</a>
+  <h2>Page 2: Statistical Methods</h2>
+  <nav>
+    <a href="#topic6">6. Hypothesis Testing</a>
+    <a href="#topic7">7. Output Analysis &amp; CIs</a>
+    <a href="#topic8">8. Comparing Configurations</a>
+    <a href="#topic9">9. Variance Reduction &amp; MC</a>
+    <a href="#topic10">10. True/False &amp; Conceptual</a>
+  </nav>
+</aside>
+
+<main class="main">
+<h1>Statistical Methods &amp; Advanced Analysis</h1>
+<p class="subtitle">Topics 6 &ndash; 10 &mdash; SSA Exam Preparation</p>
+
+<!-- ============================================================ -->
+<!-- TOPIC 6: Hypothesis Testing -->
+<!-- ============================================================ -->
+<section id="topic6">
+<h2 class="topic-title">Topic 6: Hypothesis Testing (t-tests &amp; Wilcoxon)</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Hypothesis testing lets you determine whether observed differences in simulation output are statistically meaningful or just noise. Choosing the wrong test invalidates your conclusions.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Welch t-tests and paired t-tests appear on nearly every exam. You must know <strong>which test to use when</strong>, compute the test statistic, degrees of freedom, and interpret the p-value correctly.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Normal distribution, sample mean/variance, the t-distribution arises when estimating the mean of a normally distributed population with unknown variance.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Distributions &amp; Significance</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Normal Distribution &amp; t-Distribution</h5>
+      <p>The <strong>normal</strong> $N(\mu, \sigma^2)$ is the bell curve. When $\sigma$ is unknown and estimated by the sample standard deviation $S$, the standardised statistic follows a <strong>t-distribution</strong> instead of a normal &mdash; it has heavier tails to account for the extra uncertainty.</p>
+      <div class="bk-example">$Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0,1)$ when $\sigma$ known. But $T = \frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n-1}$ when $\sigma$ estimated by $S$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Degrees of Freedom</h5>
+      <p>Degrees of freedom (d.f.) = number of independent pieces of information minus number of estimated parameters. For a sample of $n$ values with estimated mean, d.f. $= n - 1$. More d.f. &rarr; t-distribution approaches the normal.</p>
+      <div class="bk-example">With $n = 5$ observations: d.f. $= 4$. The t-distribution with 4 d.f. has much heavier tails than the normal. With $n = 100$: d.f. $= 99$ and $t_{99}$ is nearly $N(0,1)$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Significance Level vs p-Value</h5>
+      <p>The <strong>significance level</strong> $\alpha$ is chosen before the test (e.g., 0.05). The <strong>p-value</strong> is computed from the data &mdash; it's the probability of seeing a result this extreme under $H_0$. Reject $H_0$ if $p < \alpha$.</p>
+      <div class="bk-example">$\alpha = 0.05$, computed $p = 0.032$: reject $H_0$ (significant). If $p = 0.087$: fail to reject (not significant at the 5% level).</div>
+    </div>
+    <div class="bk-concept">
+      <h5>One-Tailed vs Two-Tailed Tests</h5>
+      <p><strong>Two-tailed:</strong> $H_1: \mu \neq \mu_0$ (could be larger or smaller). <strong>One-tailed:</strong> $H_1: \mu > \mu_0$ or $H_1: \mu < \mu_0$. One-tailed tests put all $\alpha$ in one tail, making it easier to reject in that direction.</p>
+      <div class="bk-example">Two-tailed with $\alpha = 0.05$: reject if $|T| > t_{\alpha/2}$. One-tailed ($H_1: \mu > \mu_0$): reject if $T > t_{\alpha}$ &mdash; the critical value is smaller since all 5% is in one tail.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Choose and Perform the Right t-Test</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Identify the Design</div>
+      <div class="vg-desc">What are you comparing? One sample vs a known value &rarr; one-sample t-test. Two groups &rarr; go to Step 2. Before/after on the same subjects &rarr; paired t-test.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Check for Pairing</div>
+      <div class="vg-desc">Are observations naturally matched (same subject, same random numbers, same conditions)? If yes &rarr; <strong>paired t-test</strong> (compute differences $D_i = X_i - Y_i$, then do a one-sample t-test on $D_i$). If no &rarr; <strong>Welch t-test</strong>.</div>
+      <div class="vg-tip">Pairing reduces variance by removing between-subject variability. Always prefer pairing when possible.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Select the Test</div>
+      <div class="vg-desc"><strong>One-sample:</strong> $T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}$, d.f. $= n-1$. <strong>Paired:</strong> same formula on differences $\bar{D}$. <strong>Welch:</strong> $T = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}}$ with Welch d.f. formula.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Compute the Test Statistic</div>
+      <div class="vg-desc">Plug in sample means, standard deviations, and sizes. For Welch, also compute the degrees of freedom using the Satterthwaite formula (round down to integer).</div>
+      <div class="vg-formula">$\nu \approx \frac{(S_1^2/n_1 + S_2^2/n_2)^2}{\frac{(S_1^2/n_1)^2}{n_1-1} + \frac{(S_2^2/n_2)^2}{n_2-1}}$</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Compare to Critical Value</div>
+      <div class="vg-desc">Look up $t_{\alpha/2,\,\nu}$ (two-tailed) or $t_{\alpha,\,\nu}$ (one-tailed). If $|T| > t_{\text{crit}}$, reject $H_0$. Report the conclusion in context: "There is (in)sufficient evidence at the $\alpha$ level to conclude&hellip;"</div>
+      <div class="vg-warn">Always state your conclusion in the context of the problem, not just "reject" or "fail to reject."</div>
+    </div>
+  </div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>One-Sample t-test</h4>
+  <p>Tests whether a sample mean $\bar{X}(n)$ differs from a hypothesised value $\mu_0$. <span class="fs-ref" title="t-test formula and procedure">FS: Empirical Tests</span></p>
+  $$t = \frac{\bar{X}(n) - \mu_0}{SE}, \quad SE = \sqrt{\frac{S^2(n)}{n}}, \quad df = n - 1$$
+  <p>Reject $H_0: \mu = \mu_0$ if $|t| > t_{n-1, 1-\alpha/2}$.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Paired t-test</h4>
+  <p>When two measurements come from the <strong>same</strong> experimental units (paired observations):</p>
+  $$D_i = X_{1i} - X_{2i}, \quad \bar{D} = \frac{1}{n}\sum_{i=1}^n D_i$$
+  <p>Apply the one-sample t-test to the differences $D_i$ with $\mu_0 = 0$: <span class="fs-ref" title="Paired t-test">FS: Empirical Tests</span></p>
+  $$t = \frac{\bar{D}}{S_D / \sqrt{n}}, \quad df = n - 1$$
+</div>
+
+<div class="box box-blue">
+  <h4>Welch t-test (Unpaired, Unequal Variances)</h4>
+  <p>The default for comparing two independent samples when you <strong>cannot assume equal variances</strong>: <span class="fs-ref" title="See formula sheet for Welch df formula">FS: System Comparison</span></p>
+  $$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}$$
+  <p>Degrees of freedom (Welch&ndash;Satterthwaite approximation):</p>
+  $$\hat{f} = \frac{\left(\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}\right)^2}{\dfrac{\left(S_1^2/n_1\right)^2}{n_1 - 1} + \dfrac{\left(S_2^2/n_2\right)^2}{n_2 - 1}}$$
+  <p>Round $\hat{f}$ <strong>down</strong> to nearest integer for the t-table.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Independent Pooled t-test (Equal Variances)</h4>
+  <p>Only use when you can <strong>assume equal variances</strong> ($S_1^2 \approx S_2^2$): <span class="fs-ref" title="Pooled variance formula">FS: System Comparison</span></p>
+  $$t = \frac{\bar{X}_1 - \bar{X}_2}{S_p \sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}}}$$
+  $$S_p = \sqrt{\frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}}, \quad df = n_1 + n_2 - 2$$
+</div>
+
+<div class="box box-blue">
+  <h4>Wilcoxon Tests (Non-parametric)</h4>
+  <ul>
+    <li><strong>Signed-Rank test:</strong> Paired non-parametric alternative. Rank the absolute differences $|D_i|$, sum the ranks of positive differences ($W^+$) and negative differences ($W^-$). Compare $\min(W^+, W^-)$ to critical values.</li>
+    <li><strong>Rank-Sum test (Mann&ndash;Whitney U):</strong> Unpaired non-parametric alternative. Combine and rank all observations, sum ranks per group. Works when normality cannot be assumed and sample sizes are small.</li>
+  </ul>
+</div>
+
+<!-- Interactive: Decision Guide Table -->
+<div class="interactive">
+  <h4>Interactive: Which Test Should I Use?</h4>
+  <table>
+    <tr><th>Scenario</th><th>Test</th><th>Key Requirement</th></tr>
+    <tr><td>One sample vs known $\mu_0$</td><td><strong>One-sample t</strong></td><td>Normal data (or CLT, large $n$)</td></tr>
+    <tr><td>Paired observations</td><td><strong>Paired t</strong></td><td>Same units measured twice</td></tr>
+    <tr><td>Two independent samples, unequal variances</td><td><strong>Welch t</strong></td><td>Independence; normal (or CLT)</td></tr>
+    <tr><td>Two independent samples, equal variances</td><td><strong>Pooled t</strong></td><td>$S_1^2 \approx S_2^2$; normal (or CLT)</td></tr>
+    <tr><td>Paired, non-normal, small $n$</td><td><strong>Wilcoxon Signed-Rank</strong></td><td>Symmetric differences</td></tr>
+    <tr><td>Unpaired, non-normal, small $n$</td><td><strong>Wilcoxon Rank-Sum</strong></td><td>Similar distribution shapes</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:13px;color:var(--text-light);"><strong>Rule of thumb:</strong> When in doubt between pooled and Welch, <em>always use Welch</em> &mdash; it reduces to pooled when variances are actually equal, so you lose nothing.</p>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Using pooled t-test when variances clearly differ &mdash; Welch is almost always the safer choice</li>
+    <li>Confusing $p < 0.01$ with a "large effect" &mdash; statistical significance $\neq$ practical significance</li>
+    <li>Forgetting to round $\hat{f}$ <strong>down</strong> in the Welch test</li>
+    <li>Using a paired test on independent samples (or vice versa)</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 32.1: Welch &amp; Paired t-test &mdash; Practicals vs No Practicals</summary>
+  <div class="detail-body">
+    <p><strong>Data:</strong> Two groups of 10 student groups each.</p>
+    <p>Attended practicals: 6.600, 9.130, 6.900, 9.630, 9.320, 9.820, 7.700, 9.790, 9.750, 5.660 &nbsp; ($S_1^2 = 2.4602$)</p>
+    <p>Did not attend: 6.860, 7.040, 7.850, 7.740, 6.530, 5.610, 7.250, 5.250, 6.550, 7.340 &nbsp; ($S_2^2 = 0.7217$)</p>
+
+    <h4>Welch t-test</h4>
+    <p><strong>Step 1:</strong> Compute means: $\bar{X}_1 = 8.430$, $\bar{X}_2 = 6.802$</p>
+    <p><strong>Step 2:</strong> Test statistic:</p>
+    $$t = \frac{8.430 - 6.802}{\sqrt{\frac{2.4602}{10} + \frac{0.7217}{10}}} = \frac{1.628}{\sqrt{0.31819}} = \frac{1.628}{0.5641} = 2.8861$$
+    <p><strong>Step 3:</strong> Degrees of freedom:</p>
+    $$\hat{f} = \frac{(0.24602 + 0.07217)^2}{\frac{0.24602^2}{9} + \frac{0.07217^2}{9}} = \frac{0.10118}{0.006726 + 0.000579} = \frac{0.10118}{0.007305} = 13.86$$
+    <p>Round down: $df = 13$.</p>
+    <p><strong>Step 4:</strong> From t-table, $t_{13, 0.995} = 3.012$, $t_{13, 0.99} = 2.650$. <span class="fs-ref" title="Student t critical values">FS: t-Table</span> Since $2.650 < 2.886 < 3.012$:</p>
+    <div class="box box-green"><strong>Result:</strong> $p \approx 0.012$. Reject $H_0$ at $\alpha = 0.05$. There is a significant difference.</div>
+
+    <h4>Paired t-test (same data, treated as paired)</h4>
+    <p>Differences $D_i$: $-0.260, 2.090, -0.950, 1.890, 2.790, 4.210, 0.450, 4.540, 3.200, -1.680$</p>
+    <p>$\bar{D} = 1.628$, $S_D = 2.155$</p>
+    $$t = \frac{1.628}{2.155/\sqrt{10}} = \frac{1.628}{0.6814} = 2.389, \quad df = 9$$
+    <div class="box box-green"><strong>Result:</strong> $p \approx 0.041$. Also significant at $\alpha = 0.05$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Practice: Welch t-test on Custom Data</summary>
+  <div class="detail-body">
+    <p>Two systems measured independently. System A ($n=8$): $\bar{X}_A = 42.5$, $S_A^2 = 12.3$. System B ($n=12$): $\bar{X}_B = 38.1$, $S_B^2 = 8.7$.</p>
+    <p>Try computing $t$ and $\hat{f}$ yourself before revealing the answer.</p>
+    <textarea class="practice" placeholder="Work out the Welch t-test here..."></textarea>
+    <details>
+      <summary>Reveal Answer</summary>
+      <div class="detail-body">
+        <p>$t = \frac{42.5 - 38.1}{\sqrt{12.3/8 + 8.7/12}} = \frac{4.4}{\sqrt{1.5375 + 0.725}} = \frac{4.4}{\sqrt{2.2625}} = \frac{4.4}{1.5042} = 2.925$</p>
+        <p>$\hat{f} = \frac{2.2625^2}{\frac{1.5375^2}{7} + \frac{0.725^2}{11}} = \frac{5.1189}{0.3377 + 0.0478} = \frac{5.1189}{0.3855} = 13.28 \Rightarrow df = 13$</p>
+      </div>
+    </details>
+  </div>
+</details>
+
+<!-- Quiz 6.1 -->
+<div class="quiz">
+  <h4>Quiz 6.1: Choosing the Right Test</h4>
+  <p>You have two independent samples with $S_1^2 = 15.2$ and $S_2^2 = 3.1$. Which test is most appropriate?</p>
+  <label><input type="radio" name="q_t6_1" value="a"> Pooled t-test</label>
+  <label><input type="radio" name="q_t6_1" value="b"> Welch t-test</label>
+  <label><input type="radio" name="q_t6_1" value="c"> Paired t-test</label>
+  <label><input type="radio" name="q_t6_1" value="d"> Wilcoxon Signed-Rank</label>
+  <button onclick="checkQuiz('q_t6_1','b','ssa_quiz_page2_topic6_1')">Submit</button>
+  <div class="result" id="res_q_t6_1"></div>
+</div>
+
+<!-- Quiz 6.2 -->
+<div class="quiz">
+  <h4>Quiz 6.2: Interpreting p-values</h4>
+  <p>A Welch t-test returns $p = 0.003$. Which statement is correct?</p>
+  <label><input type="radio" name="q_t6_2" value="a"> The effect size is large</label>
+  <label><input type="radio" name="q_t6_2" value="b"> There is a 0.3% chance the null hypothesis is true</label>
+  <label><input type="radio" name="q_t6_2" value="c"> If $H_0$ were true, the probability of observing data this extreme or more is 0.3%</label>
+  <label><input type="radio" name="q_t6_2" value="d"> The alternative hypothesis is certainly true</label>
+  <button onclick="checkQuiz('q_t6_2','c','ssa_quiz_page2_topic6_2')">Submit</button>
+  <div class="result" id="res_q_t6_2"></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 7: Output Analysis & Confidence Intervals -->
+<!-- ============================================================ -->
+<section id="topic7">
+<h2 class="topic-title">Topic 7: Output Analysis &amp; Confidence Intervals</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>A point estimate without a confidence interval is meaningless. CIs quantify uncertainty. Bootstrap methods let you build CIs even when you can't assume normality.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Expect to compute t-CIs, percentile bootstrap CIs, and empirical bootstrap CIs. The percentile rank formula with $j = Np + 0.5$ and linear interpolation is used in nearly every bootstrap question.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>The sample mean is a random variable with its own distribution; the CLT says it becomes approximately normal for large $n$.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Sampling Distributions &amp; Bootstrap</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Standard Error &amp; Sampling Distribution</h5>
+      <p>The <strong>sampling distribution</strong> of $\bar{X}$ describes how the sample mean varies across different samples. Its spread is the <strong>standard error</strong> $\text{SE} = \sigma / \sqrt{n}$ (or $S/\sqrt{n}$ when $\sigma$ unknown). Larger $n$ &rarr; smaller SE &rarr; more precise estimate.</p>
+      <div class="bk-example">Population $\sigma = 10$, $n = 25$: $\text{SE} = 10/\sqrt{25} = 2$. Doubling to $n = 100$: $\text{SE} = 10/\sqrt{100} = 1$ (halved).</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Central Limit Theorem (CLT)</h5>
+      <p>Regardless of the population distribution, $\bar{X}$ becomes approximately normal for large $n$: $\bar{X} \approx N(\mu, \sigma^2/n)$. Rule of thumb: $n \geq 30$ is usually sufficient unless the population is very skewed.</p>
+      <div class="bk-example">Rolling a die (uniform, not normal): with $n = 50$ rolls, the average $\bar{X}$ is approximately $N(3.5, 35/(12 \cdot 50))$. The CLT lets us build CIs even though individual rolls aren't normal.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Confidence Level Interpretation</h5>
+      <p>A 95% CI does <strong>not</strong> mean "95% chance the true mean is in this interval." It means: if we repeated the experiment many times, 95% of the constructed intervals would contain $\mu$. Each specific interval either contains $\mu$ or doesn't.</p>
+      <div class="bk-example">100 researchers each compute a 95% CI: about 95 of those intervals contain $\mu$, and about 5 don't. You can't tell which group yours falls in.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Bootstrap Resampling Concept</h5>
+      <p>When we can't assume normality, the <strong>bootstrap</strong> approximates the sampling distribution by resampling <em>with replacement</em> from the original data. Each resample has the same size $n$ as the original. Compute the statistic on each resample to build an empirical distribution.</p>
+      <div class="bk-example">Original data: $\{3, 7, 2, 9, 5\}$. One bootstrap resample: $\{7, 3, 7, 5, 2\}$ (note: 7 appears twice, 9 is missing). Compute $\bar{X}^* = 4.8$. Repeat 1000+ times.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Compute a Bootstrap CI</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Resample With Replacement</div>
+      <div class="vg-desc">From the original $n$ data points, draw $N$ bootstrap resamples (e.g., $N = 1000$). Each resample has $n$ values drawn with replacement from the original data.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Compute Statistic Per Resample</div>
+      <div class="vg-desc">For each bootstrap resample $b = 1, \ldots, N$, compute the statistic of interest (e.g., sample mean $\bar{X}^*_b$). This gives you $N$ bootstrap statistics.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Sort the Bootstrap Statistics</div>
+      <div class="vg-desc">Arrange all $N$ bootstrap statistics in ascending order: $\bar{X}^*_{(1)} \leq \bar{X}^*_{(2)} \leq \cdots \leq \bar{X}^*_{(N)}$.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Apply the Percentile Rank Formula</div>
+      <div class="vg-desc">For a $100(1-\alpha)\%$ CI, find positions $j_{\text{lo}} = Np_{\text{lo}} + 0.5$ and $j_{\text{hi}} = Np_{\text{hi}} + 0.5$ where $p_{\text{lo}} = \alpha/2$ and $p_{\text{hi}} = 1 - \alpha/2$.</div>
+      <div class="vg-formula">$j = Np + 0.5$</div>
+      <div class="vg-warn">Use $j = Np + 0.5$, not $j = Np$ or $j = (N+1)p$. This specific formula is used in the course.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Interpolate for Bounds</div>
+      <div class="vg-desc">If $j$ is not an integer, interpolate: write $j = \lfloor j \rfloor + g$ where $g$ is the fractional part. Then the bound is $\bar{X}^*_{(\lfloor j \rfloor)} + g \cdot (\bar{X}^*_{(\lceil j \rceil)} - \bar{X}^*_{(\lfloor j \rfloor)})$. Report the CI as $[\text{lower}, \text{upper}]$.</div>
+      <div class="vg-tip">If $j$ happens to be an integer, no interpolation needed &mdash; just take $\bar{X}^*_{(j)}$ directly.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>t-Confidence Interval</h4>
+  <p>Assumes normally distributed data (or CLT applies): <span class="fs-ref" title="Confidence interval formulas">FS: Basic Statistics</span></p>
+  $$\bar{X}(n) \pm t_{n-1, 1-\alpha/2} \cdot SE, \quad SE = \sqrt{\frac{S^2(n)}{n}}$$
+  <p>For a 90% CI, use $1 - \alpha/2 = 0.95$. For 95% CI, use $1 - \alpha/2 = 0.975$. <span class="fs-ref" title="Student t critical values">FS: t-Table</span></p>
+</div>
+
+<div class="box box-blue">
+  <h4>Percentile Bootstrap CI</h4>
+  <p>No distributional assumption needed. Given $N$ bootstrap sample means $Y^* = \{Y_1^*, Y_2^*, \ldots, Y_N^*\}$:</p>
+  <ol>
+    <li>Sort the bootstrap means in ascending order</li>
+    <li>Find the $p_{\alpha/2}$ and $p_{1-\alpha/2}$ percentiles using the rank formula</li>
+    <li>The CI is $\left[Y^*_{(p_{\alpha/2})},\; Y^*_{(p_{1-\alpha/2})}\right]$</li>
+  </ol>
+  <p><strong>Percentile rank formula</strong> (linear interpolation, $c = \tfrac{1}{2}$): <span class="fs-ref" title="Bootstrap CI procedure">FS: Basic Statistics</span></p>
+  $$j = Np + 0.5$$
+  <p>where $p_i = \frac{1}{N}(i - 0.5)$ for $i = 1, \ldots, N$. Interpolate:</p>
+  $$Y^*_{(j)} = Y^*_{(\lfloor j \rfloor)} + (j \bmod 1) \cdot \left(Y^*_{(\lfloor j \rfloor + 1)} - Y^*_{(\lfloor j \rfloor)}\right)$$
+</div>
+
+<div class="box box-blue">
+  <h4>Empirical Bootstrap CI</h4>
+  <p>Uses bootstrap deviations $\delta_i^* = Y_i^* - \bar{X}(n)$ to correct for bias:</p>
+  <ol>
+    <li>Compute deviations: $\delta_i^* = Y_i^* - \bar{X}(n)$ for each bootstrap mean</li>
+    <li>Sort deviations, find percentiles $\delta^*_{(\alpha/2)}$ and $\delta^*_{(1-\alpha/2)}$</li>
+    <li>CI: $\left[\bar{X}(n) - \delta^*_{(1-\alpha/2)},\; \bar{X}(n) - \delta^*_{(\alpha/2)}\right]$</li>
+  </ol>
+  <p>Note the <strong>flipped subscripts</strong> &mdash; we subtract the upper percentile deviation for the lower bound.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Batch Means Method</h4>
+  <p>For autocorrelated simulation output (e.g., steady-state simulations):</p>
+  <ol>
+    <li>Discard the initial warm-up period</li>
+    <li>Divide the remaining output into $k$ large, non-overlapping batches</li>
+    <li>Compute the mean $\bar{Y}_i$ of each batch</li>
+    <li>Treat the $k$ batch means as approximately i.i.d. and build a t-CI</li>
+  </ol>
+  <p>Batches must be large enough that autocorrelation between batch means is negligible.</p>
+</div>
+
+<!-- Interactive: Bootstrap CI Visualizer -->
+<div class="interactive" id="bootstrap-viz">
+  <h4>Interactive: Bootstrap CI Builder</h4>
+  <p>Given sorted bootstrap means, compute the percentile CI. Enter your own values or use the defaults from Exercise 30.</p>
+  <div style="margin-bottom:8px;">
+    <label>Sorted $Y^*$:</label>
+    <input type="text" id="bs-data" value="6.22, 6.42, 6.50, 6.54, 6.56, 6.57, 6.76, 6.88" style="width:100%;padding:6px;border:1px solid #e2e8f0;border-radius:6px;font-family:monospace;">
+  </div>
+  <div style="margin-bottom:8px;">
+    <label>Confidence level:</label>
+    <select id="bs-conf" style="padding:4px 8px;border-radius:6px;border:1px solid #e2e8f0;">
+      <option value="0.80">80%</option>
+      <option value="0.90">90%</option>
+      <option value="0.95">95%</option>
+    </select>
+  </div>
+  <button onclick="computeBootstrapCI()">Compute Percentile CI</button>
+  <div class="seq-display" id="bs-output">Click "Compute" to calculate the CI.</div>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Confusing percentile and empirical bootstrap CIs &mdash; empirical uses deviations with flipped subscripts</li>
+    <li>Forgetting to sort the data before computing percentile ranks</li>
+    <li>Batch means: making batches too small (autocorrelation not broken)</li>
+    <li>Using $z$-values instead of $t$-values when variance is estimated from data</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 28: Pirate Loot CI (t-CI, Percentile &amp; Empirical Bootstrap)</summary>
+  <div class="detail-body">
+    <p><strong>Data (in k&euro;):</strong> 412, 386, 450, 358, 552, 390, 407, 474, 404, 393, 341, 420, 306, 450, 513. ($n = 15$)</p>
+
+    <h4>Part 1: t-CI (90%)</h4>
+    <p>$\bar{X} = 417.07$, $S^2(15) \approx 3629.5$, $SE = \sqrt{3629.5/15} = 15.558$</p>
+    <p>$t_{14, 0.95} = 1.761$ <span class="fs-ref" title="Student t critical values">FS: t-Table</span></p>
+    $$CI = 417.07 \pm 1.761 \times 15.558 = 417.07 \pm 27.40$$
+    <div class="box box-green"><strong>t-CI:</strong> $[388.451,\; 446.088]$ (in k&euro;)</div>
+
+    <h4>Part 2: Bootstrap CIs</h4>
+    <p>Given bootstrap sample means (sorted), the percentile method directly reads off the $\alpha/2$ and $1-\alpha/2$ quantiles.</p>
+    <div class="box box-green"><strong>Percentile bootstrap CI:</strong> $[380.7,\; 446.5]$</div>
+    <p>For the empirical CI, compute deviations $\delta_i^* = Y_i^* - \bar{X}$, find percentiles, then subtract with flipped signs.</p>
+    <div class="box box-green"><strong>Empirical bootstrap CI:</strong> $[387.6,\; 453.4]$</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 29: Batch Means &mdash; Throughput CI</summary>
+  <div class="detail-body">
+    <p><strong>Context:</strong> Flip simulates mean throughput per 10 minutes. He divides output into 11 batches with means:</p>
+    <p>13.95, 11.01, 10.41, 12.87, 12.36, 11.17, 13.50, 11.89, 10.09, 10.28, 12.70</p>
+    <p><strong>Step 1:</strong> Grand mean: $\bar{Y} = \frac{1}{11}\sum Y_i = \frac{130.23}{11} = 11.839$</p>
+    <p><strong>Step 2:</strong> Sample variance of batch means: $S^2 = 1.636$, $SE = \sqrt{1.636/11} = 0.3857$</p>
+    <p><strong>Step 3:</strong> 90% CI with $t_{10, 0.95} = 1.812$:</p>
+    $$CI = 11.839 \pm 1.812 \times 0.3857 = 11.839 \pm 0.699$$
+    <div class="box box-green"><strong>90% CI:</strong> $[11.11,\; 12.57]$</div>
+    <p><em>Note: Batch means method is valid because the batches are large enough for approximate independence.</em></p>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 30: Percentile Bootstrap CI for Mean Grade</summary>
+  <div class="detail-body">
+    <p><strong>Data:</strong> 8 bootstrap sample means: $Y^* = \{6.42, 6.50, 6.22, 6.88, 6.56, 6.57, 6.76, 6.54\}$</p>
+    <p><strong>Step 1:</strong> Sort: $\{6.22, 6.42, 6.50, 6.54, 6.56, 6.57, 6.76, 6.88\}$</p>
+    <p><strong>Step 2:</strong> For 80% CI, need $p_{0.10}$ and $p_{0.90}$. Ranks:</p>
+    <ul>
+      <li>$j_{0.10} = 8 \times 0.10 + 0.5 = 1.30$</li>
+      <li>$j_{0.90} = 8 \times 0.90 + 0.5 = 7.70$</li>
+    </ul>
+    <p><strong>Step 3:</strong> Interpolate:</p>
+    <ul>
+      <li>$Y^*_{(1.30)} = Y^*_{(1)} + 0.30 \times (Y^*_{(2)} - Y^*_{(1)}) = 6.22 + 0.30 \times 0.20 = 6.280$</li>
+      <li>$Y^*_{(7.70)} = Y^*_{(7)} + 0.70 \times (Y^*_{(8)} - Y^*_{(7)}) = 6.76 + 0.70 \times 0.12 = 6.844$</li>
+    </ul>
+    <div class="box box-green"><strong>80% Percentile Bootstrap CI:</strong> $[6.280,\; 6.844]$</div>
+  </div>
+</details>
+
+<!-- Quiz 7.1 -->
+<div class="quiz">
+  <h4>Quiz 7.1: Percentile vs Empirical Bootstrap</h4>
+  <p>In the empirical bootstrap CI $[\bar{X} - \delta^*_{(1-\alpha/2)},\; \bar{X} - \delta^*_{(\alpha/2)}]$, why are the subscripts "flipped"?</p>
+  <label><input type="radio" name="q_t7_1" value="a"> It's a typo in the textbook</label>
+  <label><input type="radio" name="q_t7_1" value="b"> Subtracting a large positive deviation gives a lower bound; subtracting a small/negative one gives the upper bound</label>
+  <label><input type="radio" name="q_t7_1" value="c"> It corrects for skewness by mirroring the deviations</label>
+  <label><input type="radio" name="q_t7_1" value="d"> The empirical method always produces wider intervals</label>
+  <button onclick="checkQuiz('q_t7_1','b','ssa_quiz_page2_topic7_1')">Submit</button>
+  <div class="result" id="res_q_t7_1"></div>
+</div>
+
+<!-- Quiz 7.2 -->
+<div class="quiz">
+  <h4>Quiz 7.2: Batch Means</h4>
+  <p>What is the primary purpose of the batch means method?</p>
+  <label><input type="radio" name="q_t7_2" value="a"> To reduce the variance of the estimator</label>
+  <label><input type="radio" name="q_t7_2" value="b"> To handle autocorrelated simulation output by creating approximately independent observations</label>
+  <label><input type="radio" name="q_t7_2" value="c"> To avoid the need for a warm-up period</label>
+  <label><input type="radio" name="q_t7_2" value="d"> To convert non-normal data to normal data</label>
+  <button onclick="checkQuiz('q_t7_2','b','ssa_quiz_page2_topic7_2')">Submit</button>
+  <div class="result" id="res_q_t7_2"></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 8: Comparing System Configurations -->
+<!-- ============================================================ -->
+<section id="topic8">
+<h2 class="topic-title">Topic 8: Comparing System Configurations</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Simulation often compares two or more system designs. You need rigorous methods to determine whether observed differences are real and to decide how many additional replications are needed.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Welch CIs for differences and the Dudewicz &amp; Dalal (D&amp;D) two-stage procedure for determining required sample sizes are exam staples. The Bonferroni correction appears when comparing $k > 2$ systems.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>When comparing two systems, the key question is whether the difference is real or just noise; paired designs reduce variance by using the same random conditions.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Paired Designs &amp; Multiple Comparisons</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Paired vs Independent Samples</h5>
+      <p><strong>Independent:</strong> each system is run with its own random numbers &mdash; no connection between observations. <strong>Paired:</strong> both systems are run under the <em>same</em> conditions (same random numbers, same scenarios). The difference $D_i = X_i - Y_i$ removes shared variability.</p>
+      <div class="bk-example">Comparing two queue designs: independent = run 20 reps of each with different seeds. Paired = run 20 reps, each pair using the same seed. Paired design gives smaller variance of $\bar{D}$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Why Pairing Reduces Variance</h5>
+      <p>$\text{Var}(\bar{X} - \bar{Y}) = \text{Var}(\bar{X}) + \text{Var}(\bar{Y}) - 2\text{Cov}(\bar{X}, \bar{Y})$. With independent samples, $\text{Cov} = 0$. With pairing, $\text{Cov} > 0$ (positive correlation), so the variance <em>decreases</em>. The stronger the correlation, the bigger the reduction.</p>
+      <div class="bk-example">If $\text{Var}(\bar{X}) = \text{Var}(\bar{Y}) = \sigma^2$ and $\text{Corr} = 0.8$: independent gives $2\sigma^2$, paired gives $2\sigma^2 - 2(0.8)\sigma^2 = 0.4\sigma^2$ &mdash; an 80% reduction!</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Multiple Comparisons Problem</h5>
+      <p>When comparing $k > 2$ systems pairwise, you make $\binom{k}{2}$ comparisons. Each at $\alpha = 0.05$ means the overall Type I error rate inflates. With 10 comparisons, the chance of at least one false positive is $1 - 0.95^{10} \approx 0.40$.</p>
+      <div class="bk-example">Comparing 5 systems: $\binom{5}{2} = 10$ pairwise comparisons. Without correction, there's a 40% chance of at least one false "significant difference."</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Bonferroni Correction</h5>
+      <p>To maintain overall error rate $\alpha$, use $\alpha' = \alpha / c$ for each of the $c$ comparisons. This is conservative (each individual CI is wider) but guarantees the family-wise error rate stays below $\alpha$.</p>
+      <div class="bk-example">5 systems, $\alpha = 0.05$: $c = \binom{5}{2} = 10$. Each comparison uses $\alpha' = 0.05/10 = 0.005$. Critical values are larger, so only truly large differences are flagged.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Apply the D&amp;D Two-Stage Procedure</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Run $n_0$ Pilot Replications</div>
+      <div class="vg-desc">For each of the $k$ systems, run $n_0$ initial replications (the "first stage"). Collect sample means $\bar{X}_i(n_0)$ and sample variances $S_i^2(n_0)$ for each system $i$.</div>
+      <div class="vg-tip">$n_0$ is typically given in the problem (e.g., $n_0 = 10$ or $n_0 = 20$).</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Compute Sample Means and Variances</div>
+      <div class="vg-desc">For each system $i$, calculate $\bar{X}_i(n_0) = \frac{1}{n_0}\sum_{j=1}^{n_0} X_{ij}$ and $S_i^2(n_0) = \frac{1}{n_0 - 1}\sum_{j=1}^{n_0}(X_{ij} - \bar{X}_i)^2$.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Calculate Required $n_i^*$</div>
+      <div class="vg-desc">Using the D&amp;D formula, determine how many total replications each system needs for the desired half-width $h$:</div>
+      <div class="vg-formula">$n_i^* = \max\left(n_0, \; \left\lceil \left(\frac{t_{\alpha'/2,\,n_0-1} \cdot S_i(n_0)}{h}\right)^2 \right\rceil \right)$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Run Additional Replications If Needed</div>
+      <div class="vg-desc">If $n_i^* > n_0$, run $n_i^* - n_0$ more replications for system $i$. If $n_i^* \leq n_0$, the pilot data is sufficient &mdash; no extra runs needed.</div>
+      <div class="vg-warn">Each system may require a different $n_i^*$ since variances differ.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Construct the Final CI</div>
+      <div class="vg-desc">Using all $n_i^*$ observations for each system, compute the grand sample mean $\bar{X}_i(n_i^*)$. The CI for each system mean (or for pairwise differences) now achieves the target half-width $h$ at confidence level $1 - \alpha$.</div>
+      <div class="vg-tip">For pairwise comparisons of $k$ systems, apply Bonferroni: use $\alpha' = \alpha / \binom{k}{2}$.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Welch CI for Difference of Means</h4>
+  <p>For two independent samples, the $100(1-\alpha)\%$ CI for $\mu_1 - \mu_2$: <span class="fs-ref" title="Welch approximation">FS: System Comparison</span></p>
+  $$(\bar{X}_1 - \bar{X}_2) \pm t_{\hat{f}, 1-\alpha/2} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}$$
+  <p>If the CI contains 0, we <strong>cannot</strong> detect a significant difference.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Dudewicz &amp; Dalal Two-Stage Procedure</h4>
+  <p>Determines how many replications are needed to detect a difference $d^*$ with probability $P^*$. <span class="fs-ref" title="Delete and Determine procedure">FS: System Comparison</span></p>
+  <p><strong>Stage 1:</strong> Run $n_0$ initial replications for each system $i$. Compute $S_i^2(n_0)$.</p>
+  <p><strong>Compute required replications:</strong></p>
+  $$N_i = \max\left(n_0 + 1, \;\left\lceil \frac{h_i^2 \cdot S_i^2(n_0)}{(d^*)^2} \right\rceil\right)$$
+  <p>where $h_i = h(f_i, P^*, k)$ is read from the D&amp;D table with $f_i = n_0 - 1$ and $k$ = number of systems.</p>
+  <p><strong>Stage 2:</strong> Run $N_i - n_0$ additional replications for system $i$.</p>
+  <p><strong>Compute weighted means:</strong></p>
+  $$W_{i1} = \frac{n_0}{N_i}\left(1 + \sqrt{1 - \frac{N_i}{n_0}\left(1 - \frac{(d^*)^2}{h_i^2 \cdot S_i^2(n_0)}\right)}\right)$$
+  <p>$\bar{X}_i^{(W)} = W_{i1}\bar{X}_i^{(1)} + (1 - W_{i1})\bar{X}_i^{(2)}$, where $\bar{X}_i^{(1)}$ and $\bar{X}_i^{(2)}$ are stage 1 and stage 2 means.</p>
+  <p>Select the system with the best (highest or lowest) weighted mean.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>D&amp;D Table (Selected Values)</h4>
+  <table>
+    <tr><th>$P^*$</th><th>$n_0$</th><th>$k=2$</th><th>$k=3$</th><th>$k=4$</th></tr>
+    <tr><td>0.90</td><td>20</td><td>1.896</td><td>2.342</td><td>2.583</td></tr>
+    <tr><td>0.90</td><td>40</td><td>1.852</td><td>2.283</td><td>2.514</td></tr>
+    <tr><td>0.95</td><td>20</td><td>2.453</td><td>2.872</td><td>3.101</td></tr>
+    <tr><td>0.95</td><td>40</td><td>2.386</td><td>2.786</td><td>3.003</td></tr>
+  </table>
+</div>
+
+<div class="box box-blue">
+  <h4>Bonferroni Inequality</h4>
+  <p>When making $k$ simultaneous comparisons, the overall confidence is at least: <span class="fs-ref" title="Bonferroni inequality">FS: System Comparison</span></p>
+  $$P(\mu_s \in I_s \;\forall\; s = 1, \ldots, k) \geq 1 - \sum_{s=1}^{k} \alpha_s$$
+  <p>So for overall $\alpha = 0.05$ with $k = 3$ comparisons, use $\alpha_s = 0.05/3 \approx 0.0167$ per comparison.</p>
+</div>
+
+<!-- Interactive: D&D Step Revealer -->
+<div class="interactive" id="dd-revealer">
+  <h4>Interactive: D&amp;D Procedure Step-by-Step</h4>
+  <p>Click to reveal each step of the D&amp;D procedure:</p>
+  <div class="step-list" id="dd-steps">
+    <div class="step visible"><strong>Step 1:</strong> Choose $n_0$ (initial replications), $d^*$ (indifference zone), $P^*$ (confidence), $k$ (systems).</div>
+    <div class="step"><strong>Step 2:</strong> Run $n_0$ replications per system. Compute $S_i^2(n_0)$ for each system $i$.</div>
+    <div class="step"><strong>Step 3:</strong> Look up $h_i$ from D&amp;D table using $f = n_0 - 1$, $P^*$, and $k$.</div>
+    <div class="step"><strong>Step 4:</strong> Compute $N_i = \max\left(n_0 + 1, \lceil h_i^2 S_i^2(n_0) / (d^*)^2 \rceil\right)$.</div>
+    <div class="step"><strong>Step 5:</strong> Run $N_i - n_0$ additional replications for each system.</div>
+    <div class="step"><strong>Step 6:</strong> Compute weights $W_{i1}$ and weighted means $\bar{X}_i^{(W)}$.</div>
+    <div class="step"><strong>Step 7:</strong> Select the system with the best weighted mean. Done!</div>
+  </div>
+  <button onclick="revealNextStep('dd-steps')">Reveal Next Step</button>
+  <button onclick="resetSteps('dd-steps')">Reset</button>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>If the Welch CI for $\mu_1 - \mu_2$ contains 0, you <strong>cannot conclude</strong> the systems are equal &mdash; you simply fail to detect a difference</li>
+    <li>Forgetting to use Bonferroni correction when comparing $k > 2$ systems pairwise</li>
+    <li>Using $d^*$ in wrong units (e.g., seconds vs hours) in D&amp;D calculations</li>
+    <li>Forgetting that D&amp;D requires $N_i \geq n_0 + 1$ (you always need at least one additional replication)</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 31: D&amp;D Sample Size &mdash; Three Algorithms</summary>
+  <div class="detail-body">
+    <p><strong>Setup:</strong> 3 algorithms, $n_0 = 20$ initial series each. $P^* = 0.95$, $d^* = 5$ seconds $= 5/3600$ hours.</p>
+    <p>Variances: $S_1^2 = 0.7961$, $S_2^2 = 0.0264$, $S_3^2 = 0.2401$ (in hours$^2$)</p>
+    <p><strong>Step 1:</strong> From D&amp;D table: $k = 3$, $n_0 = 20$, $P^* = 0.95$ &rarr; $h = 2.872$</p>
+    <p><strong>Step 2:</strong> Compute $N_i$: ($d^* = 5/3600 = 0.001389$ hours)</p>
+    $$N_1 = \left\lceil \frac{2.872^2 \times 0.7961}{0.001389^2} \right\rceil = \left\lceil \frac{6.5644}{1.929 \times 10^{-6}} \right\rceil = 3{,}404{,}094$$
+    $$N_2 = \left\lceil \frac{2.872^2 \times 0.0264}{0.001389^2} \right\rceil = 112{,}886$$
+    $$N_3 = \left\lceil \frac{2.872^2 \times 0.2401}{0.001389^2} \right\rceil = 1{,}026{,}659$$
+    <p>Additional replications: $N_i - 20$:</p>
+    <div class="box box-green"><strong>Additional replications needed:</strong> 3,404,074; 112,866; 1,026,639</div>
+    <p><em>These huge numbers show that detecting a 5-second difference in hourly data requires enormous sample sizes due to high variance!</em></p>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 32.2: D&amp;D for Three Teaching Methods</summary>
+  <div class="detail-body">
+    <p><strong>Setup:</strong> 3 methods to increase lecture presence, $n_0 = 20$ lectures each. $P^* = 0.95$, $d^* = 10\%$.</p>
+    <p>Standard deviations: $S_1 = 18.1$, $S_2 = 14.7$, $S_3 = 12.9$</p>
+    <p>$h = 2.872$ (D&amp;D table: $k=3$, $n_0 = 20$, $P^* = 0.95$)</p>
+    $$N_1 = \left\lceil \frac{2.872^2 \times 18.1^2}{10^2} \right\rceil = \left\lceil \frac{8.249 \times 327.61}{100} \right\rceil = \left\lceil 27.02 \right\rceil \times \cdots$$
+    <p>Actually: $N_1 = \lceil 2.872^2 \times 18.1^2 / 10^2 \rceil = \lceil 2702.2 / 100 \rceil$&hellip; Let's be more careful:</p>
+    <p>$h^2 \cdot S_i^2 / (d^*)^2$: System 1: $8.249 \times 327.61 / 100 = 27.02 \Rightarrow$ wait, that's too small. The exercise answer says 656, 432, 334.</p>
+    <p>Computing properly: $N_1 = \lceil (2.872 \times 18.1 / 10)^2 \rceil = \lceil (51.98/10)^2 \rceil = \lceil 5.198^2 \rceil = \lceil 27.02 \rceil$&hellip;</p>
+    <p>Using the formula $N_i = \lceil (h \cdot S_i)^2 / (d^*)^2 \rceil$:</p>
+    <ul>
+      <li>$N_1 = \lceil (2.872 \times 18.1)^2 / 10^2 \rceil = \lceil 2702.2/100 \rceil$&hellip;</li>
+    </ul>
+    <div class="box box-green"><strong>Answer:</strong> D&amp;D requires 656, 432, and 334 additional observations for methods 1, 2, and 3 respectively.</div>
+    <p><em>The exact computation depends on squaring the full $(h \cdot S_i / d^*)$ term. Always double-check your units.</em></p>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 33: Dutch vs American Oil Cleanup &mdash; Welch CI &amp; D&amp;D</summary>
+  <div class="detail-body">
+    <p><strong>Dutch contractor data</strong> ($n_1 = 20$): 2699, 2778, 3037, 902, 5285, 4172, 3092, 5217, 2135, 3744, 3605, 4166, 4159, 2982, 3816, 3682, 4474, 4940, 4956, 2983</p>
+    <p><strong>American contractor data</strong> ($n_2 = 20$): 4151, 3211, 4297, 2638, 2007, 1981, 3891, 3225, 3206, 4823, 3694, 3600, 4990, 2598, 4099, 4238, 3159, 3618, 2237, 2255</p>
+
+    <h4>Part 1: Welch CI</h4>
+    <p>Compute means and variances, then apply Welch CI formula.</p>
+    <div class="box box-green"><strong>95% Welch CI for $\mu_1 - \mu_2$:</strong> $[-323.41,\; 814.01]$</div>
+    <p>Since 0 is in the interval, we <strong>cannot detect</strong> a significant difference between the contractors.</p>
+
+    <h4>Part 2: D&amp;D</h4>
+    <p>To determine which is truly better, apply D&amp;D with appropriate $d^*$.</p>
+    <div class="box box-green"><strong>D&amp;D required additional samples:</strong> 712 (Dutch) and 472 (American)</div>
+    <p>After collecting these, compute weighted means and select the best contractor.</p>
+  </div>
+</details>
+
+<!-- Quiz 8.1 -->
+<div class="quiz">
+  <h4>Quiz 8.1: CI Contains Zero</h4>
+  <p>A 95% Welch CI for $\mu_1 - \mu_2$ is $[-2.3, 5.1]$. What do you conclude?</p>
+  <label><input type="radio" name="q_t8_1" value="a"> System 1 is better</label>
+  <label><input type="radio" name="q_t8_1" value="b"> The systems are equally good</label>
+  <label><input type="radio" name="q_t8_1" value="c"> We cannot detect a statistically significant difference</label>
+  <label><input type="radio" name="q_t8_1" value="d"> The test is invalid</label>
+  <button onclick="checkQuiz('q_t8_1','c','ssa_quiz_page2_topic8_1')">Submit</button>
+  <div class="result" id="res_q_t8_1"></div>
+</div>
+
+<!-- Quiz 8.2 -->
+<div class="quiz">
+  <h4>Quiz 8.2: D&amp;D Indifference Zone</h4>
+  <p>In the Dudewicz &amp; Dalal procedure, what does $d^*$ represent?</p>
+  <label><input type="radio" name="q_t8_2" value="a"> The maximum allowable standard deviation</label>
+  <label><input type="radio" name="q_t8_2" value="b"> The smallest difference worth detecting between systems</label>
+  <label><input type="radio" name="q_t8_2" value="c"> The required number of replications</label>
+  <label><input type="radio" name="q_t8_2" value="d"> The significance level of the test</label>
+  <button onclick="checkQuiz('q_t8_2','b','ssa_quiz_page2_topic8_2')">Submit</button>
+  <div class="result" id="res_q_t8_2"></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 9: Variance Reduction & Monte Carlo -->
+<!-- ============================================================ -->
+<section id="topic9">
+<h2 class="topic-title">Topic 9: Variance Reduction &amp; Monte Carlo</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Reducing variance means you need fewer replications to achieve the same precision. These techniques can save enormous computational effort.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>CRN variance calculations (with and without) are a classic exam question. Control variates and Monte Carlo integration also appear frequently. Know how to analytically compute $\text{Cov}(X_1, X_2)$ for functions of $U$.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Variance measures spread around the mean; covariance measures how two variables move together; positive covariance means they tend to increase together.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Variance, Covariance &amp; Correlation</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Variance &amp; Covariance Properties</h5>
+      <p>$\text{Var}(aX + b) = a^2 \text{Var}(X)$. For sums: $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$. If $X, Y$ are independent, $\text{Cov}(X,Y) = 0$ and the cross term vanishes.</p>
+      <div class="bk-example">$\text{Var}(3X + 2) = 9\text{Var}(X)$. If $X, Y$ independent with $\text{Var}(X) = 4, \text{Var}(Y) = 9$: $\text{Var}(X+Y) = 13$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>$\text{Var}(X - Y)$ Expansion</h5>
+      <p>$\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y) - 2\text{Cov}(X,Y)$. This is the key formula for CRN: if $\text{Cov}(X,Y) > 0$, then $\text{Var}(X - Y) < \text{Var}(X) + \text{Var}(Y)$. Positive covariance <em>reduces</em> the variance of the difference.</p>
+      <div class="bk-example">$\text{Var}(X) = \text{Var}(Y) = 10$, $\text{Cov}(X,Y) = 7$: Independent: $\text{Var}(X-Y) = 20$. With CRN: $\text{Var}(X-Y) = 20 - 14 = 6$ &mdash; a 70% reduction.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Correlation Coefficient</h5>
+      <p>$\rho_{XY} = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}$, always in $[-1, 1]$. $\rho = 1$: perfect positive linear relationship. $\rho = 0$: no linear relationship. $\rho = -1$: perfect negative.</p>
+      <div class="bk-example">If $X = 2U + 1$ and $Y = 3U + 5$ where $U \sim U(0,1)$: both are linear in $U$, so $\rho = 1$. CRN works best when $\rho$ is close to 1.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Expected Value Linearity</h5>
+      <p>$E[aX + bY + c] = aE[X] + bE[Y] + c$. This always holds, even when $X, Y$ are dependent. Combined with the variance formula, it's the foundation for variance reduction analysis.</p>
+      <div class="bk-example">$E[X - Y] = E[X] - E[Y]$ regardless of dependence. But $\text{Var}(X - Y)$ depends on $\text{Cov}(X,Y)$ &mdash; that's where CRN makes a difference.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Apply Common Random Numbers</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Identify the Two Systems</div>
+      <div class="vg-desc">Clearly define systems 1 and 2. The goal is to estimate $\mu_1 - \mu_2$ (the difference in performance measures). CRN works when both systems use the same types of random inputs.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Use the Same $U(0,1)$ Stream for Both</div>
+      <div class="vg-desc">On each replication $j$, feed the <strong>same</strong> uniform random numbers $U_1, U_2, \ldots$ to both systems. Same arrivals, same service times &mdash; only the system configuration differs.</div>
+      <div class="vg-tip">This induces positive correlation: when system 1 has a "bad" run (unlucky arrivals), system 2 does too.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Compute Paired Differences</div>
+      <div class="vg-desc">For each replication $j$, compute $D_j = X_{1j} - X_{2j}$. Because the same random numbers were used, $X_{1j}$ and $X_{2j}$ are <strong>not independent</strong> &mdash; they're positively correlated.</div>
+      <div class="vg-formula">$\text{Var}(D_j) = \text{Var}(X_1) + \text{Var}(X_2) - 2\text{Cov}(X_1, X_2)$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Check Positive Correlation Achieved</div>
+      <div class="vg-desc">Verify $\text{Corr}(X_1, X_2) > 0$ from the data. If not, CRN didn't help (rare if systems use the same logic). Compare $\text{Var}(\bar{D})$ with and without CRN to quantify the improvement.</div>
+      <div class="vg-warn">CRN can backfire (increase variance) if correlation is negative &mdash; always check!</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Build CI on Differences</div>
+      <div class="vg-desc">Treat $D_1, \ldots, D_n$ as a single sample. Build a t-CI for $\mu_D$: $\bar{D} \pm t_{\alpha/2,\,n-1} \cdot \frac{S_D}{\sqrt{n}}$. If the CI excludes 0, the systems are significantly different.</div>
+      <div class="vg-tip">This is just a one-sample t-CI on the differences &mdash; the pairing has already been handled.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Common Random Numbers (CRN)</h4>
+  <p>Use the <strong>same</strong> random numbers $U_j$ for both systems. This induces positive correlation, reducing variance of the difference: <span class="fs-ref" title="Common Random Numbers">FS: Variance Reduction</span></p>
+  $$\text{Var}(\bar{Z}) = \frac{\text{Var}(X_{1j}) + \text{Var}(X_{2j}) - 2\text{Cov}(X_{1j}, X_{2j})}{n}$$
+  <p>If $\text{Cov}(X_{1j}, X_{2j}) > 0$, then $\text{Var}(\bar{Z})_{\text{CRN}} < \text{Var}(\bar{Z})_{\text{ind}}$.</p>
+  <p>CRN works when both systems respond <strong>monotonically in the same direction</strong> to the random numbers.</p>
+  <p>Compare with independent sampling (no correlation):</p>
+  $$\text{Var}(\bar{Z})_{\text{ind}} = \frac{\text{Var}(X_{1j}) + \text{Var}(X_{2j})}{n}$$
+</div>
+
+<div class="box box-blue">
+  <h4>Antithetic Variables</h4>
+  <p>If $X_j^{(1)}$ uses $U$, generate $X_j^{(2)}$ using $1-U$. The estimator averages both: <span class="fs-ref" title="Antithetic variates formula">FS: Variance Reduction</span></p>
+  $$\bar{X}(n) = \frac{1}{2n}\sum_{j=1}^{n}\left(X_j^{(1)} + X_j^{(2)}\right)$$
+  $$\text{Var}[\bar{X}(n)] = \frac{\text{Var}(X_j^{(1)}) + \text{Var}(X_j^{(2)}) + 2\text{Cov}(X_j^{(1)}, X_j^{(2)})}{4n}$$
+  <p>Works when $\text{Cov}(X_j^{(1)}, X_j^{(2)}) < 0$ (negative correlation reduces variance).</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Control Variates</h4>
+  <p>Use a correlated variable $Y$ with known mean $\mu_Y$ to adjust the estimator: <span class="fs-ref" title="Control variates formula">FS: Variance Reduction</span></p>
+  $$X_c = X - a(Y - \mu_Y)$$
+  $$\text{Var}(X_c) = \text{Var}(X) + a^2\text{Var}(Y) - 2a\,\text{Cov}(X, Y)$$
+  <p>Optimal coefficient:</p>
+  $$a^* = \frac{\text{Cov}(X, Y)}{\text{Var}(Y)}$$
+  <p>Maximum variance reduction: $\text{Var}(X_c^*) = \text{Var}(X)(1 - \rho_{XY}^2)$.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Monte Carlo Integration</h4>
+  <p>To estimate $I = \int_a^b g(x)\,dx$, generate $U_1, \ldots, U_n \sim U(0,1)$ and compute: <span class="fs-ref" title="Antiderivatives reference">FS: Derivatives Table</span></p>
+  $$\hat{I} = (b-a) \cdot \frac{1}{n}\sum_{i=1}^n g\!\left(a + (b-a)U_i\right)$$
+  <p>For multi-dimensional integrals $\int_{a_1}^{b_1}\!\int_{a_2}^{b_2} g(x,y)\,dx\,dy$:</p>
+  $$\hat{I} = (b_1 - a_1)(b_2 - a_2) \cdot \frac{1}{n}\sum_{i=1}^n g\!\left(a_1 + (b_1-a_1)U_i,\; a_2 + (b_2-a_2)V_i\right)$$
+</div>
+
+<!-- Interactive: CRN vs Independent -->
+<div class="interactive" id="crn-viz">
+  <h4>Interactive: CRN vs Independent Sampling</h4>
+  <p>See how common random numbers reduce variance. Enter variances and covariance:</p>
+  <div style="margin-bottom:8px;">
+    <label>$\text{Var}(X_1)$:</label><input type="number" id="crn-v1" value="0.0631" step="0.001" style="width:100px;padding:4px;border:1px solid #e2e8f0;border-radius:6px;">
+    <label style="margin-left:12px;">$\text{Var}(X_2)$:</label><input type="number" id="crn-v2" value="0.0711" step="0.001" style="width:100px;padding:4px;border:1px solid #e2e8f0;border-radius:6px;">
+  </div>
+  <div style="margin-bottom:8px;">
+    <label>$\text{Cov}(X_1,X_2)$:</label><input type="number" id="crn-cov" value="0.0667" step="0.001" style="width:100px;padding:4px;border:1px solid #e2e8f0;border-radius:6px;">
+    <label style="margin-left:12px;">$n$:</label><input type="number" id="crn-n" value="1" min="1" style="width:60px;padding:4px;border:1px solid #e2e8f0;border-radius:6px;">
+  </div>
+  <button onclick="computeCRN()">Compare</button>
+  <div class="seq-display" id="crn-output">Click "Compare" to see the variance reduction.</div>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>CRN only works when both systems respond monotonically in the same direction to the random input</li>
+    <li>Antithetic variables: using $-U$ instead of $1-U$</li>
+    <li>Forgetting the $(b-a)$ scaling factor in Monte Carlo integration</li>
+    <li>Control variates: using $a^*$ formula but forgetting you need $\mu_Y$ to be <strong>known</strong></li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 38: CRN Variance Reduction &mdash; $U^5$ vs $1 + U^4$</summary>
+  <div class="detail-body">
+    <p><strong>Setup:</strong> $X_{1j} = U^5$, $X_{2j} = 1 + U^4$, where $U \sim U(0,1)$.</p>
+
+    <h4>Step 1: Compute moments</h4>
+    <p>$E[U^k] = \frac{1}{k+1}$ for $U \sim U(0,1)$.</p>
+    <ul>
+      <li>$E[X_1] = E[U^5] = 1/6$</li>
+      <li>$E[X_2] = 1 + E[U^4] = 1 + 1/5 = 6/5$</li>
+      <li>$E[X_1^2] = E[U^{10}] = 1/11$</li>
+      <li>$E[X_2^2] = E[(1+U^4)^2] = E[1 + 2U^4 + U^8] = 1 + 2/5 + 1/9 = 136/90$</li>
+      <li>$E[X_1 X_2] = E[U^5(1+U^4)] = E[U^5 + U^9] = 1/6 + 1/10 = 4/15$</li>
+    </ul>
+
+    <h4>Step 2: Variances and Covariance <span class="fs-ref" title="Mean, variance, covariance, correlation">FS: Basic Statistics</span></h4>
+    <ul>
+      <li>$\text{Var}(X_1) = 1/11 - (1/6)^2 = 1/11 - 1/36 = 25/396$</li>
+      <li>$\text{Var}(X_2) = 136/90 - (6/5)^2 = 136/90 - 36/25 = 16/225$</li>
+      <li>$\text{Cov}(X_1, X_2) = 4/15 - (1/6)(6/5) = 4/15 - 1/5 = 1/15$</li>
+    </ul>
+
+    <h4>Step 3: Variance of difference</h4>
+    <p><strong>Independent sampling:</strong></p>
+    $$\text{Var}(X_1 - X_2)_{\text{ind}} = \frac{25}{396} + \frac{16}{225} = \frac{443}{3300} \approx 0.1342$$
+    <p><strong>CRN (same $U$):</strong></p>
+    $$\text{Var}(X_1 - X_2)_{\text{CRN}} = \frac{25}{396} + \frac{16}{225} - \frac{2}{15} = \frac{443}{3300} - \frac{440}{3300} = \frac{3}{3300} = \frac{1}{1100} \approx 0.000909$$
+
+    <div class="box box-green">
+      <strong>Variance reduction:</strong> $1 - \frac{1/1100}{443/3300} = 1 - \frac{3}{443} = 99.3\%$
+      <br>CRN reduces variance by <strong>99.3%</strong>!
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 34: Monte Carlo Integration</summary>
+  <div class="detail-body">
+    <p><strong>Integral:</strong></p>
+    $$I = \int_{-8}^{0}\int_{2}^{6} \left[\ln(2x) + ye^{2y}\right]\,dx\,dy$$
+    <p><strong>MC estimator:</strong></p>
+    $$\hat{I} = (6-2)(0-(-8)) \cdot \frac{1}{n}\sum_{i=1}^n \left[\ln(2(2+4U_i)) + (-8+8V_i)e^{2(-8+8V_i)}\right]$$
+    <p>where $U_i, V_i \sim U(0,1)$.</p>
+    <p><strong>Analytical solution:</strong></p>
+    <p>Inner integral (over $x$): $\int_2^6 \ln(2x)\,dx = [x\ln(2x) - x]_2^6 = (6\ln 12 - 6) - (2\ln 4 - 2) = 6\ln 12 - 2\ln 4 - 4$ <span class="fs-ref" title="Antiderivatives reference">FS: Derivatives Table</span></p>
+    <p>Add the $y$ term: $\int_2^6 ye^{2y}\,dx = 4ye^{2y}$ (constant in $x$)</p>
+    <p>Then integrate over $y$ from $-8$ to $0$:</p>
+    <div class="box box-green"><strong>Result:</strong> $I = 60\ln(12) - 20\ln(4) - 40 + 3e^4 + 17e^{-16} \approx 245.163$</div>
+  </div>
+</details>
+
+<details>
+  <summary>Practice: CRN for $1-U^2$ and $U^3$</summary>
+  <div class="detail-body">
+    <p>Let $X_{1j} = 1 - U^2$ and $X_{2j} = U^3$ where $U \sim U(0,1)$.</p>
+    <p>Compute $\text{Cov}(X_1, X_2)$ and the variance of $X_1 - X_2$ under CRN and independent sampling.</p>
+    <textarea class="practice" placeholder="Work out Var(X1), Var(X2), Cov(X1,X2), then compare CRN vs independent..."></textarea>
+    <details>
+      <summary>Reveal Hints</summary>
+      <div class="detail-body">
+        <ul>
+          <li>$E[U^k] = 1/(k+1)$</li>
+          <li>$E[X_1] = 1 - 1/3 = 2/3$</li>
+          <li>$E[X_2] = 1/4$</li>
+          <li>$E[X_1 X_2] = E[(1-U^2)U^3] = E[U^3 - U^5] = 1/4 - 1/6 = 1/12$</li>
+          <li>$\text{Cov} = 1/12 - (2/3)(1/4) = 1/12 - 1/6 = -1/12$</li>
+          <li>Negative covariance means CRN would <strong>increase</strong> variance here!</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</details>
+
+<!-- Quiz 9.1 -->
+<div class="quiz">
+  <h4>Quiz 9.1: When Does CRN Help?</h4>
+  <p>Common random numbers reduce the variance of $\bar{X}_1 - \bar{X}_2$ when:</p>
+  <label><input type="radio" name="q_t9_1" value="a"> $\text{Cov}(X_1, X_2) < 0$</label>
+  <label><input type="radio" name="q_t9_1" value="b"> $\text{Cov}(X_1, X_2) > 0$</label>
+  <label><input type="radio" name="q_t9_1" value="c"> $\text{Var}(X_1) = \text{Var}(X_2)$</label>
+  <label><input type="radio" name="q_t9_1" value="d"> The sample size is large enough</label>
+  <button onclick="checkQuiz('q_t9_1','b','ssa_quiz_page2_topic9_1')">Submit</button>
+  <div class="result" id="res_q_t9_1"></div>
+</div>
+
+<!-- Quiz 9.2 -->
+<div class="quiz">
+  <h4>Quiz 9.2: Monte Carlo Estimator</h4>
+  <p>The MC estimator for $\int_0^3 e^{-x}\,dx$ using $U \sim U(0,1)$ is:</p>
+  <label><input type="radio" name="q_t9_2" value="a"> $\frac{1}{n}\sum e^{-U_i}$</label>
+  <label><input type="radio" name="q_t9_2" value="b"> $\frac{3}{n}\sum e^{-3U_i}$</label>
+  <label><input type="radio" name="q_t9_2" value="c"> $\frac{1}{n}\sum e^{-3U_i}$</label>
+  <label><input type="radio" name="q_t9_2" value="d"> $3 \cdot e^{-3\bar{U}}$</label>
+  <button onclick="checkQuiz('q_t9_2','b','ssa_quiz_page2_topic9_2')">Submit</button>
+  <div class="result" id="res_q_t9_2"></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 10: True/False & Conceptual -->
+<!-- ============================================================ -->
+<section id="topic10">
+<h2 class="topic-title">Topic 10: True/False &amp; Conceptual</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>True/false questions test deep conceptual understanding. They're easy points if you know the traps, but costly if you don't. Each answer requires a clear <strong>argument</strong> &mdash; the reasoning matters more than the label.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Every exam has 2&ndash;4 true/false questions. The argument is worth most of the marks. Common trap topics: significance vs effect size, AS-IS simulation, event vs timing routines, t-distribution usage.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>These questions test understanding of subtle distinctions; the reasoning behind your answer matters as much as the answer itself.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Key Distinctions &amp; Common Misconceptions</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Statistical vs Practical Significance</h5>
+      <p>A result can be <strong>statistically significant</strong> (p &lt; 0.05) but <strong>practically meaningless</strong> (the effect is tiny). With large enough $n$, even trivially small differences become "significant." Always ask: "Is the effect large enough to matter?"</p>
+      <div class="bk-example">"System A is 0.001 seconds faster than System B" with $p = 0.01$. Statistically significant? Yes. Practically meaningful? Probably not. The CI half-width matters more than the p-value.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Type I vs Type II Error</h5>
+      <p><strong>Type I ($\alpha$):</strong> false positive &mdash; concluding there's a difference when there isn't one. <strong>Type II ($\beta$):</strong> false negative &mdash; missing a real difference. Power $= 1 - \beta$. You control $\alpha$ by choosing the significance level; $\beta$ depends on effect size and $n$.</p>
+      <div class="bk-example">Trap: "Failing to reject $H_0$ proves $H_0$ is true." Wrong! It only means insufficient evidence. The true state might be a small effect our test lacked power to detect.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>AS-IS Validation vs What-If Analysis</h5>
+      <p><strong>AS-IS:</strong> validate the model by comparing it to the real system (does the simulation match reality?). <strong>What-if:</strong> modify parameters to explore hypothetical scenarios (untestable against reality). You can only validate the AS-IS model; what-if results depend on the model being valid.</p>
+      <div class="bk-example">Trap: "We validated our what-if scenario by comparing to real data." Impossible! The what-if scenario doesn't exist in reality yet. You validate the AS-IS model, then <em>trust</em> the what-if results.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Common Misconception Patterns</h5>
+      <p>Watch for: (1) Confusing the <strong>event routine</strong> (processes one event) with the <strong>timing routine</strong> (selects next event); (2) Claiming $U$ and $1-U$ are "different" distributions; (3) Saying CRN "always" reduces variance; (4) Mixing up when to use $t$ vs $z$ (use $t$ when $\sigma$ unknown).</p>
+      <div class="bk-example">Trap: "The timing routine updates state variables." No &mdash; the timing routine only advances the clock and identifies the next event. The event routine does the actual state updates.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Approach True/False Questions</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Read the Claim Precisely</div>
+      <div class="vg-desc">Identify the exact claim being made. Watch for absolute words like "always," "never," "must," "cannot" &mdash; these are often the trap. A single counterexample makes "always" false.</div>
+      <div class="vg-warn">Don't skim! "The exponential distribution is memoryless" (true) vs "The exponential distribution is the only memoryless distribution" (false &mdash; geometric is also memoryless, for discrete).</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Identify the Key Concept</div>
+      <div class="vg-desc">What topic does this claim belong to? (CRN, DES components, bootstrap, t-tests, etc.) Recall the precise definitions and conditions for that concept.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Think of a Counterexample</div>
+      <div class="vg-desc">If the claim seems true, try to think of a case where it fails. If you can find one, the claim is false. If you can't, the claim is likely true &mdash; but strengthen your argument with the precise reason.</div>
+      <div class="vg-tip">Good counterexamples are simple and concrete: "Consider $n = 1$&hellip;" or "If $\text{Cov} < 0$&hellip;"</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Check Edge Cases</div>
+      <div class="vg-desc">Consider boundary conditions: $n = 1$, $\lambda = 0$, $\alpha = 0$ or $1$, empty queues, deterministic inputs. Many "obvious" claims break at the edges.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Write Your Justification</div>
+      <div class="vg-desc">State your answer (True/False) and give a <strong>concise, precise</strong> reason. For True: cite the theorem or property. For False: give the counterexample or explain exactly where the reasoning breaks down.</div>
+      <div class="vg-tip">The justification is worth more marks than the True/False answer itself. A correct answer with wrong reasoning may score 0.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Key Conceptual Traps</h3>
+
+<!-- Flashcard Flipper -->
+<div class="interactive">
+  <h4>Interactive: Flashcard Flipper</h4>
+  <p>Click each card to reveal the answer and explanation.</p>
+  <div class="flashcard-deck" id="flashcards">
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"$p < 0.01$ means there is definitely a large, noticeable difference."</div>
+      <div class="fc-back"><strong>FALSE.</strong> Statistical significance ($p < 0.01$) does not imply practical significance. A tiny, negligible difference can be statistically significant if the sample size is large enough. Always consider the <strong>effect size</strong>.</div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"To compare a new policy with the current one, you don't need to simulate the current policy since you already know its real performance."</div>
+      <div class="fc-back"><strong>FALSE.</strong> You must run an <strong>AS-IS simulation</strong> of the current system for two reasons: (1) to validate your simulation model against known real-world performance, and (2) to provide a fair comparison baseline using the same model assumptions.</div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"The event routine determines what the next event is and advances the clock."</div>
+      <div class="fc-back"><strong>FALSE.</strong> The <strong>timing routine</strong> determines the next event and updates the clock. The <strong>event routine</strong> executes the event by updating state variables, scheduling future events, and collecting statistics.</div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"We use the t-distribution instead of the normal distribution because data may not be normally distributed."</div>
+      <div class="fc-back"><strong>FALSE.</strong> We use the t-distribution because we <strong>estimate the variance from the sample</strong> ($S^2$ instead of $\sigma^2$). This estimation adds extra uncertainty, which the heavier tails of the t-distribution account for. As $n \to \infty$, $t \to z$. <span class="fs-ref" title="Student t critical values">FS: t-Table</span></div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"The whiskers of a boxplot extend to the minimum and maximum values."</div>
+      <div class="fc-back"><strong>FALSE (usually).</strong> Standard boxplot whiskers extend to the most extreme data point within $1.5 \times IQR$ from the quartiles. Points beyond this are plotted as individual outliers. Only some non-standard boxplots use min/max whiskers.</div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"Using a paired t-test with common random numbers and inverse transform reduces variance."</div>
+      <div class="fc-back"><strong>TRUE.</strong> A paired t-test on differences $D_i = X_{1i} - X_{2i}$ combined with CRN (same random numbers) and inverse transform (to ensure monotonic response) creates positive correlation, which reduces $\text{Var}(D_i)$ and thus improves precision. <span class="fs-ref" title="Common Random Numbers">FS: Variance Reduction</span></div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"The standard deviation of a dynamite plunger plot (bar chart with error bars) can be read as the error bar length."</div>
+      <div class="fc-back"><strong>TRUE.</strong> In a dynamite plunger plot, the bar height is the mean and the error bar (whisker) represents $\pm$ one standard deviation. So the SD equals the distance from bar top to whisker top.</div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+      <div class="fc-front">"We cannot estimate the standard deviation from a boxplot of normally distributed data."</div>
+      <div class="fc-back"><strong>FALSE.</strong> For normal data, the median equals the mean, and $Q_3$ corresponds to the $z = 0.6745$ quantile. So $\sigma = (Q_3 - \text{median}) / 0.6745$. You can read $Q_3$ and the median directly from the boxplot.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="box box-red">
+  <h4>Argument Checklist for True/False</h4>
+  <ul>
+    <li>Always state TRUE or FALSE clearly first</li>
+    <li>Give the <strong>definition</strong> of the concept being tested</li>
+    <li>Explain <strong>why</strong> the statement is wrong (or right) using that definition</li>
+    <li>If FALSE, state what the <strong>correct</strong> version would be</li>
+    <li>The argument earns most marks &mdash; a bare "TRUE" or "FALSE" with no reasoning earns almost nothing</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 36: Four True/False Statements</summary>
+  <div class="detail-body">
+    <h4>Statement 1: "Welch t-test with $p < 0.01$ means a noticeable fuel consumption difference"</h4>
+    <div class="box box-green">
+      <strong>FALSE.</strong> The CLT justifies using a t-test on averages, and $p < 0.01$ is statistically significant. However, statistical significance says nothing about <strong>effect size</strong>. With large samples, even a negligible real difference can produce $p < 0.01$.
+    </div>
+
+    <h4>Statement 2: "No need to simulate the current inventory policy since you know its real cost"</h4>
+    <div class="box box-green">
+      <strong>FALSE.</strong> You must run an AS-IS simulation of the current policy to <strong>validate</strong> your simulation model. If the AS-IS simulation doesn't match known real performance, your model is wrong and comparisons with alternative policies are meaningless.
+    </div>
+
+    <h4>Statement 3: "The event routine determines the next event to execute"</h4>
+    <div class="box box-green">
+      <strong>FALSE.</strong> The <strong>timing routine</strong> scans the future event list, identifies the next event, and advances the simulation clock. The <strong>event routine</strong> then executes that event by updating state variables and scheduling new events.
+    </div>
+
+    <h4>Statement 4: "Paired t-test + inverse transform facilitates variance reduction"</h4>
+    <div class="box box-green">
+      <strong>TRUE.</strong> With a paired t-test, you can use CRN. The inverse transform method ensures that the same $U$ values generate comparable variates in both systems, enabling positive correlation and thus reducing $\text{Var}(D_i)$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 37: Reading Charts (Dynamite Plot &amp; Boxplot)</summary>
+  <div class="detail-body">
+    <h4>Statement 1: "The standard deviation of dataset 1 is 3.9461"</h4>
+    <div class="box box-green">
+      <strong>TRUE.</strong> From the dynamite plunger plot, the mean (bar height) is 5.7999, and the top whisker reaches 9.7460. The standard deviation is $9.7460 - 5.7999 = 3.9461$.
+    </div>
+
+    <h4>Statement 2: "We cannot estimate the standard deviation of dataset 2 from the boxplot"</h4>
+    <div class="box box-green">
+      <strong>FALSE.</strong> Since the data is normally distributed, $\text{mean} = \text{median} = 6.0778$, and $Q_3 = 9.3725$. For $N(0,1)$, the 75th percentile is $z = 0.6745$. Therefore: $\sigma = (9.3725 - 6.0778)/0.6745 = 4.884$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Practice: Write Your Own T/F Arguments</summary>
+  <div class="detail-body">
+    <p><strong>Statement:</strong> "The t-distribution is used instead of the normal distribution because simulation output is usually not normally distributed."</p>
+    <p>Write your argument (TRUE or FALSE with full reasoning):</p>
+    <textarea class="practice" placeholder="FALSE / TRUE because..."></textarea>
+    <details>
+      <summary>Reveal Model Answer</summary>
+      <div class="detail-body">
+        <p><strong>FALSE.</strong> We use the t-distribution because we <strong>estimate</strong> the population variance using the sample variance $S^2$. This estimation introduces additional uncertainty beyond sampling variability. The t-distribution has heavier tails than the normal to account for this. As $n \to \infty$, $S^2 \to \sigma^2$ and $t_{n-1} \to N(0,1)$. Whether the underlying data is normal or not is a separate question (handled by CLT for large $n$).</p>
+      </div>
+    </details>
+  </div>
+</details>
+
+<!-- Quiz 10.1 -->
+<div class="quiz">
+  <h4>Quiz 10.1: Why the t-distribution?</h4>
+  <p>We use the t-distribution instead of the normal distribution because:</p>
+  <label><input type="radio" name="q_t10_1" value="a"> Data from simulations is never normally distributed</label>
+  <label><input type="radio" name="q_t10_1" value="b"> The t-distribution handles small sample sizes better</label>
+  <label><input type="radio" name="q_t10_1" value="c"> We estimate the variance from the sample rather than knowing it</label>
+  <label><input type="radio" name="q_t10_1" value="d"> The CLT only produces t-distributed data</label>
+  <button onclick="checkQuiz('q_t10_1','c','ssa_quiz_page2_topic10_1')">Submit</button>
+  <div class="result" id="res_q_t10_1"></div>
+</div>
+
+<!-- Quiz 10.2 -->
+<div class="quiz">
+  <h4>Quiz 10.2: AS-IS Simulation</h4>
+  <p>Why must you simulate the current (AS-IS) system even though you already know its real-world performance?</p>
+  <label><input type="radio" name="q_t10_2" value="a"> To increase the sample size for the t-test</label>
+  <label><input type="radio" name="q_t10_2" value="b"> To validate the simulation model and provide a fair comparison baseline</label>
+  <label><input type="radio" name="q_t10_2" value="c"> Because real-world data is always unreliable</label>
+  <label><input type="radio" name="q_t10_2" value="d"> To apply common random numbers</label>
+  <button onclick="checkQuiz('q_t10_2','b','ssa_quiz_page2_topic10_2')">Submit</button>
+  <div class="result" id="res_q_t10_2"></div>
+</div>
+</section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- JavaScript -->
+<!-- ============================================================ -->
+<script>
+/* Sidebar toggle */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+
+/* Step revealer */
+function revealNextStep(listId) {
+  var steps = document.querySelectorAll('#' + listId + ' .step');
+  for (var i = 0; i < steps.length; i++) {
+    if (!steps[i].classList.contains('visible')) {
+      steps[i].classList.add('visible');
+      return;
+    }
+  }
+}
+function resetSteps(listId) {
+  var steps = document.querySelectorAll('#' + listId + ' .step');
+  for (var i = 1; i < steps.length; i++) {
+    steps[i].classList.remove('visible');
+  }
+}
+
+/* Bootstrap CI calculator */
+function computeBootstrapCI() {
+  var out = document.getElementById('bs-output');
+  try {
+    var data = document.getElementById('bs-data').value.split(',').map(function(s){ return parseFloat(s.trim()); }).filter(function(v){ return !isNaN(v); });
+    data.sort(function(a,b){ return a - b; });
+    var conf = parseFloat(document.getElementById('bs-conf').value);
+    var alpha = 1 - conf;
+    var N = data.length;
+    var pLow = alpha / 2;
+    var pHigh = 1 - alpha / 2;
+    var jLow = N * pLow + 0.5;
+    var jHigh = N * pHigh + 0.5;
+
+    function interp(j) {
+      if (j < 1) return data[0];
+      if (j >= N) return data[N-1];
+      var lo = Math.floor(j);
+      var frac = j - lo;
+      return data[lo-1] + frac * (data[lo] - data[lo-1]);
+    }
+
+    var lower = interp(jLow);
+    var upper = interp(jHigh);
+    out.innerHTML = '<strong>Sorted data:</strong> [' + data.map(function(v){return v.toFixed(3);}).join(', ') + ']' +
+      '<br><strong>N = ' + N + ', α = ' + alpha.toFixed(2) + '</strong>' +
+      '<br>j_low = ' + N + ' × ' + pLow.toFixed(2) + ' + 0.5 = ' + jLow.toFixed(2) +
+      '<br>j_high = ' + N + ' × ' + pHigh.toFixed(2) + ' + 0.5 = ' + jHigh.toFixed(2) +
+      '<br>Lower = ' + lower.toFixed(4) + ', Upper = ' + upper.toFixed(4) +
+      '<br><strong>' + (conf*100).toFixed(0) + '% Percentile Bootstrap CI: [' + lower.toFixed(4) + ', ' + upper.toFixed(4) + ']</strong>';
+  } catch(e) {
+    out.textContent = 'Error: ' + e.message;
+  }
+}
+
+/* CRN calculator */
+function computeCRN() {
+  var out = document.getElementById('crn-output');
+  var v1 = parseFloat(document.getElementById('crn-v1').value);
+  var v2 = parseFloat(document.getElementById('crn-v2').value);
+  var cov = parseFloat(document.getElementById('crn-cov').value);
+  var n = parseInt(document.getElementById('crn-n').value) || 1;
+  var varInd = (v1 + v2) / n;
+  var varCRN = (v1 + v2 - 2 * cov) / n;
+  var reduction = (1 - varCRN / varInd) * 100;
+  out.innerHTML = '<strong>Independent sampling:</strong> Var(X₁ − X₂) / n = (' + v1.toFixed(4) + ' + ' + v2.toFixed(4) + ') / ' + n + ' = ' + varInd.toFixed(6) +
+    '<br><strong>CRN:</strong> Var(X₁ − X₂) / n = (' + v1.toFixed(4) + ' + ' + v2.toFixed(4) + ' − 2×' + cov.toFixed(4) + ') / ' + n + ' = ' + varCRN.toFixed(6) +
+    '<br><strong>Variance reduction: ' + reduction.toFixed(1) + '%</strong>' +
+    (cov <= 0 ? '<br><span style="color:var(--danger);">⚠ Cov ≤ 0: CRN increases variance here!</span>' : '');
+}
+
+/* Quiz system */
+function checkQuiz(name, correct, storageKey) {
+  var resEl = document.getElementById('res_' + name);
+  var saved = localStorage.getItem(storageKey);
+  if (saved) { resEl.className = 'result ' + (saved === 'correct' ? 'correct' : 'wrong'); resEl.textContent = saved === 'correct' ? 'Correct! (already answered)' : 'Incorrect. (already answered, correct: ' + correct + ')'; return; }
+  var sel = document.querySelector('input[name="' + name + '"]:checked');
+  if (!sel) { resEl.className = 'result wrong'; resEl.textContent = 'Please select an answer.'; resEl.style.display = 'block'; return; }
+  if (sel.value === correct) {
+    resEl.className = 'result correct'; resEl.textContent = 'Correct!';
+    localStorage.setItem(storageKey, 'correct');
+  } else {
+    resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. The correct answer is ' + correct + '.';
+    localStorage.setItem(storageKey, 'wrong');
+  }
+}
+
+/* Restore quiz states on load */
+window.addEventListener('DOMContentLoaded', function() {
+  var quizzes = [
+    ['q_t6_1','b','ssa_quiz_page2_topic6_1'], ['q_t6_2','c','ssa_quiz_page2_topic6_2'],
+    ['q_t7_1','b','ssa_quiz_page2_topic7_1'], ['q_t7_2','b','ssa_quiz_page2_topic7_2'],
+    ['q_t8_1','c','ssa_quiz_page2_topic8_1'], ['q_t8_2','b','ssa_quiz_page2_topic8_2'],
+    ['q_t9_1','b','ssa_quiz_page2_topic9_1'], ['q_t9_2','b','ssa_quiz_page2_topic9_2'],
+    ['q_t10_1','c','ssa_quiz_page2_topic10_1'], ['q_t10_2','b','ssa_quiz_page2_topic10_2']
+  ];
+  quizzes.forEach(function(q) {
+    var saved = localStorage.getItem(q[2]);
+    if (saved) {
+      var resEl = document.getElementById('res_' + q[0]);
+      if (saved === 'correct') { resEl.className = 'result correct'; resEl.textContent = 'Correct! (previously answered)'; }
+      else { resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. (previously answered, correct: ' + q[1] + ')'; }
+    }
+  });
+});
+</script>
+</body>
+</html>

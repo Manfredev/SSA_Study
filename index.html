@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSA Exam Prep -- iLearn</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --sidebar-width: 280px;
+  --radius: 12px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ===== Scroll Progress Bar ===== */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), #7c3aed);
+  width: 0%;
+  z-index: 10000;
+  transition: width 0.1s linear;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--card-bg);
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 0;
+  overflow-y: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand {
+  padding: 0 24px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 8px;
+}
+
+.sidebar-brand h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.3px;
+}
+
+.sidebar-brand p {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 8px 12px;
+}
+
+.sidebar-section {
+  margin-bottom: 6px;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-light);
+  padding: 12px 12px 6px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+}
+
+.sidebar-link:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.sidebar-link.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-link .icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sidebar-link .badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.sidebar-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.sidebar-footer .completion-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.sidebar-footer .completion-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.sidebar-footer p {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ===== Main Content ===== */
+.main {
+  margin-left: var(--sidebar-width);
+  padding: 40px 48px 80px;
+  max-width: 960px;
+}
+
+/* ===== Hamburger ===== */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 2000;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+  position: absolute;
+}
+
+.hamburger span:nth-child(1) { transform: translateY(-6px); }
+.hamburger span:nth-child(2) { transform: translateY(0); }
+.hamburger span:nth-child(3) { transform: translateY(6px); }
+
+.hamburger.open span:nth-child(1) { transform: rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg); }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 999;
+}
+
+/* ===== Hero ===== */
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+
+.hero h1 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero .subtitle {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+.hero .institution {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+.hero .overall-progress {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero .overall-progress .bar-bg {
+  flex: 1;
+  max-width: 320px;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.hero .overall-progress .bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  transition: width 0.6s ease;
+}
+
+.hero .overall-progress .pct {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 40px;
+}
+
+/* ===== Cards ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 28px;
+  margin-bottom: 28px;
+  border: 1px solid #e2e8f0;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card h2 .card-icon {
+  font-size: 22px;
+}
+
+.card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+/* ===== Course Overview ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.overview-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.overview-item .oi-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.overview-item .oi-icon.blue { background: var(--primary-light); }
+.overview-item .oi-icon.green { background: var(--success-light); }
+.overview-item .oi-icon.red { background: var(--danger-light); }
+.overview-item .oi-icon.purple { background: #ede9fe; }
+
+.overview-item .oi-text .label {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.overview-item .oi-text .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ===== Exam Format ===== */
+.exam-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.exam-table thead th {
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--bg);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.exam-table thead th:first-child { border-radius: 8px 0 0 0; }
+.exam-table thead th:last-child { border-radius: 0 8px 0 0; }
+
+.exam-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.exam-table tbody tr:last-child td { border-bottom: none; }
+
+.exam-table tbody tr:hover { background: #f8fafc; }
+
+.topic-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.type-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.type-tag.calc { background: #fef3c7; color: #92400e; }
+.type-tag.proof { background: #ede9fe; color: #6d28d9; }
+.type-tag.algo { background: #dbeafe; color: #1d4ed8; }
+.type-tag.tf { background: #f1f5f9; color: #475569; }
+
+/* ===== Sub-page Cards ===== */
+.page-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.page-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-card:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.page-card-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.page-card-header .page-num {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.page-card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-card-body {
+  padding: 16px 24px;
+  flex: 1;
+}
+
+.topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topic-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8fafc;
+  font-size: 13px;
+}
+
+.topic-list li:last-child {
+  border-bottom: none;
+}
+
+.topic-list li .topic-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.topic-list li .topic-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+.topic-quizzes {
+  display: flex;
+  gap: 4px;
+}
+
+.quiz-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: var(--text-light);
+}
+
+.quiz-badge.done {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.quiz-badge.perfect {
+  background: var(--success);
+  color: #fff;
+}
+
+.page-card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.page-progress .mini-bar-bg {
+  width: 80px;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.page-progress .mini-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--success);
+  transition: width 0.4s ease;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: var(--primary-light);
+  transition: background 0.15s, color 0.15s;
+}
+
+.page-link:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.page-link .arrow {
+  transition: transform 0.15s;
+}
+
+.page-link:hover .arrow {
+  transform: translateX(2px);
+}
+
+/* ===== Formula Reference ===== */
+.formula-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.formula-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.formula-item .formula-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+}
+
+.formula-item .formula-math {
+  font-size: 14px;
+  color: var(--text);
+  overflow-x: auto;
+}
+
+/* ===== Study Tips ===== */
+.tips-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tips-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+}
+
+.tips-list li:last-child { border-bottom: none; }
+
+.tip-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-text strong {
+  color: var(--text);
+}
+
+.tip-text {
+  color: var(--text-light);
+}
+
+/* ===== Exam Dashboard Grid ===== */
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.exam-card {
+  background: var(--card-bg);
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.exam-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.exam-card .q-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.exam-card .q-pts {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--success);
+  margin: 4px 0 8px;
+}
+
+.exam-card .q-topic {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.exam-card .badge-cat {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.badge-cat.found { background: var(--primary-light); color: var(--primary); }
+.badge-cat.stat { background: var(--purple-light); color: var(--purple); }
+
+/* ===== Card Accents ===== */
+.card.highlight { border-left: 4px solid var(--primary); }
+.card.success { border-left: 4px solid var(--success); }
+.card.info { border-left: 4px solid var(--primary); }
+
+.mvp-callout {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--success-light);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--success);
+}
+
+.tips-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tips-bullets li {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: var(--text-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.tips-bullets li:last-child { border-bottom: none; }
+
+.tips-bullets li::before {
+  content: "\2022";
+  color: var(--primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.card.success .tips-bullets li::before { color: var(--success); }
+.card.info .tips-bullets li::before { color: var(--danger); }
+
+/* ===== Reveal Animations ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+  }
+
+  .sidebar-overlay.show {
+    display: block;
+  }
+
+  .main {
+    margin-left: 0;
+    padding: 72px 20px 60px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .hero .subtitle {
+    font-size: 15px;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .formula-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exam-table {
+    font-size: 12px;
+  }
+
+  .exam-table thead th,
+  .exam-table tbody td {
+    padding: 8px 10px;
+  }
+
+  .exam-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 66px 14px 50px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .page-card-header,
+  .page-card-body,
+  .page-card-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .exam-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
+
+<!-- Hamburger Button (mobile) -->
+<button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <h2>SSA Exam Prep</h2>
+    <p>KEN2530 -- iLearn</p>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Overview</div>
+      <a class="sidebar-link active" href="#course-overview" onclick="closeMobileMenu()">
+        <span class="icon">&#128218;</span> Course Overview
+      </a>
+      <a class="sidebar-link" href="#exam-format" onclick="closeMobileMenu()">
+        <span class="icon">&#128203;</span> Exam Format
+      </a>
+      <a class="sidebar-link" href="#exam-dashboard" onclick="closeMobileMenu()">
+        <span class="icon">&#127919;</span> Exam Dashboard
+      </a>
+      <a class="sidebar-link" href="#exam-strategy" onclick="closeMobileMenu()">
+        <span class="icon">&#9889;</span> Exam Strategy
+      </a>
+      <a class="sidebar-link" href="#formula-reference" onclick="closeMobileMenu()">
+        <span class="icon">&#128290;</span> Quick Formula Reference
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Study Pages</div>
+      <a class="sidebar-link" href="page1.html">
+        <span class="icon">&#9679;</span> Page 1: Foundations
+        <span class="badge" id="sidebar-badge-p1">0%</span>
+      </a>
+      <a class="sidebar-link" href="page2.html">
+        <span class="icon">&#9679;</span> Page 2: Methods
+        <span class="badge" id="sidebar-badge-p2">0%</span>
+      </a>
+      <a class="sidebar-link" href="page3.html">
+        <span class="icon">&#9679;</span> Page 3: Resit Prep
+        <span class="badge" id="sidebar-badge-p3">0%</span>
+      </a>
+      <a class="sidebar-link" href="exam.html">
+        <span class="icon">&#9679;</span> Practice Exam
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Resources</div>
+      <a class="sidebar-link" href="#study-tips" onclick="closeMobileMenu()">
+        <span class="icon">&#128161;</span> Study Tips
+      </a>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="completion-bar-bg">
+      <div class="completion-bar-fill" id="sidebar-completion-bar" style="width: 0%"></div>
+    </div>
+    <p>Overall: <span id="sidebar-completion-pct">0</span>% complete</p>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main">
+
+  <!-- Hero Section -->
+  <section class="hero reveal" id="hero">
+    <div class="hero-chip">Exam Preparation</div>
+    <h1>SSA Exam Prep -- <span>iLearn</span></h1>
+    <p class="subtitle">Simulation and Statistical Analysis (KEN2530)</p>
+    <p class="institution">Maastricht University</p>
+    <div class="overall-progress">
+      <div class="bar-bg">
+        <div class="bar-fill" id="hero-progress-bar" style="width: 0%"></div>
+      </div>
+      <span class="pct" id="hero-progress-pct">0%</span>
+    </div>
+  </section>
+
+  <!-- Course Overview -->
+  <section class="card reveal" id="course-overview">
+    <h2><span class="card-icon">&#128218;</span> Course Overview</h2>
+    <div class="overview-grid">
+      <div class="overview-item">
+        <div class="oi-icon blue">&#128214;</div>
+        <div class="oi-text">
+          <div class="label">Course</div>
+          <div class="value">Simulation and Statistical Analysis (KEN2530)</div>
+        </div>
+      </div>
+      <div class="overview-item">
+        <div class="oi-icon red">&#128220;</div>
+        <div class="oi-text">
+          <div class="label">Format</div>
+          <div class="value">Closed book exam, calculator allowed</div>
+        </div>
+      </div>
+      <div class="overview-item">
+        <div class="oi-icon purple">&#9200;</div>
+        <div class="oi-text">
+          <div class="label">Mock Exam</div>
+          <div class="value">7 questions, 100 points, ~3 hours</div>
+        </div>
+      </div>
+      <div class="overview-item">
+        <div class="oi-icon green">&#9201;</div>
+        <div class="oi-text">
+          <div class="label">2h Mock Exam</div>
+          <div class="value">8 questions, 98 points, 2 hours</div>
+        </div>
+      </div>
+      <div class="overview-item" style="grid-column: 1 / -1;">
+        <div class="oi-icon blue">&#128209;</div>
+        <div class="oi-text">
+          <div class="label">Topics Covered</div>
+          <div class="value">RNG, Testing, Poisson, Random Variates, Simulation, Hypothesis Testing, Output Analysis, System Comparison, Variance Reduction, True/False</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Exam Format -->
+  <section class="card reveal" id="exam-format">
+    <h2><span class="card-icon">&#128203;</span> Exam Format Summary</h2>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:14px;">Point distribution and question types across both mock exams.</p>
+    <table class="exam-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Points (3h)</th>
+          <th>Points (2h)</th>
+          <th>Question Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="topic-tag">1</span> Random Number Generators</td>
+          <td>15</td>
+          <td>12</td>
+          <td><span class="type-tag calc">Calculation</span> <span class="type-tag algo">Algorithm</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">2</span> Testing RNGs</td>
+          <td>15</td>
+          <td>12</td>
+          <td><span class="type-tag calc">Calculation</span> <span class="type-tag proof">Proof</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">3</span> Poisson Processes</td>
+          <td>12</td>
+          <td>10</td>
+          <td><span class="type-tag calc">Calculation</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">4</span> Random Variate Generation</td>
+          <td>12</td>
+          <td>12</td>
+          <td><span class="type-tag algo">Algorithm</span> <span class="type-tag proof">Proof</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">5</span> Simulation Fundamentals</td>
+          <td>10</td>
+          <td>10</td>
+          <td><span class="type-tag calc">Calculation</span> <span class="type-tag algo">Algorithm</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">6</span> Hypothesis Testing</td>
+          <td>10</td>
+          <td>12</td>
+          <td><span class="type-tag calc">Calculation</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">7</span> Output Analysis &amp; CIs</td>
+          <td>8</td>
+          <td>10</td>
+          <td><span class="type-tag calc">Calculation</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">8</span> Comparing Systems</td>
+          <td>8</td>
+          <td>8</td>
+          <td><span class="type-tag calc">Calculation</span> <span class="type-tag proof">Proof</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">9</span> Variance Reduction</td>
+          <td>5</td>
+          <td>6</td>
+          <td><span class="type-tag calc">Calculation</span> <span class="type-tag proof">Proof</span></td>
+        </tr>
+        <tr>
+          <td><span class="topic-tag">10</span> True/False &amp; Conceptual</td>
+          <td>5</td>
+          <td>6</td>
+          <td><span class="type-tag tf">True/False</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Exam Dashboard -->
+  <section class="card reveal" id="exam-dashboard">
+    <h2><span class="card-icon">&#127919;</span> Exam Dashboard</h2>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:14px;">Visual overview of the 2-hour exam — 8 questions, 98 points total.</p>
+    <div class="exam-grid">
+      <div class="exam-card">
+        <div class="q-num">Q1</div>
+        <div class="q-pts">12 pts</div>
+        <div class="q-topic">Random Number Generators</div>
+        <span class="badge-cat found">Foundations</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q2</div>
+        <div class="q-pts">12 pts</div>
+        <div class="q-topic">Testing RNGs</div>
+        <span class="badge-cat found">Foundations</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q3</div>
+        <div class="q-pts">10 pts</div>
+        <div class="q-topic">Poisson Processes</div>
+        <span class="badge-cat found">Foundations</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q4</div>
+        <div class="q-pts">12 pts</div>
+        <div class="q-topic">Variate Generation</div>
+        <span class="badge-cat found">Foundations</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q5</div>
+        <div class="q-pts">10 pts</div>
+        <div class="q-topic">Simulation Fundamentals</div>
+        <span class="badge-cat found">Foundations</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q6</div>
+        <div class="q-pts">12 pts</div>
+        <div class="q-topic">Hypothesis Testing</div>
+        <span class="badge-cat stat">Statistical</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q7</div>
+        <div class="q-pts">10 pts</div>
+        <div class="q-topic">Output Analysis &amp; CIs</div>
+        <span class="badge-cat stat">Statistical</span>
+      </div>
+      <div class="exam-card">
+        <div class="q-num">Q8</div>
+        <div class="q-pts">20 pts</div>
+        <div class="q-topic">Comparing + VR + T/F</div>
+        <span class="badge-cat stat">Statistical</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pass Strategy -->
+  <section class="card highlight reveal" id="exam-strategy">
+    <h2><span class="card-icon">&#9889;</span> Pass Strategy — Priority by ROI</h2>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:14px;">Topics ranked by how easily you can secure points. Master the top 5 and you're most of the way there.</p>
+    <table class="exam-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Topic</th>
+          <th>Pts</th>
+          <th>Why High ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="topic-tag">1</span> RNG</td>
+          <td>12</td>
+          <td>Mechanical LCG tracing — follow the recipe, get full marks</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="topic-tag">4</span> Variate Generation</td>
+          <td>12</td>
+          <td>Inverse transform is algorithmic — integrate, invert, done</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="topic-tag">6</span> Hypothesis Testing</td>
+          <td>12</td>
+          <td>Formulaic t-test — plug values into standard formulas</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="topic-tag">2</span> Testing RNGs</td>
+          <td>12</td>
+          <td>Know 4 tests, compute statistics, compare to critical values</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="topic-tag">7</span> Output Analysis</td>
+          <td>10</td>
+          <td>Bootstrap CI follows a fixed recipe with $j = Np + 0.5$</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="topic-tag">3</span> Poisson Processes</td>
+          <td>10</td>
+          <td>Memoryless property + merging/splitting — practice conditionals</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="topic-tag">5</span> Simulation</td>
+          <td>10</td>
+          <td>DES step-through — systematic but time-consuming</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="topic-tag">8</span> Comparing Systems</td>
+          <td>8</td>
+          <td>D&amp;D procedure + Welch CI — multi-step, moderate difficulty</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="topic-tag">9</span> Variance Reduction</td>
+          <td>6</td>
+          <td>Covariance proofs — requires deeper understanding</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><span class="topic-tag">10</span> True/False</td>
+          <td>6</td>
+          <td>Conceptual reasoning — hard to study mechanically</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="mvp-callout">
+      Minimum viable path: Master priorities 1–5 = 58 points. Pick up ~5 partial-credit points elsewhere = 63 points PASS (assuming ~64% pass threshold).
+    </div>
+  </section>
+
+  <!-- Sub-page Cards -->
+  <div class="page-cards">
+
+    <!-- Page 1 Card -->
+    <div class="page-card reveal" id="page1-card">
+      <div class="page-card-header">
+        <div class="page-num">Page 1</div>
+        <h3>Foundations &amp; Probability</h3>
+      </div>
+      <div class="page-card-body">
+        <ul class="topic-list" id="page1-topics">
+          <li>
+            <span class="topic-name"><span class="topic-num">1</span> Random Number Generators (LCG, LFSR)</span>
+            <span class="topic-quizzes" data-page="1" data-topic="1"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">2</span> Testing RNGs (Runs, Poker, Chi-sq, K-S)</span>
+            <span class="topic-quizzes" data-page="1" data-topic="2"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">3</span> Poisson Processes</span>
+            <span class="topic-quizzes" data-page="1" data-topic="3"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">4</span> Random Variate Generation</span>
+            <span class="topic-quizzes" data-page="1" data-topic="4"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">5</span> Simulation Fundamentals</span>
+            <span class="topic-quizzes" data-page="1" data-topic="5"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="page-card-footer">
+        <div class="page-progress">
+          <div class="mini-bar-bg"><div class="mini-bar-fill" id="p1-bar" style="width:0%"></div></div>
+          <span id="p1-pct">0/10</span>
+        </div>
+        <a class="page-link" href="page1.html">Study <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+
+    <!-- Page 2 Card -->
+    <div class="page-card reveal" id="page2-card">
+      <div class="page-card-header">
+        <div class="page-num">Page 2</div>
+        <h3>Statistical Methods &amp; Advanced Analysis</h3>
+      </div>
+      <div class="page-card-body">
+        <ul class="topic-list" id="page2-topics">
+          <li>
+            <span class="topic-name"><span class="topic-num">6</span> Hypothesis Testing (t-tests, Wilcoxon)</span>
+            <span class="topic-quizzes" data-page="2" data-topic="6"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">7</span> Output Analysis &amp; Confidence Intervals</span>
+            <span class="topic-quizzes" data-page="2" data-topic="7"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">8</span> Comparing System Configurations</span>
+            <span class="topic-quizzes" data-page="2" data-topic="8"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">9</span> Variance Reduction &amp; Monte Carlo</span>
+            <span class="topic-quizzes" data-page="2" data-topic="9"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">10</span> True/False &amp; Conceptual</span>
+            <span class="topic-quizzes" data-page="2" data-topic="10"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="page-card-footer">
+        <div class="page-progress">
+          <div class="mini-bar-bg"><div class="mini-bar-fill" id="p2-bar" style="width:0%"></div></div>
+          <span id="p2-pct">0/10</span>
+        </div>
+        <a class="page-link" href="page2.html">Study <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+
+    <!-- Page 3 Card -->
+    <div class="page-card reveal" id="page3-card">
+      <div class="page-card-header">
+        <div class="page-num">Page 3</div>
+        <h3>Resit Preparation &amp; Theory Deep-Dives</h3>
+      </div>
+      <div class="page-card-body">
+        <ul class="topic-list" id="page3-topics">
+          <li>
+            <span class="topic-name"><span class="topic-num">A</span> Prerequisite Mathematics</span>
+            <span class="topic-quizzes" data-page="3" data-section="A"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">B</span> PDF / CDF / Inverse Transform</span>
+            <span class="topic-quizzes" data-page="3" data-section="B"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">C</span> Poisson Processes</span>
+            <span class="topic-quizzes" data-page="3" data-section="C"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">D</span> Hypothesis Testing Reference</span>
+            <span class="topic-quizzes" data-page="3" data-section="D"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">E</span> MATLAB Monte Carlo</span>
+            <span class="topic-quizzes" data-page="3" data-section="E"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">F</span> Output Analysis</span>
+            <span class="topic-quizzes" data-page="3" data-section="F"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">G</span> Dudewicz &amp; Dalal</span>
+            <span class="topic-quizzes" data-page="3" data-section="G"></span>
+          </li>
+          <li>
+            <span class="topic-name"><span class="topic-num">H</span> Variance Reduction</span>
+            <span class="topic-quizzes" data-page="3" data-section="H"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="page-card-footer">
+        <div class="page-progress">
+          <div class="mini-bar-bg"><div class="mini-bar-fill" id="p3-bar" style="width:0%"></div></div>
+          <span id="p3-pct">0/17</span>
+        </div>
+        <a class="page-link" href="page3.html">Study <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+
+    <!-- Practice Exam Card -->
+    <div class="page-card reveal" id="exam-card">
+      <div class="page-card-header" style="background: linear-gradient(135deg, var(--primary-light), var(--purple-light));">
+        <div class="page-num" style="color: var(--purple);">Exam</div>
+        <h3>Reconstructed Resit Exam</h3>
+      </div>
+      <div class="page-card-body">
+        <ul class="topic-list">
+          <li><span class="topic-name"><span class="topic-num">1</span> Poisson Processes (16p)</span></li>
+          <li><span class="topic-name"><span class="topic-num">2</span> True/False Statements (14p)</span></li>
+          <li><span class="topic-name"><span class="topic-num">3</span> PDF Composition (15p)</span></li>
+          <li><span class="topic-name"><span class="topic-num">4</span> MATLAB + PDF (22p)</span></li>
+          <li><span class="topic-name"><span class="topic-num">5</span> KS Test + Bootstrap (24p)</span></li>
+          <li><span class="topic-name"><span class="topic-num">6</span> Welch + D&amp;D + VR (24p)</span></li>
+        </ul>
+      </div>
+      <div class="page-card-footer">
+        <div class="page-progress">
+          <span style="font-size:12px; color:var(--text-light); font-weight:600;">115 points total</span>
+        </div>
+        <a class="page-link" href="exam.html" style="background: var(--purple-light); color: var(--purple);">Take Exam <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Formula Quick Reference -->
+  <section class="card reveal" id="formula-reference">
+    <h2><span class="card-icon">&#128290;</span> Formula Quick Reference</h2>
+
+    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 1px solid #f59e0b; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;">
+      <h4 style="margin: 0 0 8px; color: #92400e; font-size: 15px;">&#128203; Formula Sheet Badges in Topic Pages</h4>
+      <p style="font-size: 13px; color: #78350f; margin-bottom: 10px;">Throughout Pages 1, 2, and 3, you'll see amber badges like <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:#fde68a;border:1px solid #f59e0b;border-radius:6px;font-size:0.78rem;font-weight:600;color:#92400e;white-space:nowrap;">&#128203; FS: Example</span> marking exactly where to find each formula on your allowed exam formula sheet. Here's what each label refers to:</p>
+      <table style="width:100%; font-size:13px; border-collapse:collapse; background: rgba(255,255,255,0.6); border-radius: 8px; overflow: hidden;">
+        <tr style="background: rgba(245,158,11,0.2);"><th style="padding:6px 10px; text-align:left; border-bottom:1px solid #f59e0b;">Badge Label</th><th style="padding:6px 10px; text-align:left; border-bottom:1px solid #f59e0b;">Formula Sheet Section</th><th style="padding:6px 10px; text-align:left; border-bottom:1px solid #f59e0b;">Contains</th></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Basic Statistics</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 1</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Mean, variance, covariance, correlation, CIs, bootstrap</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Derivatives Table</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 2</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">(Anti)derivatives reference</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Queuing Systems</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 3</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">W<sub>i</sub>, d, w, Q, L, conservation equations</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Distributions</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 4</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Uniform, exponential, normal, Poisson PDFs/CDFs</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Empirical Tests</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 5</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Chi-squared, t-test, runs test, poker test, K-S test</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: System Comparison</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 6</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Welch df, pooled variance, D&amp;D, Bonferroni</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Variance Reduction</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Section 7</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">CRN, antithetic, control variates</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: t-Table</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Table 1</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Student t critical values</td></tr>
+        <tr><td style="padding:5px 10px; border-bottom:1px solid #fde68a;"><strong>FS: Chi-sq Table</strong></td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Table 2</td><td style="padding:5px 10px; border-bottom:1px solid #fde68a;">Chi-squared critical values</td></tr>
+        <tr><td style="padding:5px 10px;"><strong>FS: Normal Table</strong></td><td style="padding:5px 10px;">Table 3</td><td style="padding:5px 10px;">Standard normal CDF values</td></tr>
+      </table>
+    </div>
+
+    <div class="formula-grid">
+      <div class="formula-item">
+        <div class="formula-label">LCG Recurrence</div>
+        <div class="formula-math">$Z_{n+1} = (aZ_n + c) \bmod m$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Runs Test</div>
+        <div class="formula-math">$\mu_r = \frac{2ab}{n} + 0.5$, &nbsp; $\sigma_r^2 = \frac{2ab(2ab-n)}{n^2(n-1)}$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Chi-Squared Statistic</div>
+        <div class="formula-math">$\chi^2 = \sum \frac{(N_j - np_j)^2}{np_j}$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Poisson PMF</div>
+        <div class="formula-math">$P[N(t)=k] = \frac{(\lambda t)^k}{k!} e^{-\lambda t}$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Exponential Distribution</div>
+        <div class="formula-math">$f(t) = \lambda e^{-\lambda t}$, &nbsp; mean $= 1/\lambda$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">t-Test Statistic</div>
+        <div class="formula-math">$t = \frac{\bar{X}(n) - \mu_0}{SE}$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Confidence Interval</div>
+        <div class="formula-math">$\bar{X}(n) \pm t_{n-1,1-\alpha/2} \cdot SE$</div>
+      </div>
+      <div class="formula-item">
+        <div class="formula-label">Welch Degrees of Freedom</div>
+        <div class="formula-math">$\hat{f} = \frac{(S_1^2/n_1 + S_2^2/n_2)^2}{\frac{(S_1^2/n_1)^2}{n_1-1} + \frac{(S_2^2/n_2)^2}{n_2-1}}$</div>
+      </div>
+      <div class="formula-item" style="grid-column: 1 / -1;">
+        <div class="formula-label">Hitchhiker Estimator</div>
+        <div class="formula-math">$\frac{1}{2}\!\left(\beta + \frac{\sigma^2}{\beta}\right)$</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Study Tips -->
+  <section class="card reveal" id="study-tips">
+    <h2><span class="card-icon">&#128161;</span> Study Tips</h2>
+    <ul class="tips-list">
+      <li>
+        <span class="tip-icon">1</span>
+        <span class="tip-text"><strong>Start with the foundations.</strong> Topics 1 and 2 (RNGs and testing) underpin everything else. Make sure you can manually compute an LCG sequence and perform a runs test before moving on.</span>
+      </li>
+      <li>
+        <span class="tip-icon">2</span>
+        <span class="tip-text"><strong>Practice manual calculations.</strong> The exam is closed book with only a calculator. Work through every formula by hand at least once -- especially chi-squared tests, confidence intervals, and Welch's t-test.</span>
+      </li>
+      <li>
+        <span class="tip-icon">3</span>
+        <span class="tip-text"><strong>Understand when to use each test.</strong> Know the decision criteria: paired vs. unpaired, normal vs. non-parametric, one-sided vs. two-sided. The True/False section often tests these distinctions.</span>
+      </li>
+      <li>
+        <span class="tip-icon">4</span>
+        <span class="tip-text"><strong>Manage your time carefully.</strong> The 2-hour exam has 8 questions worth 98 points -- roughly 15 minutes per question. If you get stuck, move on and come back. Partial credit is awarded for correct intermediate steps.</span>
+      </li>
+      <li>
+        <span class="tip-icon">5</span>
+        <span class="tip-text"><strong>Use the quizzes on each page.</strong> Each topic has two quizzes (4 questions each). Aim for perfect scores -- they test exactly the types of questions that appear on the exam.</span>
+      </li>
+      <li>
+        <span class="tip-icon">6</span>
+        <span class="tip-text"><strong>Use your formula sheet.</strong> You're allowed a formula sheet during the exam. Look for the amber &#128203; <strong>FS:</strong> badges throughout the topic pages — they tell you exactly which formula sheet section to reference for each concept.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Time Management -->
+  <section class="card highlight reveal" id="time-management">
+    <h2><span class="card-icon">&#9200;</span> Time Management — 2h Exam</h2>
+    <p style="font-size:14px; color:var(--text-light); margin-bottom:14px;">Suggested time allocation based on point weight. Aim to finish with 5 minutes for review.</p>
+    <table class="exam-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Topic</th>
+          <th>Points</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Q1</td><td>RNG</td><td>12</td><td>15 min</td></tr>
+        <tr><td>Q2</td><td>Testing RNGs</td><td>12</td><td>15 min</td></tr>
+        <tr><td>Q3</td><td>Poisson Processes</td><td>10</td><td>12 min</td></tr>
+        <tr><td>Q4</td><td>Variate Generation</td><td>12</td><td>15 min</td></tr>
+        <tr><td>Q5</td><td>Simulation</td><td>10</td><td>12 min</td></tr>
+        <tr><td>Q6</td><td>Hypothesis Testing</td><td>12</td><td>15 min</td></tr>
+        <tr><td>Q7</td><td>Output Analysis &amp; CIs</td><td>10</td><td>12 min</td></tr>
+        <tr><td>Q8</td><td>Comparing + VR + T/F</td><td>20</td><td>24 min</td></tr>
+        <tr style="font-weight:700; background:var(--bg);"><td></td><td>Total</td><td>98</td><td>120 min</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Partial Credit Tips -->
+  <section class="card success reveal">
+    <h2><span class="card-icon">&#9989;</span> Partial Credit Tips</h2>
+    <ul class="tips-bullets">
+      <li>Always show intermediate steps — partial marks for correct working</li>
+      <li>Label which formula/test you are using</li>
+      <li>If stuck on a sub-part, assume a reasonable answer and continue</li>
+      <li>Check: do probabilities sum to 1? Do counts match expected totals?</li>
+      <li>For CIs: state the confidence level, d.f., and interpret in context</li>
+      <li>For True/False: the justification is worth more than the answer</li>
+    </ul>
+  </section>
+
+  <!-- Common Mistakes -->
+  <section class="card info reveal">
+    <h2><span class="card-icon">&#9888;</span> Common Mistakes to Avoid</h2>
+    <ul class="tips-bullets">
+      <li>Forgetting to take mod in LCG calculations</li>
+      <li>Wrong degrees of freedom in chi-squared ($k-1$, not $k$)</li>
+      <li>Confusing $\lambda$ (rate) with $1/\lambda$ (mean) in exponentials</li>
+      <li>Inverting the wrong CDF piece for piecewise distributions</li>
+      <li>Using z-critical instead of t-critical when $\sigma$ is unknown</li>
+      <li>Forgetting to subtract estimated parameters from d.f. in GoF tests</li>
+      <li>Not pairing observations when CRN was used</li>
+      <li>Bootstrap: using $j = Np$ instead of $j = Np + 0.5$</li>
+      <li>Claiming "fail to reject" means "$H_0$ is true"</li>
+    </ul>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== Quiz Score Reading =====
+  // Keys: ssa_quiz_page{P}_topic{N}_{1|2} => score string like "3/4"
+  function getQuizScore(page, topic, quizNum) {
+    var key = 'ssa_quiz_page' + page + '_topic' + topic + '_' + quizNum;
+    var val = localStorage.getItem(key);
+    if (!val) return null;
+    var parts = val.split('/');
+    if (parts.length === 2) {
+      return { score: parseInt(parts[0], 10), total: parseInt(parts[1], 10) };
+    }
+    var num = parseInt(val, 10);
+    if (!isNaN(num)) {
+      return { score: num, total: 4 };
+    }
+    return null;
+  }
+
+  // ===== Page 3 quiz score (different key format: ssa_quiz_page3_sec{X}_{N}) =====
+  function getPage3QuizDone(section, quizNum) {
+    var key = 'ssa_quiz_page3_sec' + section + '_' + quizNum;
+    return localStorage.getItem(key) !== null;
+  }
+
+  function getPage3QuizResult(section, quizNum) {
+    var key = 'ssa_quiz_page3_sec' + section + '_' + quizNum;
+    return localStorage.getItem(key);
+  }
+
+  // ===== Render Quiz Badges =====
+  function renderQuizBadges() {
+    // Pages 1 & 2: data-page + data-topic
+    var quizSpans = document.querySelectorAll('.topic-quizzes[data-page][data-topic]');
+    quizSpans.forEach(function(span) {
+      var page = span.getAttribute('data-page');
+      var topic = span.getAttribute('data-topic');
+      span.innerHTML = '';
+
+      for (var q = 1; q <= 2; q++) {
+        var badge = document.createElement('span');
+        badge.className = 'quiz-badge';
+        var result = getQuizScore(page, topic, q);
+        if (result) {
+          badge.textContent = result.score + '/' + result.total;
+          if (result.score === result.total) {
+            badge.classList.add('perfect');
+          } else {
+            badge.classList.add('done');
+          }
+        } else {
+          badge.textContent = 'Q' + q;
+        }
+        span.appendChild(badge);
+      }
+    });
+
+    // Page 3: data-page=3 + data-section
+    var p3Spans = document.querySelectorAll('.topic-quizzes[data-page="3"][data-section]');
+    var p3QuizCounts = { A: 2, B: 2, C: 2, D: 3, E: 2, F: 2, G: 2, H: 2 };
+    p3Spans.forEach(function(span) {
+      var section = span.getAttribute('data-section');
+      var count = p3QuizCounts[section] || 2;
+      span.innerHTML = '';
+
+      for (var q = 1; q <= count; q++) {
+        var badge = document.createElement('span');
+        badge.className = 'quiz-badge';
+        var val = getPage3QuizResult(section, q);
+        if (val) {
+          badge.textContent = val === 'correct' ? 'Pass' : 'Fail';
+          badge.classList.add(val === 'correct' ? 'perfect' : 'done');
+        } else {
+          badge.textContent = 'Q' + q;
+        }
+        span.appendChild(badge);
+      }
+    });
+  }
+
+  // ===== Completion Calculation =====
+  function calcPageCompletion(page, topics) {
+    var completed = 0;
+    var total = topics.length * 2; // 2 quizzes per topic
+    topics.forEach(function(t) {
+      for (var q = 1; q <= 2; q++) {
+        if (getQuizScore(page, t, q) !== null) {
+          completed++;
+        }
+      }
+    });
+    return { completed: completed, total: total };
+  }
+
+  function calcPage3Completion() {
+    var sections = { A: 2, B: 2, C: 2, D: 3, E: 2, F: 2, G: 2, H: 2 };
+    var completed = 0;
+    var total = 0;
+    Object.keys(sections).forEach(function(sec) {
+      var count = sections[sec];
+      total += count;
+      for (var q = 1; q <= count; q++) {
+        if (getPage3QuizDone(sec, q)) completed++;
+      }
+    });
+    return { completed: completed, total: total };
+  }
+
+  function updateProgress() {
+    var p1 = calcPageCompletion(1, [1,2,3,4,5]);
+    var p2 = calcPageCompletion(2, [6,7,8,9,10]);
+    var p3 = calcPage3Completion();
+
+    var totalCompleted = p1.completed + p2.completed + p3.completed;
+    var totalQuizzes = p1.total + p2.total + p3.total;
+    var overallPct = totalQuizzes > 0 ? Math.round((totalCompleted / totalQuizzes) * 100) : 0;
+
+    // Page 1 progress
+    var p1Pct = p1.total > 0 ? Math.round((p1.completed / p1.total) * 100) : 0;
+    var p1Bar = document.getElementById('p1-bar');
+    var p1PctEl = document.getElementById('p1-pct');
+    if (p1Bar) p1Bar.style.width = p1Pct + '%';
+    if (p1PctEl) p1PctEl.textContent = p1.completed + '/' + p1.total;
+
+    // Page 2 progress
+    var p2Pct = p2.total > 0 ? Math.round((p2.completed / p2.total) * 100) : 0;
+    var p2Bar = document.getElementById('p2-bar');
+    var p2PctEl = document.getElementById('p2-pct');
+    if (p2Bar) p2Bar.style.width = p2Pct + '%';
+    if (p2PctEl) p2PctEl.textContent = p2.completed + '/' + p2.total;
+
+    // Page 3 progress
+    var p3Pct = p3.total > 0 ? Math.round((p3.completed / p3.total) * 100) : 0;
+    var p3Bar = document.getElementById('p3-bar');
+    var p3PctEl = document.getElementById('p3-pct');
+    if (p3Bar) p3Bar.style.width = p3Pct + '%';
+    if (p3PctEl) p3PctEl.textContent = p3.completed + '/' + p3.total;
+
+    // Sidebar badges
+    var sbP1 = document.getElementById('sidebar-badge-p1');
+    var sbP2 = document.getElementById('sidebar-badge-p2');
+    var sbP3 = document.getElementById('sidebar-badge-p3');
+    if (sbP1) sbP1.textContent = p1Pct + '%';
+    if (sbP2) sbP2.textContent = p2Pct + '%';
+    if (sbP3) sbP3.textContent = p3Pct + '%';
+
+    // Sidebar overall
+    var scBar = document.getElementById('sidebar-completion-bar');
+    var scPct = document.getElementById('sidebar-completion-pct');
+    if (scBar) scBar.style.width = overallPct + '%';
+    if (scPct) scPct.textContent = overallPct;
+
+    // Hero progress
+    var hBar = document.getElementById('hero-progress-bar');
+    var hPct = document.getElementById('hero-progress-pct');
+    if (hBar) hBar.style.width = overallPct + '%';
+    if (hPct) hPct.textContent = overallPct + '%';
+  }
+
+  // ===== Scroll Progress Bar =====
+  function updateScrollProgress() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    var bar = document.getElementById('scroll-progress');
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  // ===== Sidebar Active Link Tracking =====
+  function updateActiveLink() {
+    var sections = ['course-overview', 'exam-format', 'exam-dashboard', 'exam-strategy', 'formula-reference', 'study-tips'];
+    var links = document.querySelectorAll('.sidebar-link[href^="#"]');
+    var scrollY = window.pageYOffset + 120;
+
+    var current = '';
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollY) {
+        current = id;
+      }
+    });
+
+    links.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // ===== Mobile Hamburger Menu =====
+  var hamburger = document.getElementById('hamburger');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebar-overlay');
+
+  function toggleMobileMenu() {
+    hamburger.classList.toggle('open');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  }
+
+  hamburger.addEventListener('click', toggleMobileMenu);
+  overlay.addEventListener('click', toggleMobileMenu);
+
+  window.closeMobileMenu = function() {
+    if (sidebar.classList.contains('open')) {
+      hamburger.classList.remove('open');
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+    }
+  };
+
+  // ===== Intersection Observer for Reveal Animations =====
+  var revealElements = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show all immediately
+    revealElements.forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // ===== Event Listeners =====
+  window.addEventListener('scroll', function() {
+    updateScrollProgress();
+    updateActiveLink();
+  }, { passive: true });
+
+  // ===== Initialize =====
+  renderQuizBadges();
+  updateProgress();
+  updateScrollProgress();
+  updateActiveLink();
+})();
+</script>
+</body>
+</html>

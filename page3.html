@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resit Preparation &amp; Theory Deep-Dives | SSA Exam Prep</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --purple: #7c3aed;
+  --purple-light: #f3e8ff;
+  --sidebar-width: 280px;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+/* Sidebar */
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; background: var(--card-bg); border-right: 1px solid #e2e8f0; padding: 24px 16px; overflow-y: auto; z-index: 100; transition: transform 0.3s ease; }
+.sidebar h2 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.sidebar .hub-link { display: inline-block; margin-bottom: 16px; color: var(--primary); text-decoration: none; font-size: 14px; }
+.sidebar .hub-link:hover { text-decoration: underline; }
+.sidebar nav a { display: block; padding: 8px 12px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 14px; margin-bottom: 2px; transition: background 0.15s; }
+.sidebar nav a:hover, .sidebar nav a.active { background: var(--primary-light); color: var(--primary); }
+.hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: var(--primary); color: #fff; border: none; border-radius: 8px; width: 40px; height: 40px; font-size: 22px; cursor: pointer; line-height: 1; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 90; }
+/* Main */
+.main { margin-left: var(--sidebar-width); padding: 40px 48px 80px; max-width: 960px; }
+h1 { font-size: 32px; margin-bottom: 8px; }
+.subtitle { color: var(--text-light); margin-bottom: 32px; font-size: 16px; }
+h2.topic-title { font-size: 26px; margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid #e2e8f0; }
+h3 { font-size: 20px; margin: 24px 0 12px; }
+h4 { font-size: 17px; margin: 16px 0 8px; }
+p, li { margin-bottom: 8px; }
+ul, ol { padding-left: 24px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+th { background: var(--primary-light); font-weight: 600; }
+/* Boxes */
+.box { border-radius: var(--radius); padding: 16px 20px; margin: 16px 0; }
+.box-blue { background: var(--primary-light); border-left: 4px solid var(--primary); }
+.box-red { background: var(--danger-light); border-left: 4px solid var(--danger); }
+.box-green { background: var(--success-light); border-left: 4px solid var(--success); }
+.box h4 { margin-top: 0; }
+/* Cards */
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h4 { margin-top: 0; }
+/* Collapsible */
+details { margin: 12px 0; }
+details summary { cursor: pointer; font-weight: 600; padding: 10px 16px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid #e2e8f0; user-select: none; }
+details summary:hover { background: #f1f5f9; }
+details[open] summary { border-radius: var(--radius) var(--radius) 0 0; }
+details .detail-body { padding: 16px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 var(--radius) var(--radius); background: var(--card-bg); }
+/* Practice */
+textarea.practice { width: 100%; min-height: 100px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 14px; resize: vertical; margin: 8px 0; }
+/* Quiz */
+.quiz { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin: 16px 0; border: 1px solid #e2e8f0; }
+.quiz h4 { margin-top: 0; color: var(--primary); }
+.quiz label { display: block; padding: 8px 12px; margin: 4px 0; border-radius: 8px; cursor: pointer; font-size: 15px; transition: background 0.15s; }
+.quiz label:hover { background: #f1f5f9; }
+.quiz input[type="radio"] { margin-right: 8px; }
+.quiz button { margin-top: 12px; padding: 8px 20px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+.quiz button:hover { opacity: 0.9; }
+.quiz .result { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-weight: 600; display: none; }
+.quiz .result.correct { background: var(--success-light); color: var(--success); display: block; }
+.quiz .result.wrong { background: var(--danger-light); color: var(--danger); display: block; }
+/* Flashcard */
+.flashcard-deck { display: flex; flex-direction: column; gap: 12px; }
+.flashcard { background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: box-shadow 0.2s; }
+.flashcard:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.flashcard .fc-front { padding: 14px 18px; font-weight: 600; font-size: 15px; }
+.flashcard .fc-back { padding: 0 18px 14px; font-size: 14px; color: var(--text-light); display: none; border-top: 1px dashed #e2e8f0; padding-top: 12px; }
+.flashcard.flipped .fc-back { display: block; }
+/* Background Knowledge */
+details.bg-knowledge { margin: 18px 0; }
+details.bg-knowledge summary { color: var(--purple); border-color: #e9d5ff; }
+details.bg-knowledge summary:hover { background: var(--purple-light); }
+details.bg-knowledge .detail-body { border-color: #e9d5ff; }
+.bk-concept { background: var(--bg); border-radius: 8px; padding: 14px 18px; margin: 12px 0; border: 1px solid #e2e8f0; }
+.bk-concept h5 { font-size: .92rem; font-weight: 700; margin-bottom: 6px; color: var(--purple); }
+.bk-concept p { font-size: .88rem; color: var(--text-light); margin-bottom: 6px; }
+.bk-concept p:last-child { margin-bottom: 0; }
+.bk-example { background: var(--purple-light); padding: 8px 12px; border-radius: 6px; font-size: .85rem; margin-top: 8px; }
+/* Visual Step Guide */
+.visual-guide { margin: 24px 0; padding: 24px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.visual-guide h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.vg-steps { position: relative; padding-left: 40px; }
+.vg-steps::before { content: ''; position: absolute; left: 15px; top: 14px; bottom: 14px; width: 2px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
+.vg-step { position: relative; margin-bottom: 16px; padding: 14px 18px; background: var(--bg); border-radius: 8px; border: 1px solid #e2e8f0; transition: border-color .2s; }
+.vg-step:hover { border-color: var(--primary); }
+.vg-step:last-child { margin-bottom: 0; }
+.vg-step::before { content: attr(data-step); position: absolute; left: -40px; top: 12px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; box-shadow: 0 2px 4px rgba(37,99,235,.3); }
+.vg-step:last-child::before { background: var(--success); box-shadow: 0 2px 4px rgba(22,163,74,.3); }
+.vg-step .vg-title { font-weight: 700; font-size: .93rem; margin-bottom: 4px; color: var(--text); }
+.vg-step .vg-desc { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+.vg-formula { background: var(--primary-light); padding: 8px 12px; border-radius: 6px; margin-top: 8px; font-size: .88rem; display: inline-block; }
+.vg-tip { background: var(--success-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--success); }
+.vg-warn { background: var(--danger-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--danger); }
+/* Formula Sheet Reference Badge */
+.fs-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #92400e;
+  margin: 2px 4px;
+  white-space: nowrap;
+}
+.fs-ref::before { content: '\1F4CB'; font-size: 0.8rem; }
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .overlay.open { display: block; }
+  .main { margin-left: 0; padding: 60px 16px 80px; }
+  h1 { font-size: 24px; }
+  h2.topic-title { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="hub-link">&larr; Back to Hub</a>
+  <h2>Page 3: Resit Prep</h2>
+  <nav>
+    <a href="#secA">A. Prerequisite Maths</a>
+    <a href="#secB">B. PDF / CDF / Inverse</a>
+    <a href="#secC">C. Poisson Processes</a>
+    <a href="#secD">D. Hypothesis Testing</a>
+    <a href="#secE">E. MATLAB Monte Carlo</a>
+    <a href="#secF">F. Output Analysis</a>
+    <a href="#secG">G. Dudewicz &amp; Dalal</a>
+    <a href="#secH">H. Variance Reduction</a>
+  </nav>
+</aside>
+
+<main class="main">
+<h1>Resit Preparation &amp; Theory Deep-Dives</h1>
+<p class="subtitle">Sections A &ndash; H &mdash; SSA Resit Exam Preparation</p>
+
+
+<!-- ============================================================ -->
+<!-- SECTION A: Prerequisite Mathematics -->
+<!-- ============================================================ -->
+<section id="secA">
+<h2 class="topic-title">A. Prerequisite Mathematics</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Every derivation on the SSA exam&mdash;from PDFs and CDFs to variance reduction&mdash;relies on calculus skills. Rusty integration will slow you down under exam pressure. This section sharpens the specific techniques you need.</p>
+</div>
+
+<!-- A.1 Integration by Parts -->
+<h3>A.1 Integration by Parts</h3>
+
+<div class="box box-blue">
+  <h4>Key Formula <span class="fs-ref">FS: Integration</span></h4>
+  <p>$$\int u\,dv = uv - \int v\,du$$</p>
+  <p>Choose $u$ and $dv$ using the <strong>LIATE</strong> rule (priority order):</p>
+  <ol>
+    <li><strong>L</strong>ogarithmic &mdash; $\ln x$, $\log x$</li>
+    <li><strong>I</strong>nverse trigonometric &mdash; $\arctan x$, $\arcsin x$</li>
+    <li><strong>A</strong>lgebraic &mdash; $x^n$, polynomials</li>
+    <li><strong>T</strong>rigonometric &mdash; $\sin x$, $\cos x$</li>
+    <li><strong>E</strong>xponential &mdash; $e^x$, $a^x$</li>
+  </ol>
+  <p>Set $u$ = whichever factor appears <strong>earliest</strong> in LIATE, and $dv$ = everything else $\cdot\,dx$.</p>
+</div>
+
+<details>
+  <summary>Worked Example A.1: $\int x e^x\,dx$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1.</strong> Identify parts using LIATE. $x$ is Algebraic (A), $e^x$ is Exponential (E). Since A comes before E, let $u = x$.</p>
+    <p>$u = x \implies du = dx$</p>
+    <p>$dv = e^x\,dx \implies v = e^x$</p>
+    <p><strong>Step 2.</strong> Apply the formula:</p>
+    <p>$$\int x e^x\,dx = xe^x - \int e^x\,dx = xe^x - e^x + C$$</p>
+    <div class="box box-green">
+      <p><strong>Result:</strong> $\int x e^x\,dx = xe^x - e^x + C = e^x(x - 1) + C$</p>
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Worked Example A.2: $\int x^2 e^{-x}\,dx$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1.</strong> $x^2$ is Algebraic, $e^{-x}$ is Exponential. Let $u = x^2$, $dv = e^{-x}\,dx$.</p>
+    <p>$u = x^2 \implies du = 2x\,dx$, &ensp; $v = -e^{-x}$</p>
+    <p><strong>Step 2.</strong> First application:</p>
+    <p>$$\int x^2 e^{-x}\,dx = -x^2 e^{-x} + \int 2x e^{-x}\,dx$$</p>
+    <p><strong>Step 3.</strong> Apply integration by parts again to $\int 2x e^{-x}\,dx$. Let $u = 2x$, $dv = e^{-x}\,dx$:</p>
+    <p>$u = 2x \implies du = 2\,dx$, &ensp; $v = -e^{-x}$</p>
+    <p>$$\int 2x e^{-x}\,dx = -2xe^{-x} + \int 2e^{-x}\,dx = -2xe^{-x} - 2e^{-x}$$</p>
+    <p><strong>Step 4.</strong> Combine:</p>
+    <p>$$\int x^2 e^{-x}\,dx = -x^2 e^{-x} - 2xe^{-x} - 2e^{-x} + C = -e^{-x}(x^2 + 2x + 2) + C$$</p>
+  </div>
+</details>
+
+<details>
+  <summary>Worked Example A.3: $\int \ln(x)\,dx$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1.</strong> $\ln(x)$ is Logarithmic, the implicit $1$ is Algebraic. Let $u = \ln x$, $dv = dx$.</p>
+    <p>$u = \ln x \implies du = \frac{1}{x}\,dx$, &ensp; $v = x$</p>
+    <p><strong>Step 2.</strong> Apply:</p>
+    <p>$$\int \ln(x)\,dx = x\ln x - \int x \cdot \frac{1}{x}\,dx = x\ln x - \int 1\,dx = x\ln x - x + C$$</p>
+  </div>
+</details>
+
+<!-- A.2 Exponential Integrals -->
+<h3>A.2 Exponential Integrals</h3>
+
+<div class="box box-blue">
+  <h4>Key Patterns</h4>
+  <p>$$\int e^{a - x}\,dx = -e^{a-x} + C$$</p>
+  <p>More generally: $\int e^{kx}\,dx = \frac{1}{k}e^{kx} + C$ for any constant $k \neq 0$.</p>
+  <p>For $e^{a-x}$ we have $k = -1$, so the antiderivative picks up a factor of $-1$.</p>
+</div>
+
+<details>
+  <summary>Worked Example A.4: Show $\int_1^3 \frac{e^{3-x}}{e^2 - 1}\,dx = 1$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1.</strong> Factor out the constant:</p>
+    <p>$$\int_1^3 \frac{e^{3-x}}{e^2 - 1}\,dx = \frac{1}{e^2 - 1}\int_1^3 e^{3-x}\,dx$$</p>
+    <p><strong>Step 2.</strong> Evaluate the integral:</p>
+    <p>$$\int_1^3 e^{3-x}\,dx = \left[-e^{3-x}\right]_1^3 = \left(-e^{3-3}\right) - \left(-e^{3-1}\right) = -e^0 + e^2 = -1 + e^2$$</p>
+    <p><strong>Step 3.</strong> Combine:</p>
+    <p>$$\frac{1}{e^2 - 1}\cdot(e^2 - 1) = 1 \quad \checkmark$$</p>
+    <div class="box box-green">
+      <p><strong>Result:</strong> The integral equals exactly 1, confirming this is a valid (sub-)density on $[1,3]$.</p>
+    </div>
+  </div>
+</details>
+
+<!-- A.3 Arctan -->
+<h3>A.3 Arctan: Derivative and Integral</h3>
+
+<div class="box box-blue">
+  <h4>Key Formulas</h4>
+  <p>$$\frac{d}{dx}\arctan(x) = \frac{1}{1 + x^2}$$</p>
+  <p>$$\int \frac{1}{1 + x^2}\,dx = \arctan(x) + C$$</p>
+  <p>Shifted form: $\int \frac{1}{1 + (x - a)^2}\,dx = \arctan(x - a) + C$</p>
+</div>
+
+<details class="bg-knowledge">
+  <summary>Background: Why the shifted form works</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Substitution for Shifted Arguments</h5>
+      <p>When you see $\frac{1}{1 + (x - a)^2}$, let $t = x - a$ so $dt = dx$. Then:</p>
+      <p>$$\int \frac{1}{1 + (x-a)^2}\,dx = \int \frac{1}{1 + t^2}\,dt = \arctan(t) + C = \arctan(x - a) + C$$</p>
+      <div class="bk-example">No chain rule factor appears because $\frac{d}{dx}(x - a) = 1$. If it were $(2x - a)$, you would get a factor of $\frac{1}{2}$.</div>
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Worked Example A.5: $\int_3^4 \frac{1}{1 + (x - 3)^2}\,dx$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1.</strong> Use the shifted arctan formula directly:</p>
+    <p>$$\int_3^4 \frac{1}{1 + (x-3)^2}\,dx = \left[\arctan(x - 3)\right]_3^4$$</p>
+    <p><strong>Step 2.</strong> Evaluate at the bounds:</p>
+    <p>$$= \arctan(4 - 3) - \arctan(3 - 3) = \arctan(1) - \arctan(0) = \frac{\pi}{4} - 0 = \frac{\pi}{4}$$</p>
+    <div class="box box-green">
+      <p><strong>Result:</strong> $\displaystyle\int_3^4 \frac{1}{1 + (x-3)^2}\,dx = \frac{\pi}{4}$</p>
+    </div>
+  </div>
+</details>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Forgetting $\arctan(0) = 0$ and $\arctan(1) = \pi/4$ (not $\pi/2$!).</li>
+    <li>Confusing $\arctan(\infty) = \pi/2$ with $\arctan(1) = \pi/4$.</li>
+    <li>Missing the minus sign on $\int e^{a-x}\,dx = -e^{a-x}$ (the exponent has a hidden $-1$ coefficient on $x$).</li>
+  </ul>
+</div>
+
+<!-- Quiz A.1 -->
+<div class="quiz">
+  <h4>Quiz A.1: Integration by Parts</h4>
+  <p>What is $\int x e^x\,dx$?</p>
+  <label><input type="radio" name="q_secA_1" value="a"> $xe^x + e^x + C$</label>
+  <label><input type="radio" name="q_secA_1" value="b"> $xe^x - e^x + C$</label>
+  <label><input type="radio" name="q_secA_1" value="c"> $x^2 e^x / 2 + C$</label>
+  <label><input type="radio" name="q_secA_1" value="d"> $e^x(x+1) + C$</label>
+  <button onclick="checkQuiz('q_secA_1','b','ssa_quiz_page3_secA_1')">Submit</button>
+  <div class="result" id="res_q_secA_1"></div>
+</div>
+
+<!-- Quiz A.2 -->
+<div class="quiz">
+  <h4>Quiz A.2: Exponential &amp; Arctan Integrals</h4>
+  <p>What is $\displaystyle\int_3^4 \frac{2}{\pi(1+(x-3)^2)}\,dx$?</p>
+  <label><input type="radio" name="q_secA_2" value="a"> $\dfrac{1}{\pi}$</label>
+  <label><input type="radio" name="q_secA_2" value="b"> $\dfrac{1}{2}$</label>
+  <label><input type="radio" name="q_secA_2" value="c"> $\dfrac{\pi}{4}$</label>
+  <label><input type="radio" name="q_secA_2" value="d"> $\dfrac{2}{\pi}$</label>
+  <button onclick="checkQuiz('q_secA_2','b','ssa_quiz_page3_secA_2')">Submit</button>
+  <div class="result" id="res_q_secA_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION B: PDF / CDF / Inverse Transform -->
+<!-- ============================================================ -->
+<section id="secB">
+<h2 class="topic-title">B. PDF / CDF / Inverse Transform</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Generating random variates from arbitrary distributions is the backbone of simulation. You must be able to verify a PDF, derive the CDF, invert it, and apply the composition method for piecewise densities.</p>
+</div>
+
+<h3>B.1 Verifying a Valid PDF</h3>
+
+<div class="box box-blue">
+  <h4>Two Conditions <span class="fs-ref">FS: Distributions</span></h4>
+  <ol>
+    <li><strong>Non-negativity:</strong> $f(x) \geq 0$ for all $x$.</li>
+    <li><strong>Normalization:</strong> $\displaystyle\int_{-\infty}^{\infty} f(x)\,dx = 1$.</li>
+  </ol>
+  <p>For piecewise PDFs, check each piece is non-negative and that the pieces sum to 1.</p>
+</div>
+
+<h3>B.2 CDF Derivation from a PDF</h3>
+
+<p>The cumulative distribution function (CDF) is:</p>
+<p>$$F(x) = \int_{-\infty}^{x} f(t)\,dt$$</p>
+<p>For a piecewise PDF defined on $[a, b]$, the CDF is found piece by piece, ensuring <strong>continuity at each boundary</strong>: the CDF from the left piece must equal the CDF from the right piece at each breakpoint.</p>
+
+<h3>B.3 Inverse Transform Method</h3>
+
+<div class="visual-guide">
+  <h4>Inverse Transform Method &mdash; Step by Step</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Derive the CDF $F(x)$</div>
+      <div class="vg-desc">Integrate the PDF: $F(x) = \int_{-\infty}^x f(t)\,dt$. Make sure $F$ is continuous and goes from 0 to 1.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Set $F(x) = U$ where $U \sim \text{Uniform}(0,1)$</div>
+      <div class="vg-desc">We want to solve for $x$ in terms of $U$.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Solve for $x = F^{-1}(U)$</div>
+      <div class="vg-desc">Algebraically invert the CDF. This gives your variate generation formula.</div>
+      <div class="vg-formula">$X = F^{-1}(U)$ has distribution $F$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Generate: draw $U$, compute $X = F^{-1}(U)$</div>
+      <div class="vg-desc">Each uniform random number produces one random variate from the target distribution.</div>
+      <div class="vg-tip">Tip: If $F^{-1}$ has no closed form, use the composition method instead.</div>
+    </div>
+  </div>
+</div>
+
+<h3>B.4 Composition Method</h3>
+
+<div class="box box-blue">
+  <h4>Composition Decomposition <span class="fs-ref">FS: Composition</span></h4>
+  <p>If $f(x) = p_1 f_1(x) + p_2 f_2(x) + \cdots + p_k f_k(x)$ where $p_i > 0$, $\sum p_i = 1$, and each $f_i$ is a valid PDF:</p>
+  <ol>
+    <li>Generate $U_1 \sim \text{Uniform}(0,1)$.</li>
+    <li>Select component $i$ with probability $p_i$ (using $U_1$).</li>
+    <li>Generate $X$ from $f_i$ (using one or more additional uniforms).</li>
+  </ol>
+  <p>The weights $p_i$ equal the integrals of each piece of the original PDF, and each $f_i$ is the <strong>normalized sub-density</strong> (the piece divided by its weight).</p>
+</div>
+
+<!-- B.5 Simple Worked Example -->
+<h3>B.5 Simple Example: Power PDF</h3>
+
+<details>
+  <summary>Worked Example B.1: $f(x) = \tfrac{3}{8}x^2$ on $[0, 2]$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1. Verify it is a valid PDF:</strong></p>
+    <p>$f(x) = \frac{3}{8}x^2 \geq 0$ on $[0,2]$. Check normalization:</p>
+    <p>$$\int_0^2 \frac{3}{8}x^2\,dx = \frac{3}{8}\left[\frac{x^3}{3}\right]_0^2 = \frac{3}{8}\cdot\frac{8}{3} = 1 \quad\checkmark$$</p>
+    <p><strong>Step 2. Derive the CDF:</strong></p>
+    <p>$$F(x) = \int_0^x \frac{3}{8}t^2\,dt = \frac{3}{8}\cdot\frac{x^3}{3} = \frac{x^3}{8}, \quad 0 \leq x \leq 2$$</p>
+    <p><strong>Step 3. Invert:</strong> Set $U = x^3/8$, solve for $x$:</p>
+    <p>$$x^3 = 8U \implies x = 2U^{1/3}$$</p>
+    <div class="box box-green">
+      <p><strong>Generator:</strong> $X = 2U^{1/3}$ where $U \sim \text{Uniform}(0,1)$.</p>
+    </div>
+  </div>
+</details>
+
+<!-- B.6 KEY Exam PDF -->
+<h3>B.6 Key Exam PDF &mdash; Piecewise with Composition</h3>
+
+<div class="box box-blue">
+  <h4>The Exam PDF</h4>
+  <p>$$f(x) = \begin{cases} \dfrac{1}{2(e^2-1)}e^{3-x} & 1 \leq x \leq 3 \\[8pt] \dfrac{2}{\pi(1+(x-3)^2)} & 3 < x \leq 4 \\[8pt] 0 & \text{otherwise} \end{cases}$$</p>
+</div>
+
+<details>
+  <summary>Worked Example B.2: Full derivation &mdash; verification, CDF, inverse, composition</summary>
+  <div class="detail-body">
+
+    <h4>Step 1: Verify the PDF (show total integral = 1)</h4>
+    <p><strong>Piece 1</strong> on $[1,3]$:</p>
+    <p>$$\int_1^3 \frac{1}{2(e^2-1)}e^{3-x}\,dx = \frac{1}{2(e^2-1)}\left[-e^{3-x}\right]_1^3 = \frac{1}{2(e^2-1)}\left(-e^0 + e^2\right) = \frac{e^2 - 1}{2(e^2-1)} = \frac{1}{2}$$</p>
+    <p><strong>Piece 2</strong> on $(3,4]$:</p>
+    <p>$$\int_3^4 \frac{2}{\pi(1+(x-3)^2)}\,dx = \frac{2}{\pi}\left[\arctan(x-3)\right]_3^4 = \frac{2}{\pi}\left(\arctan(1) - \arctan(0)\right) = \frac{2}{\pi}\cdot\frac{\pi}{4} = \frac{1}{2}$$</p>
+    <p><strong>Total:</strong> $\frac{1}{2} + \frac{1}{2} = 1$ &ensp; $\checkmark$</p>
+
+    <h4>Step 2: Identify the composition weights and sub-densities</h4>
+    <p>Since each piece integrates to $\frac{1}{2}$, we have $p_1 = \frac{1}{2}$ and $p_2 = \frac{1}{2}$.</p>
+    <p>The <strong>normalized sub-densities</strong> are obtained by dividing each piece by its weight:</p>
+    <ul>
+      <li><strong>Sub-density 1:</strong> $f_1(x) = \dfrac{f(x)}{p_1} = \dfrac{e^{3-x}}{e^2-1}$ &ensp; on $[1,3]$</li>
+      <li><strong>Sub-density 2:</strong> $f_2(x) = \dfrac{f(x)}{p_2} = \dfrac{4}{\pi(1+(x-3)^2)}$ &ensp; on $(3,4]$</li>
+    </ul>
+
+    <h4>Step 3: CDF and inverse for sub-density 1</h4>
+    <p>$$F_1(x) = \int_1^x \frac{e^{3-t}}{e^2-1}\,dt = \frac{1}{e^2-1}\left[-e^{3-t}\right]_1^x = \frac{1}{e^2-1}\left(-e^{3-x}+e^2\right) = \frac{e^2 - e^{3-x}}{e^2 - 1}$$</p>
+    <p>Set $F_1(x) = U$:</p>
+    <p>$$U = \frac{e^2 - e^{3-x}}{e^2 - 1} \implies e^{3-x} = e^2 - U(e^2 - 1)$$</p>
+    <p>$$3 - x = \ln\!\left(e^2 - U(e^2-1)\right) \implies x = 3 - \ln\!\left(e^2 - U(e^2-1)\right)$$</p>
+    <div class="box box-green">
+      <p>$F_1^{-1}(U) = 3 - \ln\!\left(e^2 - U(e^2 - 1)\right)$</p>
+    </div>
+
+    <h4>Step 4: CDF and inverse for sub-density 2</h4>
+    <p>$$F_2(x) = \int_3^x \frac{4}{\pi(1+(t-3)^2)}\,dt = \frac{4}{\pi}\left[\arctan(t-3)\right]_3^x = \frac{4}{\pi}\arctan(x-3)$$</p>
+    <p>Set $F_2(x) = U$:</p>
+    <p>$$U = \frac{4}{\pi}\arctan(x-3) \implies \arctan(x-3) = \frac{\pi U}{4} \implies x = 3 + \tan\!\left(\frac{\pi U}{4}\right)$$</p>
+    <div class="box box-green">
+      <p>$F_2^{-1}(U) = 3 + \tan\!\left(\dfrac{\pi U}{4}\right)$</p>
+    </div>
+
+    <h4>Step 5: Full Composition Algorithm</h4>
+    <div class="visual-guide">
+      <h4>Composition Algorithm for the Exam PDF</h4>
+      <div class="vg-steps">
+        <div class="vg-step" data-step="1">
+          <div class="vg-title">Generate $U_1 \sim \text{Uniform}(0,1)$</div>
+          <div class="vg-desc">This selects which component to use.</div>
+        </div>
+        <div class="vg-step" data-step="2">
+          <div class="vg-title">If $U_1 &lt; 0.5$: use component 1 (exponential piece)</div>
+          <div class="vg-desc">Generate $U_2 \sim \text{Uniform}(0,1)$. Return $X = 3 - \ln(e^2 - U_2(e^2 - 1))$.</div>
+          <div class="vg-formula">$X \in [1, 3]$ from the exponential sub-density</div>
+        </div>
+        <div class="vg-step" data-step="3">
+          <div class="vg-title">Else ($U_1 \geq 0.5$): use component 2 (Cauchy-like piece)</div>
+          <div class="vg-desc">Generate $U_2 \sim \text{Uniform}(0,1)$. Return $X = 3 + \tan(\pi U_2 / 4)$.</div>
+          <div class="vg-formula">$X \in (3, 4]$ from the arctan sub-density</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</details>
+
+<div class="box box-red">
+  <h4>Common Mistakes with Composition</h4>
+  <ul>
+    <li><strong>Forgetting to normalize sub-densities:</strong> If piece $i$ integrates to $p_i$, the sub-density is $f_i(x) = f(x)/p_i$, NOT $f(x)$ itself.</li>
+    <li><strong>Wrong integration bounds:</strong> Each sub-density is only defined on its own interval. The CDF integration starts at the left boundary of that interval.</li>
+    <li><strong>Confusing the two uniform draws:</strong> $U_1$ selects the component, $U_2$ generates the variate. They must be independent.</li>
+  </ul>
+</div>
+
+<!-- Quiz B.1 -->
+<div class="quiz">
+  <h4>Quiz B.1: CDF Inversion</h4>
+  <p>If $f(x) = \frac{3}{8}x^2$ on $[0,2]$, what is the inverse transform formula?</p>
+  <label><input type="radio" name="q_secB_1" value="a"> $X = 8U^{1/3}$</label>
+  <label><input type="radio" name="q_secB_1" value="b"> $X = 2U^{1/2}$</label>
+  <label><input type="radio" name="q_secB_1" value="c"> $X = 2U^{1/3}$</label>
+  <label><input type="radio" name="q_secB_1" value="d"> $X = (8U)^{1/2}$</label>
+  <button onclick="checkQuiz('q_secB_1','c','ssa_quiz_page3_secB_1')">Submit</button>
+  <div class="result" id="res_q_secB_1"></div>
+</div>
+
+<!-- Quiz B.2 -->
+<div class="quiz">
+  <h4>Quiz B.2: Composition Method</h4>
+  <p>In the exam PDF above, the sub-density for piece 2 (on $(3,4]$) is $f_2(x) = \frac{4}{\pi(1+(x-3)^2)}$. What is $F_2^{-1}(U)$?</p>
+  <label><input type="radio" name="q_secB_2" value="a"> $3 + \tan(\pi U / 2)$</label>
+  <label><input type="radio" name="q_secB_2" value="b"> $3 + \arctan(\pi U / 4)$</label>
+  <label><input type="radio" name="q_secB_2" value="c"> $\tan(\pi U / 4)$</label>
+  <label><input type="radio" name="q_secB_2" value="d"> $3 + \tan(\pi U / 4)$</label>
+  <button onclick="checkQuiz('q_secB_2','d','ssa_quiz_page3_secB_2')">Submit</button>
+  <div class="result" id="res_q_secB_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION C: Poisson Processes -->
+<!-- ============================================================ -->
+<section id="secC">
+<h2 class="topic-title">C. Poisson Processes</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Poisson processes model arrival patterns in queues, networks, and service systems. The exam tests merging, splitting, memorylessness, and utilization &mdash; all in applied scenarios.</p>
+</div>
+
+<h3>C.1 Definition &amp; Properties</h3>
+
+<div class="box box-blue">
+  <h4>Three Defining Properties <span class="fs-ref">FS: Poisson Process</span></h4>
+  <ol>
+    <li><strong>Independent increments:</strong> Numbers of arrivals in non-overlapping intervals are independent.</li>
+    <li><strong>Stationary increments:</strong> The distribution of arrivals depends only on interval length, not position.</li>
+    <li><strong>No simultaneous events:</strong> $P[\text{2 or more arrivals in } (t, t+h)] = o(h)$ as $h \to 0$.</li>
+  </ol>
+</div>
+
+<div class="box box-blue">
+  <h4>Key Formulas</h4>
+  <p><strong>PMF:</strong> $\displaystyle P[N(t) = k] = \frac{(\lambda t)^k e^{-\lambda t}}{k!}$, &ensp; $k = 0, 1, 2, \ldots$</p>
+  <p><strong>Interarrival times:</strong> $T_i \sim \text{Exp}(\lambda)$, i.e., $p(t) = \lambda e^{-\lambda t}$ for $t \geq 0$.</p>
+  <p><strong>Mean interarrival time:</strong> $E[T] = 1/\lambda$.</p>
+</div>
+
+<h3>C.2 Memoryless Property</h3>
+
+<div class="box box-blue">
+  <h4>Memoryless Property of the Exponential</h4>
+  <p>$$P(T > s + t \mid T > s) = P(T > t)$$</p>
+  <p>If a server has been busy for 5 minutes (exponential service time), the remaining time has the <em>same</em> distribution as the original &mdash; the past is forgotten.</p>
+</div>
+
+<h3>C.3 Merging Poisson Processes</h3>
+
+<div class="box box-blue">
+  <h4>Superposition</h4>
+  <p>If independent Poisson processes with rates $\lambda_1, \lambda_2, \ldots, \lambda_k$ are merged, the result is a Poisson process with rate:</p>
+  <p>$$\lambda = \lambda_1 + \lambda_2 + \cdots + \lambda_k$$</p>
+</div>
+
+<h3>C.4 Splitting / Thinning</h3>
+
+<div class="box box-blue">
+  <h4>Thinning</h4>
+  <p>A Poisson process with rate $\lambda$ is split into types. Each arrival is independently classified as type $i$ with probability $p_i$. Then type $i$ arrivals form a Poisson process with rate $\lambda_i = p_i \lambda$.</p>
+  <p>If arrivals come from merging streams with rates $\lambda_i$, the probability a random arrival is type $i$ is $\lambda_i / \lambda$.</p>
+</div>
+
+<h3>C.5 Competing Exponentials</h3>
+
+<div class="box box-blue">
+  <h4>Which Finishes First?</h4>
+  <p>If $X \sim \text{Exp}(\lambda_X)$ and $Y \sim \text{Exp}(\lambda_Y)$ are independent:</p>
+  <p>$$P(X < Y) = \frac{\lambda_X}{\lambda_X + \lambda_Y}$$</p>
+  <p>$$\min(X, Y) \sim \text{Exp}(\lambda_X + \lambda_Y)$$</p>
+</div>
+
+<h3>C.6 Utilization Factor</h3>
+
+<div class="box box-blue">
+  <h4>Server Utilization <span class="fs-ref">FS: Queuing</span></h4>
+  <p>$$\rho = \lambda \cdot E[S]$$</p>
+  <p>where $\lambda$ = arrival rate and $E[S]$ = mean service time. For stability, $\rho < 1$.</p>
+</div>
+
+<!-- Worked Example: Fitness Center -->
+<h3>C.7 Worked Example: Fitness Center Smoothie Bar</h3>
+
+<details>
+  <summary>Worked Example C.1: Smoothie bar with merging, utilization, and competing exponentials</summary>
+  <div class="detail-body">
+    <p><strong>Setup:</strong> Protein smoothie orders arrive at rate 6/hr, fruit smoothie orders at rate 4/hr. Preparation time is Exp(mean 3 min). After prep, each smoothie requires exactly 1 min of processing.</p>
+
+    <h4>(a) Merged rate and utilization</h4>
+    <p><strong>Merged arrival rate:</strong> $\lambda = 6 + 4 = 10$ per hour.</p>
+    <p><strong>Mean service time:</strong> $E[S] = 3 + 1 = 4$ min $= \frac{4}{60} = \frac{1}{15}$ hr.</p>
+    <p><strong>Utilization:</strong></p>
+    <p>$$\rho = \lambda \cdot E[S] = 10 \times \frac{1}{15} = \frac{2}{3} \approx 0.667$$</p>
+    <div class="box box-green">
+      <p><strong>Result:</strong> $\rho = 2/3$. The server is busy about 67% of the time.</p>
+    </div>
+
+    <h4>(b) Scenario with competing exponentials</h4>
+    <p><strong>Setup:</strong> A customer arrives at the smoothie bar and sees 2 customers in the queue ahead. Meanwhile, a drink station next door has 1 customer being served with service time $\sim \text{Exp}(\text{rate } 1/2 \text{ per min})$. Which server will free up for the customer first?</p>
+
+    <p><strong>Step 1: Apply the memoryless property.</strong><br>
+    The person at the drink station has already been there for some time. Normally you'd think "they must be almost done." But because the exponential distribution is memoryless:
+    $$P(T > s + t \mid T > s) = P(T > t)$$
+    Their remaining time is still $\text{Exp}(\text{rate } 1/2)$ &mdash; as if they just started. This is the key insight that makes the problem tractable.</p>
+
+    <p><strong>Step 2: Identify the two competing exponentials.</strong><br>
+    We have two servers working simultaneously:
+    <ul>
+      <li><strong>Drink station:</strong> rate $= 1/2$ per min (mean 2 min to finish)</li>
+      <li><strong>Smoothie bar (current customer):</strong> rate $= 1/3$ per min (mean 3 min prep time, ignoring the 1-min deterministic part for simplicity)</li>
+    </ul></p>
+
+    <p><strong>Step 3: Use the competing exponentials formula.</strong><br>
+    For two independent exponentials, the probability that one finishes before the other is:
+    $$P(\text{Exp}(\lambda_1) &lt; \text{Exp}(\lambda_2)) = \frac{\lambda_1}{\lambda_1 + \lambda_2}$$
+    The one with the higher rate is more likely to finish first. Here:
+    $$P(\text{drink first}) = \frac{\lambda_{\text{drink}}}{\lambda_{\text{drink}} + \lambda_{\text{smoothie}}} = \frac{1/2}{1/2 + 1/3}$$</p>
+
+    <p><strong>Step 4: Simplify the fraction.</strong><br>
+    The denominator is $1/2 + 1/3$. Find a common denominator (6):
+    $$\frac{1}{2} + \frac{1}{3} = \frac{3}{6} + \frac{2}{6} = \frac{5}{6}$$
+    So:
+    $$P(\text{drink first}) = \frac{1/2}{5/6} = \frac{1}{2} \times \frac{6}{5} = \frac{6}{10} = \frac{3}{5} = 0.6$$</p>
+
+    <div class="box box-green"><strong>Result:</strong> There is a 60% chance the drink station finishes its current customer before the smoothie bar finishes its current customer. The drink station has the higher rate ($1/2 > 1/3$), so it's more likely to finish first.</div>
+  </div>
+</details>
+
+<!-- Quiz C.1 -->
+<div class="quiz">
+  <h4>Quiz C.1: Merging &amp; Utilization</h4>
+  <p>Arrivals at a shop follow a Poisson process: online orders at rate 8/hr, walk-ins at rate 12/hr. Each customer takes Exp(mean 2 min) to serve. What is the utilization $\rho$?</p>
+  <label><input type="radio" name="q_secC_1" value="a"> $0.50$</label>
+  <label><input type="radio" name="q_secC_1" value="b"> $0.40$</label>
+  <label><input type="radio" name="q_secC_1" value="c"> $2/3$</label>
+  <label><input type="radio" name="q_secC_1" value="d"> $1/3$</label>
+  <button onclick="checkQuiz('q_secC_1','c','ssa_quiz_page3_secC_1')">Submit</button>
+  <div class="result" id="res_q_secC_1"></div>
+</div>
+
+<!-- Quiz C.2 -->
+<div class="quiz">
+  <h4>Quiz C.2: Competing Exponentials</h4>
+  <p>Server A has service time $\sim \text{Exp}(\text{rate } 3)$ and server B has service time $\sim \text{Exp}(\text{rate } 5)$. Both start simultaneously. What is the probability that A finishes first?</p>
+  <label><input type="radio" name="q_secC_2" value="a"> $5/8$</label>
+  <label><input type="radio" name="q_secC_2" value="b"> $3/5$</label>
+  <label><input type="radio" name="q_secC_2" value="c"> $3/8$</label>
+  <label><input type="radio" name="q_secC_2" value="d"> $1/2$</label>
+  <button onclick="checkQuiz('q_secC_2','c','ssa_quiz_page3_secC_2')">Submit</button>
+  <div class="result" id="res_q_secC_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION D: Hypothesis Testing Reference -->
+<!-- ============================================================ -->
+<section id="secD">
+<h2 class="topic-title">D. Hypothesis Testing Reference</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Choosing the correct statistical test and interpreting results correctly is essential for validating simulation output. The exam frequently asks you to pick the right test, compute the statistic, and state conclusions.</p>
+</div>
+
+<h3>D.1 Which Test to Use &mdash; Decision Flowchart</h3>
+
+<div class="visual-guide">
+  <h4>Test Selection Flowchart</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Is the goal to test if data fits a distribution?</div>
+      <div class="vg-desc">Yes &rarr; Use <strong>Chi-squared Goodness of Fit</strong> or <strong>KS test</strong>.<br>No &rarr; Go to step 2.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Are you comparing two populations / systems?</div>
+      <div class="vg-desc">Yes &rarr; Go to step 3.<br>No &rarr; Use a one-sample t-test or CI.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Are observations paired (same random seeds, before/after)?</div>
+      <div class="vg-desc">Yes &rarr; <strong>Paired t-test</strong>.<br>No &rarr; Go to step 4.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Can you assume normality?</div>
+      <div class="vg-desc">Yes &rarr; <strong>Welch two-sample t-test</strong> (unequal variances).<br>No &rarr; <strong>Wilcoxon rank-sum test</strong> (non-parametric).</div>
+    </div>
+  </div>
+</div>
+
+<h3>D.2 Chi-Squared Goodness of Fit</h3>
+
+<div class="box box-blue">
+  <h4>Procedure <span class="fs-ref">FS: Chi-Squared GoF</span></h4>
+  <p><strong>Test statistic:</strong> $\displaystyle\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}$</p>
+  <p>where $O_i$ = observed count, $E_i$ = expected count in bin $i$.</p>
+  <p><strong>Degrees of freedom:</strong></p>
+  <ul>
+    <li>All parameters known (fully specified $H_0$): $\text{df} = k - 1$</li>
+    <li>$m$ parameters estimated from data: $\text{df} = k - m - 1$</li>
+  </ul>
+  <p><strong>Bin merging rule:</strong> Merge adjacent bins until every bin has $E_i \geq 5$. After merging, $k$ is the new number of bins.</p>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistake: Degrees of Freedom</h4>
+  <p>If you estimate $\mu$ and $\sigma^2$ from the data to fit a normal distribution, then $m = 2$, and $\text{df} = k - 3$ (not $k - 1$). Forgetting to subtract estimated parameters inflates df, making the test less conservative.</p>
+</div>
+
+<h3>D.3 Kolmogorov-Smirnov (KS) Test</h3>
+
+<div class="box box-blue">
+  <h4>KS Test &mdash; Three Adjustment Cases <span class="fs-ref">FS: KS Test</span></h4>
+  <p>The KS statistic is $D_n = \sup_x |F_n(x) - F_0(x)|$, where $F_n$ is the empirical CDF and $F_0$ is the hypothesized CDF.</p>
+  <p><strong>Case 1: All parameters known.</strong> Compute the adjusted statistic:</p>
+  <p>$$D_n^* = \left(\sqrt{n} + 0.12 + \frac{0.11}{\sqrt{n}}\right)D_n$$</p>
+  <p>Compare $D_n^*$ to critical values from the standard KS table.</p>
+  <p><strong>Case 2: Normal with $\bar{X}$ and $S^2$ estimated.</strong> Use the <strong>Lilliefors</strong> critical values (larger than Case 1 critical values, because estimation makes the test less sensitive).</p>
+  <p><strong>Case 3: Exponential with $\bar{X}$ estimated.</strong> Use the separate exponential KS critical values from the formula sheet.</p>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistake: Using Standard KS Table with Estimated Parameters</h4>
+  <p>If you estimated parameters from the data, you <strong>cannot</strong> use the standard KS critical values. You must use the adjusted tables (Lilliefors for normal, special table for exponential). Using the wrong table makes the test too liberal (rejects $H_0$ less often than it should).</p>
+</div>
+
+<h3>D.4 Welch Two-Sample t-Test</h3>
+
+<div class="box box-blue">
+  <h4>Test Statistic <span class="fs-ref">FS: Welch t-test</span></h4>
+  <p>$$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}$$</p>
+  <p><strong>Satterthwaite degrees of freedom:</strong></p>
+  <p>$$\nu = \frac{\left(\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}\right)^2}{\dfrac{(S_1^2/n_1)^2}{n_1 - 1} + \dfrac{(S_2^2/n_2)^2}{n_2 - 1}}$$</p>
+  <p>Round $\nu$ <strong>down</strong> to the nearest integer. Compare $|t|$ to $t_{\nu, 1-\alpha/2}$ for a two-sided test.</p>
+</div>
+
+<h3>D.5 Wilcoxon Rank-Sum Test</h3>
+
+<div class="box box-blue">
+  <h4>Key Facts</h4>
+  <p><strong>Null hypothesis:</strong> The two samples come from the same distribution.</p>
+  <p><strong>When shape and spread are the same:</strong> the test becomes a test of <strong>location (median)</strong>, not necessarily the mean.</p>
+  <p><strong>Procedure:</strong> Rank all observations together, sum the ranks for each sample, compare to critical values or use the normal approximation.</p>
+</div>
+
+<h3>D.6 Conceptual Points</h3>
+
+<div class="box box-green">
+  <h4>Statistical Significance vs. Practical Significance</h4>
+  <p>A very small p-value (e.g., $p < 0.001$) means the observed difference is <strong>statistically significant</strong> &mdash; unlikely to be due to chance alone. It does NOT mean the difference is large or practically important.</p>
+  <p>With large sample sizes, even tiny, meaningless differences become statistically significant. Always consider the <strong>effect size</strong> alongside the p-value.</p>
+</div>
+
+<div class="box box-green">
+  <h4>Type I vs. Type II Errors</h4>
+  <table>
+    <tr><th></th><th>$H_0$ True</th><th>$H_0$ False</th></tr>
+    <tr><td><strong>Reject $H_0$</strong></td><td>Type I error ($\alpha$)</td><td>Correct (Power = $1-\beta$)</td></tr>
+    <tr><td><strong>Fail to reject $H_0$</strong></td><td>Correct</td><td>Type II error ($\beta$)</td></tr>
+  </table>
+  <p>Increasing df (more data) increases <strong>power</strong> &mdash; the ability to detect real differences.</p>
+</div>
+
+<!-- Quiz D.1 -->
+<div class="quiz">
+  <h4>Quiz D.1: Chi-Squared Degrees of Freedom</h4>
+  <p>You perform a chi-squared GoF test with 8 bins. You estimated 2 parameters from the data. What are the degrees of freedom?</p>
+  <label><input type="radio" name="q_secD_1" value="a"> 7</label>
+  <label><input type="radio" name="q_secD_1" value="b"> 6</label>
+  <label><input type="radio" name="q_secD_1" value="c"> 5</label>
+  <label><input type="radio" name="q_secD_1" value="d"> 4</label>
+  <button onclick="checkQuiz('q_secD_1','c','ssa_quiz_page3_secD_1')">Submit</button>
+  <div class="result" id="res_q_secD_1"></div>
+</div>
+
+<!-- Quiz D.2 -->
+<div class="quiz">
+  <h4>Quiz D.2: KS Test Adjustment</h4>
+  <p>You test whether data is exponentially distributed, but you estimated $\bar{X}$ from the data. Which critical values should you use?</p>
+  <label><input type="radio" name="q_secD_2" value="a"> Standard KS table (all parameters known)</label>
+  <label><input type="radio" name="q_secD_2" value="b"> Lilliefors table for normal distributions</label>
+  <label><input type="radio" name="q_secD_2" value="c"> Special exponential KS table (estimated mean)</label>
+  <label><input type="radio" name="q_secD_2" value="d"> No adjustment needed; use $D_n$ directly</label>
+  <button onclick="checkQuiz('q_secD_2','c','ssa_quiz_page3_secD_2')">Submit</button>
+  <div class="result" id="res_q_secD_2"></div>
+</div>
+
+<!-- Quiz D.3 -->
+<div class="quiz">
+  <h4>Quiz D.3: Wilcoxon Interpretation</h4>
+  <p>The Wilcoxon rank-sum test has $H_0$: &ldquo;the two samples come from the same distribution.&rdquo; If the two distributions have the same shape and spread, rejecting $H_0$ implies a difference in:</p>
+  <label><input type="radio" name="q_secD_3" value="a"> Variance</label>
+  <label><input type="radio" name="q_secD_3" value="b"> Location (median)</label>
+  <label><input type="radio" name="q_secD_3" value="c"> Mean (always)</label>
+  <label><input type="radio" name="q_secD_3" value="d"> Shape of the distribution</label>
+  <button onclick="checkQuiz('q_secD_3','b','ssa_quiz_page3_secD_3')">Submit</button>
+  <div class="result" id="res_q_secD_3"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION E: MATLAB Monte Carlo Analysis -->
+<!-- ============================================================ -->
+<section id="secE">
+<h2 class="topic-title">E. MATLAB Monte Carlo Analysis</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>The exam gives you MATLAB code and asks what integral it estimates. You need to systematically decode the code into a mathematical integral. Getting the constant factor right is the key challenge.</p>
+</div>
+
+<h3>E.1 How Monte Carlo Integration Works</h3>
+
+<div class="box box-blue">
+  <h4>The MC Estimation Identity <span class="fs-ref">FS: Monte Carlo</span></h4>
+  <p>If $X \sim \text{Uniform}(a_1, b_1)$ and $Y \sim \text{Uniform}(a_2, b_2)$, then:</p>
+  <p>$$E[g(X, Y)] = \frac{1}{(b_1-a_1)(b_2-a_2)}\int_{a_1}^{b_1}\int_{a_2}^{b_2} g(x,y)\,dy\,dx$$</p>
+  <p>Therefore: <code>mean(H)</code> where <code>H = g(X,Y)</code> estimates $E[g(X,Y)]$, which equals the integral of $g$ <strong>divided by the area</strong>.</p>
+  <p>Rearranging: The integral equals $\text{Area} \times E[g(X,Y)] = \text{Area} \times \texttt{mean(H)}$.</p>
+</div>
+
+<h3>E.2 Reading MATLAB Code</h3>
+
+<div class="box box-blue">
+  <h4>MATLAB Translation Guide</h4>
+  <table>
+    <tr><th>MATLAB Code</th><th>Mathematical Meaning</th></tr>
+    <tr><td><code>rand(1)*diff(rangeX)+rangeX(1)</code></td><td>$X \sim \text{Uniform}(a_1, b_1)$</td></tr>
+    <tr><td><code>diff(rangeX)</code></td><td>$b_1 - a_1$ (width of $X$ range)</td></tr>
+    <tr><td><code>log(x)</code></td><td>$\ln(x)$ (natural logarithm)</td></tr>
+    <tr><td><code>log10(x)</code></td><td>$\log_{10}(x)$</td></tr>
+    <tr><td><code>exp(X)</code></td><td>$e^X$</td></tr>
+    <tr><td><code>E=mean(H)</code></td><td>$E$ estimates $E[H(X,Y)]$</td></tr>
+  </table>
+</div>
+
+<div class="box box-red">
+  <h4>MATLAB Gotcha: <code>log</code> = $\ln$</h4>
+  <p>In MATLAB, <code>log(x)</code> is the <strong>natural logarithm</strong> $\ln(x)$, NOT $\log_{10}(x)$. This trips people up constantly. Use <code>log10</code> for base-10.</p>
+</div>
+
+<h3>E.3 Systematic Decoding Procedure</h3>
+
+<div class="visual-guide">
+  <h4>How to Decode MC Code into an Integral</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Identify the sampling region</div>
+      <div class="vg-desc">Read <code>rangeX</code> and <code>rangeY</code> to find bounds $[a_1, b_1] \times [a_2, b_2]$.</div>
+      <div class="vg-formula">Area $= (b_1 - a_1)(b_2 - a_2)$</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Write down the code expression for H</div>
+      <div class="vg-desc">Translate the MATLAB expression into math. Remember: <code>log</code> = $\ln$.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Apply the MC identity</div>
+      <div class="vg-desc"><code>mean(H)</code> $= E[H] = \dfrac{1}{\text{Area}}\displaystyle\int\int H(x,y)\,dy\,dx$. So the integral being estimated is: $\text{Area} \times$ <code>mean(H)</code>. But since <code>mean(H)</code> = E, check if the code already includes the area factor inside H.</div>
+      <div class="vg-warn">If H already has a constant multiplier, simplify carefully.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Simplify to identify the integrand</div>
+      <div class="vg-desc">$E[\text{H}] = \frac{1}{\text{Area}}\int\int H(x,y)\,dy\,dx$. So <code>mean(H)</code> estimates $\frac{1}{\text{Area}}\int\int H(x,y)\,dy\,dx$.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Worked Example E.1 -->
+<h3>E.4 Worked Example: Exam Code</h3>
+
+<details>
+  <summary>Worked Example E.1: Decode the exam MATLAB code</summary>
+  <div class="detail-body">
+    <p><strong>The code:</strong></p>
+<pre style="background:#f1f5f9; padding:14px; border-radius:8px; font-size:13px; overflow-x:auto;">
+nExperiments=100000; H=[];
+rangeX=[2,5]; rangeY=[-1,3];
+for cnt=1:nExperiments
+    X=rand(1)*diff(rangeX)+rangeX(1);
+    Y=rand(1)*diff(rangeY)+rangeY(1);
+    H=[H 24*exp(X)*sin(Y)/log(X^2)];
+end
+E=mean(H)
+</pre>
+
+    <h4>Step 1: Identify sampling region and area</h4>
+    <p>$X \sim \text{Uniform}(2, 5)$, &ensp; $Y \sim \text{Uniform}(-1, 3)$.</p>
+    <p>Area $= (5-2)(3-(-1)) = 3 \times 4 = 12$.</p>
+
+    <h4>Step 2: Translate the H expression</h4>
+    <p>MATLAB: <code>24*exp(X)*sin(Y)/log(X^2)</code></p>
+    <p>In math: $H = \dfrac{24 \, e^X \sin(Y)}{\ln(X^2)}$</p>
+    <p>Now simplify: $\ln(X^2) = 2\ln(X)$, so:</p>
+    <p>$$H = \frac{24\,e^X \sin(Y)}{2\ln(X)} = \frac{12\,e^X \sin(Y)}{\ln(X)}$$</p>
+
+    <h4>Step 3: Apply the MC identity</h4>
+    <p><code>mean(H)</code> estimates:</p>
+    <p>$$E[H] = \frac{1}{\text{Area}}\int_2^5\int_{-1}^3 H(x,y)\,dy\,dx = \frac{1}{12}\int_2^5\int_{-1}^3 \frac{12\,e^x\sin y}{\ln x}\,dy\,dx$$</p>
+    <p>Simplify:</p>
+    <p>$$E[H] = \frac{1}{12}\cdot 12 \int_2^5\int_{-1}^3 \frac{e^x \sin y}{\ln x}\,dy\,dx = \int_2^5\int_{-1}^3 \frac{e^x \sin y}{\ln x}\,dy\,dx$$</p>
+
+    <div class="box box-green">
+      <h4>Result</h4>
+      <p><code>E = mean(H)</code> estimates:</p>
+      <p>$$I = \int_2^5\int_{-1}^3 \frac{e^x \sin y}{\ln x}\,dy\,dx$$</p>
+      <p>Note: there is <strong>no factor of 2</strong> in the numerator. If an exam question claims the integral has $\frac{2e^x \sin y}{\ln x}$, that statement is <strong>false</strong> &mdash; it is off by a factor of 2.</p>
+    </div>
+
+    <h4>Verification of the constant</h4>
+    <p>Code constant = 24. After simplifying $\ln(X^2)$ to $2\ln X$, code constant becomes $24/2 = 12$. Dividing by Area = 12 gives $12/12 = 1$. So the integrand multiplier is just 1, confirming no extra constant.</p>
+  </div>
+</details>
+
+<!-- Quiz E.1 -->
+<div class="quiz">
+  <h4>Quiz E.1: MATLAB <code>log</code></h4>
+  <p>In MATLAB, what does <code>log(X^2)</code> equal mathematically?</p>
+  <label><input type="radio" name="q_secE_1" value="a"> $\log_{10}(X^2)$</label>
+  <label><input type="radio" name="q_secE_1" value="b"> $2\ln(X)$</label>
+  <label><input type="radio" name="q_secE_1" value="c"> $(\ln X)^2$</label>
+  <label><input type="radio" name="q_secE_1" value="d"> $2\log_{10}(X)$</label>
+  <button onclick="checkQuiz('q_secE_1','b','ssa_quiz_page3_secE_1')">Submit</button>
+  <div class="result" id="res_q_secE_1"></div>
+</div>
+
+<!-- Quiz E.2 -->
+<div class="quiz">
+  <h4>Quiz E.2: MC Area Factor</h4>
+  <p>If <code>rangeX=[1,4]</code> and <code>rangeY=[0,2]</code>, and <code>H = 6*X*Y</code>, what integral does <code>mean(H)</code> estimate?</p>
+  <label><input type="radio" name="q_secE_2" value="a"> $\displaystyle\int_1^4\int_0^2 6xy\,dy\,dx$</label>
+  <label><input type="radio" name="q_secE_2" value="b"> $\displaystyle\int_1^4\int_0^2 xy\,dy\,dx$</label>
+  <label><input type="radio" name="q_secE_2" value="c"> $\displaystyle\int_1^4\int_0^2 36xy\,dy\,dx$</label>
+  <label><input type="radio" name="q_secE_2" value="d"> $6 \times \displaystyle\int_1^4\int_0^2 6xy\,dy\,dx$</label>
+  <button onclick="checkQuiz('q_secE_2','b','ssa_quiz_page3_secE_2')">Submit</button>
+  <div class="result" id="res_q_secE_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION F: Output Analysis -->
+<!-- ============================================================ -->
+<section id="secF">
+<h2 class="topic-title">F. Output Analysis</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Simulation output is random. Confidence intervals quantify uncertainty. The exam tests percentile bootstrap, empirical bootstrap, batch means, and t-CIs. Getting the rank calculations and flipped subscripts right is critical.</p>
+</div>
+
+<h3>F.1 Percentile Bootstrap Confidence Interval</h3>
+
+<div class="box box-blue">
+  <h4>Percentile Bootstrap Procedure <span class="fs-ref">FS: Bootstrap CI</span></h4>
+  <ol>
+    <li>Generate $N$ bootstrap replicate means $\bar{Y}_1^*, \bar{Y}_2^*, \ldots, \bar{Y}_N^*$.</li>
+    <li>Sort them in ascending order: $\bar{Y}_{(1)}^* \leq \bar{Y}_{(2)}^* \leq \cdots \leq \bar{Y}_{(N)}^*$.</li>
+    <li>For a $(1-\alpha)$ CI, compute the ranks:
+      <p>$j_{\text{low}} = N \cdot (\alpha/2) + C$</p>
+      <p>$j_{\text{high}} = N \cdot (1-\alpha/2) + C$</p>
+      <p>where $C = 1/2$ in this course.</p>
+    </li>
+    <li>If $j$ is not an integer, interpolate linearly between adjacent order statistics.</li>
+    <li>CI $= \left[\bar{Y}_{(j_{\text{low}})}^*,\; \bar{Y}_{(j_{\text{high}})}^*\right]$.</li>
+  </ol>
+</div>
+
+<h3>F.2 Empirical Bootstrap Confidence Interval</h3>
+
+<div class="box box-blue">
+  <h4>Empirical Bootstrap &mdash; Note the Flipped Subscripts! <span class="fs-ref">FS: Empirical Bootstrap</span></h4>
+  <p>Compute the bootstrap deltas: $\delta_i^* = \bar{Y}_i^* - \bar{X}(n)$ for each bootstrap replicate.</p>
+  <p>Sort the deltas. The $(1-\alpha)$ CI is:</p>
+  <p>$$\left[\bar{X}(n) - \delta^*_{(1-\alpha/2)},\; \bar{X}(n) - \delta^*_{(\alpha/2)}\right]$$</p>
+  <p>The subscripts are <strong>flipped</strong> compared to what you might expect: the <em>upper</em> quantile of $\delta^*$ gives the <em>lower</em> bound of the CI, and vice versa.</p>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistake: Subscript Flip</h4>
+  <p>Students often write $[\bar{X} - \delta^*_{(\alpha/2)},\; \bar{X} - \delta^*_{(1-\alpha/2)}]$ (wrong order). Remember: the minus sign reverses the direction. The upper delta is subtracted to give the lower CI bound.</p>
+</div>
+
+<h3>F.3 Batch Means Method</h3>
+
+<div class="box box-blue">
+  <h4>Batch Means</h4>
+  <p>For a single long simulation run of $N$ observations:</p>
+  <ol>
+    <li>Discard initial transient (warm-up period).</li>
+    <li>Divide remaining $n$ observations into $b$ batches of size $m$ ($n = bm$).</li>
+    <li>Compute the mean of each batch: $\bar{Y}_j$ for $j = 1, \ldots, b$.</li>
+    <li>Treat the $b$ batch means as approximately i.i.d. and apply a t-confidence interval.</li>
+  </ol>
+  <p>Batches must be large enough that batch means are approximately independent.</p>
+</div>
+
+<h3>F.4 t-Confidence Intervals</h3>
+
+<div class="box box-blue">
+  <h4>Standard t-CI</h4>
+  <p>$$\bar{X}(n) \pm t_{n-1,\,1-\alpha/2} \cdot \frac{S(n)}{\sqrt{n}}$$</p>
+  <p>where $S(n)$ is the sample standard deviation and $t_{n-1,\,1-\alpha/2}$ is the critical value from the t-distribution with $n-1$ degrees of freedom.</p>
+</div>
+
+<!-- Worked Example F.1 -->
+<h3>F.5 Worked Example: Percentile Bootstrap CI</h3>
+
+<details>
+  <summary>Worked Example F.1: 90% Bootstrap CI with $C = 1/2$</summary>
+  <div class="detail-body">
+    <p><strong>Data:</strong> 10 bootstrap replicate means:</p>
+    <p>$\bar{Y}^* = \{6.52,\; 7.01,\; 6.38,\; 7.24,\; 6.89,\; 6.45,\; 7.15,\; 6.73,\; 6.61,\; 6.98\}$</p>
+
+    <h4>Step 1: Sort the data</h4>
+    <p>$\bar{Y}_{(1)}^* = 6.38,\; \bar{Y}_{(2)}^* = 6.45,\; \bar{Y}_{(3)}^* = 6.52,\; \bar{Y}_{(4)}^* = 6.61,\; \bar{Y}_{(5)}^* = 6.73,$</p>
+    <p>$\bar{Y}_{(6)}^* = 6.89,\; \bar{Y}_{(7)}^* = 6.98,\; \bar{Y}_{(8)}^* = 7.01,\; \bar{Y}_{(9)}^* = 7.15,\; \bar{Y}_{(10)}^* = 7.24$</p>
+
+    <h4>Step 2: Compute ranks for a 90% CI ($\alpha = 0.10$)</h4>
+    <p>$j_{\text{low}} = N \cdot (\alpha/2) + C = 10 \times 0.05 + 0.5 = 0.5 + 0.5 = 1.0$</p>
+    <p>$j_{\text{high}} = N \cdot (1-\alpha/2) + C = 10 \times 0.95 + 0.5 = 9.5 + 0.5 = 10.0$</p>
+
+    <h4>Step 3: Read off the order statistics</h4>
+    <p>$j_{\text{low}} = 1.0$ &rarr; $\bar{Y}_{(1)}^* = 6.38$</p>
+    <p>$j_{\text{high}} = 10.0$ &rarr; $\bar{Y}_{(10)}^* = 7.24$</p>
+
+    <div class="box box-green">
+      <p><strong>90% Percentile Bootstrap CI:</strong> $[6.38,\; 7.24]$</p>
+    </div>
+
+    <p><em>Note:</em> If $j$ were non-integer, say $j = 2.3$, you would interpolate: $\bar{Y}^*_{(2)} + 0.3(\bar{Y}^*_{(3)} - \bar{Y}^*_{(2)})$.</p>
+  </div>
+</details>
+
+<!-- Quiz F.1 -->
+<div class="quiz">
+  <h4>Quiz F.1: Bootstrap Rank Calculation</h4>
+  <p>You have $N = 200$ bootstrap replicates and want a 95% CI with $C = 1/2$. What is $j_{\text{low}}$?</p>
+  <label><input type="radio" name="q_secF_1" value="a"> $5.0$</label>
+  <label><input type="radio" name="q_secF_1" value="b"> $5.5$</label>
+  <label><input type="radio" name="q_secF_1" value="c"> $10.0$</label>
+  <label><input type="radio" name="q_secF_1" value="d"> $10.5$</label>
+  <button onclick="checkQuiz('q_secF_1','b','ssa_quiz_page3_secF_1')">Submit</button>
+  <div class="result" id="res_q_secF_1"></div>
+</div>
+
+<!-- Quiz F.2 -->
+<div class="quiz">
+  <h4>Quiz F.2: Empirical Bootstrap CI</h4>
+  <p>In the empirical bootstrap, the CI is $[\bar{X} - \delta^*_{(1-\alpha/2)},\; \bar{X} - \delta^*_{(\alpha/2)}]$. Why are the subscripts &ldquo;flipped&rdquo;?</p>
+  <label><input type="radio" name="q_secF_2" value="a"> Because the deltas are always negative</label>
+  <label><input type="radio" name="q_secF_2" value="b"> Because subtracting a large positive delta gives a smaller bound</label>
+  <label><input type="radio" name="q_secF_2" value="c"> Because the empirical CDF is inverted</label>
+  <label><input type="radio" name="q_secF_2" value="d"> They are not flipped; it is a typo in most textbooks</label>
+  <button onclick="checkQuiz('q_secF_2','b','ssa_quiz_page3_secF_2')">Submit</button>
+  <div class="result" id="res_q_secF_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION G: Comparing Systems — Dudewicz & Dalal -->
+<!-- ============================================================ -->
+<section id="secG">
+<h2 class="topic-title">G. Comparing Systems &mdash; Dudewicz &amp; Dalal</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>The Dudewicz &amp; Dalal (D&amp;D) two-stage procedure lets you select the best of $k$ system configurations with a guaranteed probability of correct selection $P^*$. This is a staple exam question.</p>
+</div>
+
+<h3>G.1 Two-Stage Procedure Overview</h3>
+
+<div class="visual-guide">
+  <h4>Dudewicz &amp; Dalal Procedure <span class="fs-ref">FS: D&amp;D Table</span></h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Stage 1: Pilot run of $n_0$ observations per system</div>
+      <div class="vg-desc">Run each of the $k$ systems for $n_0$ observations. Compute sample variances $S_i^2(n_0)$ for each system $i$.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Look up $h_1$ from the D&amp;D table</div>
+      <div class="vg-desc">Use the D&amp;D table with parameters $P^*$, $k$, and $n_0$ to find the constant $h_1$.</div>
+      <div class="vg-tip">$h_1$ depends on $P^*$, $k$, and $n_0$. This value comes directly from the formula sheet.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Compute required sample sizes $N_i$</div>
+      <div class="vg-desc">For each system $i$:</div>
+      <div class="vg-formula">$N_i = \max\!\left\{n_0 + 1,\; \left\lceil \dfrac{h_1^2\, S_i^2(n_0)}{(d^*)^2} \right\rceil\right\}$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Stage 2: Run additional observations</div>
+      <div class="vg-desc">For each system $i$, run $N_i - n_0$ <strong>additional</strong> observations (beyond the pilot run).</div>
+      <div class="vg-warn">&ldquo;How many more runs?&rdquo; = $N_i - n_0$, NOT $N_i$.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Compute weighted means and select the best</div>
+      <div class="vg-desc">Compute weights $W_{i1}$ using $h_2$ from the D&amp;D table (with $N_i - 1$ df). The weighted mean accounts for the two-stage sampling. Select the system with the best (largest or smallest) weighted mean.</div>
+    </div>
+  </div>
+</div>
+
+<div class="box box-blue">
+  <h4>Weight Formula</h4>
+  <p>$$W_{i1} = \frac{d^*\, h_1\, n_0}{h_2(N_i - 1)\, N_i\, S_i(n_0)}$$</p>
+  <p>where $h_2$ is read from the D&amp;D table for $N_i - 1$ degrees of freedom.</p>
+</div>
+
+<h3>G.2 Bonferroni for $k > 2$ Systems</h3>
+
+<div class="box box-blue">
+  <h4>Bonferroni Inequality</h4>
+  <p>When comparing $k > 2$ systems pairwise, there are $\binom{k}{2} = \frac{k(k-1)}{2}$ pairs.</p>
+  <p>To maintain overall confidence level $1-\alpha$, use significance level $\alpha / \binom{k}{2}$ for each pairwise comparison.</p>
+</div>
+
+<!-- Worked Example G.1 -->
+<h3>G.3 Worked Example</h3>
+
+<details>
+  <summary>Worked Example G.1: D&amp;D with two configurations</summary>
+  <div class="detail-body">
+    <p><strong>Setup:</strong> $k = 2$ systems, $n_0 = 20$ pilot observations each, $P^* = 0.95$, $d^* = 2.0$.</p>
+    <p>Pilot results: $S_1^2(20) = 244.3$, $S_2^2(20) = 67.3$.</p>
+    <p>From the D&amp;D table ($P^* = 0.95$, $k = 2$, $n_0 = 20$): $h_1 = 2.453$.</p>
+
+    <h4>Step 1: Compute $N_1$</h4>
+    <p>$$N_1 = \max\!\left\{21,\; \left\lceil\frac{(2.453)^2 \times 244.3}{(2.0)^2}\right\rceil\right\} = \max\!\left\{21,\; \left\lceil\frac{6.017 \times 244.3}{4.0}\right\rceil\right\}$$</p>
+    <p>$$= \max\!\left\{21,\; \left\lceil\frac{1470.0}{4.0}\right\rceil\right\} = \max\{21,\; \lceil 367.5 \rceil\} = \max\{21,\; 368\} = 368$$</p>
+
+    <h4>Step 2: Compute $N_2$</h4>
+    <p>$$N_2 = \max\!\left\{21,\; \left\lceil\frac{6.017 \times 67.3}{4.0}\right\rceil\right\} = \max\!\left\{21,\; \left\lceil\frac{404.9}{4.0}\right\rceil\right\} = \max\{21,\; \lceil 101.2 \rceil\} = \max\{21,\; 102\} = 102$$</p>
+
+    <h4>Step 3: Additional runs needed</h4>
+    <p>Config A: $N_1 - n_0 = 368 - 20 = \mathbf{348}$ more runs.</p>
+    <p>Config B: $N_2 - n_0 = 102 - 20 = \mathbf{82}$ more runs.</p>
+
+    <div class="box box-green">
+      <h4>Result</h4>
+      <p>Configuration A (higher variance) needs <strong>348 additional runs</strong>.</p>
+      <p>Configuration B (lower variance) needs <strong>82 additional runs</strong>.</p>
+      <p>Higher variance systems require dramatically more observations to achieve the same precision.</p>
+    </div>
+  </div>
+</details>
+
+<!-- Quiz G.1 -->
+<div class="quiz">
+  <h4>Quiz G.1: Additional Runs</h4>
+  <p>In a D&amp;D procedure with $n_0 = 15$ and computed $N_i = 200$, how many <strong>additional</strong> runs are needed for system $i$?</p>
+  <label><input type="radio" name="q_secG_1" value="a"> 200</label>
+  <label><input type="radio" name="q_secG_1" value="b"> 215</label>
+  <label><input type="radio" name="q_secG_1" value="c"> 185</label>
+  <label><input type="radio" name="q_secG_1" value="d"> 15</label>
+  <button onclick="checkQuiz('q_secG_1','c','ssa_quiz_page3_secG_1')">Submit</button>
+  <div class="result" id="res_q_secG_1"></div>
+</div>
+
+<!-- Quiz G.2 -->
+<div class="quiz">
+  <h4>Quiz G.2: Bonferroni Correction</h4>
+  <p>You are comparing $k = 4$ systems at overall confidence 95% ($\alpha = 0.05$). Using Bonferroni, what significance level do you use for each pairwise comparison?</p>
+  <label><input type="radio" name="q_secG_2" value="a"> $0.05 / 4 = 0.0125$</label>
+  <label><input type="radio" name="q_secG_2" value="b"> $0.05 / 6 \approx 0.0083$</label>
+  <label><input type="radio" name="q_secG_2" value="c"> $0.05 / 8 = 0.00625$</label>
+  <label><input type="radio" name="q_secG_2" value="d"> $0.05 / 12 \approx 0.0042$</label>
+  <button onclick="checkQuiz('q_secG_2','b','ssa_quiz_page3_secG_2')">Submit</button>
+  <div class="result" id="res_q_secG_2"></div>
+</div>
+
+</section>
+
+
+<!-- ============================================================ -->
+<!-- SECTION H: Variance Reduction -->
+<!-- ============================================================ -->
+<section id="secH">
+<h2 class="topic-title">H. Variance Reduction</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Variance reduction techniques let you get tighter confidence intervals from the same number of simulation runs. The exam tests whether you can compute covariances analytically and determine when each technique helps or hurts.</p>
+</div>
+
+<h3>H.1 Common Random Numbers (CRN)</h3>
+
+<div class="box box-blue">
+  <h4>CRN Variance Formula <span class="fs-ref">FS: Variance Reduction</span></h4>
+  <p>When comparing systems 1 and 2 using the same random numbers:</p>
+  <p>$$\text{Var}[\bar{Z}(n)] = \frac{\text{Var}(X_{1j}) + \text{Var}(X_{2j}) - 2\,\text{Cov}(X_{1j}, X_{2j})}{n}$$</p>
+  <p>where $Z_j = X_{1j} - X_{2j}$.</p>
+  <p><strong>CRN helps when</strong> $\text{Cov}(X_1, X_2) > 0$ (positive correlation reduces the variance).</p>
+  <p><strong>CRN hurts when</strong> $\text{Cov}(X_1, X_2) < 0$ (negative correlation <em>increases</em> variance).</p>
+</div>
+
+<h3>H.2 Antithetic Variates</h3>
+
+<div class="box box-blue">
+  <h4>Antithetic Variates Variance Formula</h4>
+  <p>Pair each run using $U$ with a run using $1-U$. Let $X^{(1)} = g(U)$ and $X^{(2)} = g(1-U)$, and average them:</p>
+  <p>$$\text{Var}\!\left[\frac{X^{(1)} + X^{(2)}}{2}\right] = \frac{\text{Var}(X^{(1)}) + \text{Var}(X^{(2)}) + 2\,\text{Cov}(X^{(1)}, X^{(2)})}{4}$$</p>
+  <p>For $n$ pairs:</p>
+  <p>$$\text{Var}[\bar{X}(n)] = \frac{\text{Var}(X^{(1)}) + \text{Var}(X^{(2)}) + 2\,\text{Cov}(X^{(1)}, X^{(2)})}{4n}$$</p>
+  <p><strong>Antithetic helps when</strong> $\text{Cov}(X^{(1)}, X^{(2)}) < 0$ (negative correlation). This is why we use $1-U$: if $g$ is monotone, $g(U)$ and $g(1-U)$ tend to be negatively correlated.</p>
+</div>
+
+<h3>H.3 Control Variates</h3>
+
+<div class="box box-blue">
+  <h4>Control Variates <span class="fs-ref">FS: Control Variates</span></h4>
+  <p>Use a correlated variable $Y$ with known mean $E[Y]$ to reduce variance of estimator for $E[X]$:</p>
+  <p>$$X_c = X + a(Y - E[Y])$$</p>
+  <p><strong>Optimal coefficient:</strong></p>
+  <p>$$a^* = -\frac{\text{Cov}(X, Y)}{\text{Var}(Y)}$$</p>
+  <p>Note the <strong>minus sign</strong>. The variance reduction achieved is proportional to $\rho^2_{XY}$ (the squared correlation).</p>
+</div>
+
+<h3>H.4 Key Identity for Uniform Moments</h3>
+
+<div class="box box-blue">
+  <h4>Uniform Moments</h4>
+  <p>If $U \sim \text{Uniform}(0,1)$:</p>
+  <p>$$E[U^k] = \frac{1}{k+1}$$</p>
+  <p>So: $E[U] = 1/2$, &ensp; $E[U^2] = 1/3$, &ensp; $E[U^3] = 1/4$, &ensp; $E[U^4] = 1/5$, etc.</p>
+</div>
+
+<h3>H.5 Analytical Covariance Computation</h3>
+
+<div class="box box-blue">
+  <h4>Covariance Formula</h4>
+  <p>$$\text{Cov}(X, Y) = E[XY] - E[X]\,E[Y]$$</p>
+  <p>Expand $XY$ as a polynomial in $U$, then use $E[U^k] = 1/(k+1)$.</p>
+</div>
+
+<!-- Worked Example H.1 -->
+<details>
+  <summary>Worked Example H.1: Compute $\text{Cov}(X_1, X_2)$ where $X_1 = (U-2)^2$, $X_2 = U^2$</summary>
+  <div class="detail-body">
+    <p><strong>Given:</strong> $U \sim \text{Uniform}(0,1)$, $X_1 = (U-2)^2$, $X_2 = U^2$.</p>
+
+    <h4>Step 1: Compute the uniform moments we need</h4>
+    <p>$E[U] = 1/2$, &ensp; $E[U^2] = 1/3$, &ensp; $E[U^3] = 1/4$, &ensp; $E[U^4] = 1/5$</p>
+
+    <h4>Step 2: Compute $E[X_1]$</h4>
+    <p>$X_1 = (U-2)^2 = U^2 - 4U + 4$</p>
+    <p>$E[X_1] = E[U^2] - 4E[U] + 4 = \frac{1}{3} - 4\cdot\frac{1}{2} + 4 = \frac{1}{3} - 2 + 4 = \frac{1}{3} + 2 = \frac{7}{3}$</p>
+
+    <h4>Step 3: Compute $E[X_2]$</h4>
+    <p>$E[X_2] = E[U^2] = \frac{1}{3}$</p>
+
+    <h4>Step 4: Compute $E[X_1 X_2]$</h4>
+    <p>$X_1 X_2 = (U-2)^2 \cdot U^2 = (U^2 - 4U + 4) \cdot U^2 = U^4 - 4U^3 + 4U^2$</p>
+    <p>$E[X_1 X_2] = E[U^4] - 4E[U^3] + 4E[U^2] = \frac{1}{5} - 4\cdot\frac{1}{4} + 4\cdot\frac{1}{3} = \frac{1}{5} - 1 + \frac{4}{3}$</p>
+    <p>Common denominator (15): $= \frac{3}{15} - \frac{15}{15} + \frac{20}{15} = \frac{8}{15}$</p>
+
+    <h4>Step 5: Compute the covariance</h4>
+    <p>$\text{Cov}(X_1, X_2) = E[X_1 X_2] - E[X_1]\,E[X_2] = \frac{8}{15} - \frac{7}{3}\cdot\frac{1}{3} = \frac{8}{15} - \frac{7}{9}$</p>
+    <p>Common denominator (45): $= \frac{24}{45} - \frac{35}{45} = -\frac{11}{45}$</p>
+
+    <div class="box box-green">
+      <h4>Result and Interpretation</h4>
+      <p>$\text{Cov}(X_1, X_2) = -\dfrac{11}{45} \approx -0.244$</p>
+      <p>Since $\text{Cov} < 0$:</p>
+      <ul>
+        <li><strong>CRN would INCREASE variance</strong> (the $-2\text{Cov}$ term becomes $+2 \times 11/45$, making things worse).</li>
+        <li><strong>Antithetic variates would benefit</strong> (the $+2\text{Cov}$ term is negative, reducing variance).</li>
+      </ul>
+    </div>
+  </div>
+</details>
+
+<div class="box box-red">
+  <h4>Common Mistakes with Variance Reduction</h4>
+  <ul>
+    <li><strong>Sign confusion in CRN:</strong> CRN has $-2\text{Cov}$ in the variance formula. Positive Cov reduces variance; negative Cov increases it.</li>
+    <li><strong>Sign confusion in Antithetic:</strong> Antithetic has $+2\text{Cov}$ in the variance formula. Negative Cov reduces variance; positive Cov increases it.</li>
+    <li><strong>Forgetting the minus in control variates:</strong> $a^* = -\text{Cov}(X,Y)/\text{Var}(Y)$. The minus sign is part of the formula.</li>
+    <li><strong>Arithmetic errors with fractions:</strong> When computing $E[U^k]$, always convert to a common denominator before adding/subtracting.</li>
+  </ul>
+</div>
+
+<!-- Quiz H.1 -->
+<div class="quiz">
+  <h4>Quiz H.1: CRN Effectiveness</h4>
+  <p>In CRN, $\text{Var}[\bar{Z}(n)] = \frac{\text{Var}(X_1) + \text{Var}(X_2) - 2\text{Cov}(X_1,X_2)}{n}$. For CRN to reduce variance (compared to independent sampling), what is required?</p>
+  <label><input type="radio" name="q_secH_1" value="a"> $\text{Cov}(X_1, X_2) < 0$</label>
+  <label><input type="radio" name="q_secH_1" value="b"> $\text{Cov}(X_1, X_2) > 0$</label>
+  <label><input type="radio" name="q_secH_1" value="c"> $\text{Cov}(X_1, X_2) = 0$</label>
+  <label><input type="radio" name="q_secH_1" value="d"> $\text{Var}(X_1) = \text{Var}(X_2)$</label>
+  <button onclick="checkQuiz('q_secH_1','b','ssa_quiz_page3_secH_1')">Submit</button>
+  <div class="result" id="res_q_secH_1"></div>
+</div>
+
+<!-- Quiz H.2 -->
+<div class="quiz">
+  <h4>Quiz H.2: Uniform Moment Calculation</h4>
+  <p>If $U \sim \text{Uniform}(0,1)$ and $X = U^2$, what is $\text{Var}(X)$?</p>
+  <p><em>Hint:</em> $\text{Var}(X) = E[X^2] - (E[X])^2 = E[U^4] - (E[U^2])^2$.</p>
+  <label><input type="radio" name="q_secH_2" value="a"> $1/12$</label>
+  <label><input type="radio" name="q_secH_2" value="b"> $4/45$</label>
+  <label><input type="radio" name="q_secH_2" value="c"> $1/18$</label>
+  <label><input type="radio" name="q_secH_2" value="d"> $2/15$</label>
+  <button onclick="checkQuiz('q_secH_2','b','ssa_quiz_page3_secH_2')">Submit</button>
+  <div class="result" id="res_q_secH_2"></div>
+</div>
+
+</section>
+
+
+</main>
+
+<script>
+/* Sidebar toggle */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+
+/* Active section tracking */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+/* Flashcard toggle */
+document.addEventListener('click', function(e) {
+  var fc = e.target.closest('.flashcard');
+  if (fc) fc.classList.toggle('flipped');
+});
+
+/* Quiz system */
+function checkQuiz(name, correct, storageKey) {
+  var resEl = document.getElementById('res_' + name);
+  var saved = localStorage.getItem(storageKey);
+  if (saved) { resEl.className = 'result ' + (saved === 'correct' ? 'correct' : 'wrong'); resEl.textContent = saved === 'correct' ? 'Correct! (already answered)' : 'Incorrect. (already answered, correct: ' + correct + ')'; return; }
+  var sel = document.querySelector('input[name="' + name + '"]:checked');
+  if (!sel) { resEl.className = 'result wrong'; resEl.textContent = 'Please select an answer.'; resEl.style.display = 'block'; return; }
+  if (sel.value === correct) {
+    resEl.className = 'result correct'; resEl.textContent = 'Correct!';
+    localStorage.setItem(storageKey, 'correct');
+  } else {
+    resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. The correct answer is ' + correct + '.';
+    localStorage.setItem(storageKey, 'wrong');
+  }
+}
+
+/* Restore quiz states on load */
+window.addEventListener('DOMContentLoaded', function() {
+  var quizzes = [
+    ['q_secA_1','b','ssa_quiz_page3_secA_1'],
+    ['q_secA_2','b','ssa_quiz_page3_secA_2'],
+    ['q_secB_1','c','ssa_quiz_page3_secB_1'],
+    ['q_secB_2','d','ssa_quiz_page3_secB_2'],
+    ['q_secC_1','c','ssa_quiz_page3_secC_1'],
+    ['q_secC_2','c','ssa_quiz_page3_secC_2'],
+    ['q_secD_1','c','ssa_quiz_page3_secD_1'],
+    ['q_secD_2','c','ssa_quiz_page3_secD_2'],
+    ['q_secD_3','b','ssa_quiz_page3_secD_3'],
+    ['q_secE_1','b','ssa_quiz_page3_secE_1'],
+    ['q_secE_2','b','ssa_quiz_page3_secE_2'],
+    ['q_secF_1','b','ssa_quiz_page3_secF_1'],
+    ['q_secF_2','b','ssa_quiz_page3_secF_2'],
+    ['q_secG_1','c','ssa_quiz_page3_secG_1'],
+    ['q_secG_2','b','ssa_quiz_page3_secG_2'],
+    ['q_secH_1','b','ssa_quiz_page3_secH_1'],
+    ['q_secH_2','b','ssa_quiz_page3_secH_2']
+  ];
+  quizzes.forEach(function(q) {
+    var saved = localStorage.getItem(q[2]);
+    if (saved) {
+      var resEl = document.getElementById('res_' + q[0]);
+      if (saved === 'correct') { resEl.className = 'result correct'; resEl.textContent = 'Correct! (previously answered)'; }
+      else { resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. (previously answered, correct: ' + q[1] + ')'; }
+    }
+  });
+});
+</script>
+</body>
+</html>

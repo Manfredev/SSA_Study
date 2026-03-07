@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundations &amp; Probability | SSA Exam Prep</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-light: #dbeafe;
+  --success: #16a34a;
+  --success-light: #dcfce7;
+  --danger: #dc2626;
+  --danger-light: #fee2e2;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --purple: #7c3aed;
+  --purple-light: #f3e8ff;
+  --sidebar-width: 280px;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+/* Sidebar */
+.sidebar { position: fixed; top: 0; left: 0; width: var(--sidebar-width); height: 100vh; background: var(--card-bg); border-right: 1px solid #e2e8f0; padding: 24px 16px; overflow-y: auto; z-index: 100; transition: transform 0.3s ease; }
+.sidebar h2 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.sidebar .hub-link { display: inline-block; margin-bottom: 16px; color: var(--primary); text-decoration: none; font-size: 14px; }
+.sidebar .hub-link:hover { text-decoration: underline; }
+.sidebar nav a { display: block; padding: 8px 12px; color: var(--text); text-decoration: none; border-radius: 8px; font-size: 14px; margin-bottom: 2px; transition: background 0.15s; }
+.sidebar nav a:hover, .sidebar nav a.active { background: var(--primary-light); color: var(--primary); }
+.hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; background: var(--primary); color: #fff; border: none; border-radius: 8px; width: 40px; height: 40px; font-size: 22px; cursor: pointer; line-height: 1; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 90; }
+/* Main */
+.main { margin-left: var(--sidebar-width); padding: 40px 48px 80px; max-width: 960px; }
+h1 { font-size: 32px; margin-bottom: 8px; }
+.subtitle { color: var(--text-light); margin-bottom: 32px; font-size: 16px; }
+h2.topic-title { font-size: 26px; margin: 48px 0 16px; padding-top: 24px; border-top: 2px solid #e2e8f0; }
+h3 { font-size: 20px; margin: 24px 0 12px; }
+h4 { font-size: 17px; margin: 16px 0 8px; }
+p, li { margin-bottom: 8px; }
+ul, ol { padding-left: 24px; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+th { background: var(--primary-light); font-weight: 600; }
+/* Boxes */
+.box { border-radius: var(--radius); padding: 16px 20px; margin: 16px 0; }
+.box-blue { background: var(--primary-light); border-left: 4px solid var(--primary); }
+.box-red { background: var(--danger-light); border-left: 4px solid var(--danger); }
+.box-green { background: var(--success-light); border-left: 4px solid var(--success); }
+.box h4 { margin-top: 0; }
+/* Cards */
+.card { background: var(--card-bg); border-radius: var(--radius); padding: 20px 24px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.card h4 { margin-top: 0; }
+/* Collapsible */
+details { margin: 12px 0; }
+details summary { cursor: pointer; font-weight: 600; padding: 10px 16px; background: var(--card-bg); border-radius: var(--radius); border: 1px solid #e2e8f0; user-select: none; }
+details summary:hover { background: #f1f5f9; }
+details[open] summary { border-radius: var(--radius) var(--radius) 0 0; }
+details .detail-body { padding: 16px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 var(--radius) var(--radius); background: var(--card-bg); }
+/* Practice */
+textarea.practice { width: 100%; min-height: 100px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 14px; resize: vertical; margin: 8px 0; }
+/* Quiz */
+.quiz { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin: 16px 0; border: 1px solid #e2e8f0; }
+.quiz h4 { margin-top: 0; color: var(--primary); }
+.quiz label { display: block; padding: 8px 12px; margin: 4px 0; border-radius: 8px; cursor: pointer; font-size: 15px; transition: background 0.15s; }
+.quiz label:hover { background: #f1f5f9; }
+.quiz input[type="radio"] { margin-right: 8px; }
+.quiz button { margin-top: 12px; padding: 8px 20px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+.quiz button:hover { opacity: 0.9; }
+.quiz .result { margin-top: 10px; padding: 10px 14px; border-radius: 8px; font-weight: 600; display: none; }
+.quiz .result.correct { background: var(--success-light); color: var(--success); display: block; }
+.quiz .result.wrong { background: var(--danger-light); color: var(--danger); display: block; }
+/* Interactive */
+.interactive { background: var(--card-bg); border: 2px dashed var(--primary); border-radius: var(--radius); padding: 20px; margin: 16px 0; }
+.interactive h4 { color: var(--primary); margin-top: 0; }
+.interactive label { font-size: 14px; font-weight: 600; display: inline-block; min-width: 80px; }
+.interactive input[type="range"] { width: 140px; vertical-align: middle; }
+.interactive .val { display: inline-block; min-width: 36px; text-align: right; font-family: monospace; }
+.interactive button { padding: 6px 16px; background: var(--primary); color: #fff; border: none; border-radius: 8px; cursor: pointer; margin: 4px; font-size: 13px; }
+.interactive button:hover { opacity: 0.9; }
+.seq-display { font-family: monospace; font-size: 14px; background: #f1f5f9; padding: 12px; border-radius: 8px; margin-top: 12px; word-break: break-all; min-height: 40px; max-height: 200px; overflow-y: auto; }
+/* Tabs */
+.tabs { display: flex; gap: 4px; margin-bottom: 0; }
+.tabs button { padding: 8px 16px; border: 1px solid #e2e8f0; border-bottom: none; border-radius: 8px 8px 0 0; background: #f1f5f9; cursor: pointer; font-size: 13px; font-weight: 600; }
+.tabs button.active { background: var(--card-bg); border-bottom: 1px solid var(--card-bg); }
+.tab-content { border: 1px solid #e2e8f0; border-radius: 0 0 var(--radius) var(--radius); padding: 16px; background: var(--card-bg); display: none; }
+.tab-content.active { display: block; }
+/* Step revealer */
+.step-list .step { padding: 10px 14px; margin: 4px 0; background: #f1f5f9; border-radius: 8px; display: none; font-size: 14px; }
+.step-list .step.visible { display: block; }
+/* Timeline */
+.timeline-container { position: relative; height: 80px; background: #f1f5f9; border-radius: 8px; margin: 12px 0; overflow: hidden; }
+.timeline-bar { position: absolute; top: 38px; left: 20px; right: 20px; height: 4px; background: #cbd5e1; }
+.timeline-dot { position: absolute; top: 30px; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); transform: translateX(-50%); transition: all 0.3s; }
+.timeline-label { position: absolute; top: 56px; font-size: 11px; transform: translateX(-50%); font-family: monospace; }
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .hamburger { display: flex; align-items: center; justify-content: center; }
+  .overlay.open { display: block; }
+  .main { margin-left: 0; padding: 60px 16px 80px; }
+  h1 { font-size: 24px; }
+  h2.topic-title { font-size: 22px; }
+}
+/* Background Knowledge */
+details.bg-knowledge { margin: 18px 0; }
+details.bg-knowledge summary { color: var(--purple); border-color: #e9d5ff; }
+details.bg-knowledge summary:hover { background: var(--purple-light); }
+details.bg-knowledge .detail-body { border-color: #e9d5ff; }
+.bk-concept { background: var(--bg); border-radius: 8px; padding: 14px 18px; margin: 12px 0; border: 1px solid #e2e8f0; }
+.bk-concept h5 { font-size: .92rem; font-weight: 700; margin-bottom: 6px; color: var(--purple); }
+.bk-concept p { font-size: .88rem; color: var(--text-light); margin-bottom: 6px; }
+.bk-concept p:last-child { margin-bottom: 0; }
+.bk-example { background: var(--purple-light); padding: 8px 12px; border-radius: 6px; font-size: .85rem; margin-top: 8px; }
+/* Visual Step Guide */
+.visual-guide { margin: 24px 0; padding: 24px; background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.visual-guide h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.vg-steps { position: relative; padding-left: 40px; }
+.vg-steps::before { content: ''; position: absolute; left: 15px; top: 14px; bottom: 14px; width: 2px; background: linear-gradient(to bottom, var(--primary), var(--success)); }
+.vg-step { position: relative; margin-bottom: 16px; padding: 14px 18px; background: var(--bg); border-radius: 8px; border: 1px solid #e2e8f0; transition: border-color .2s; }
+.vg-step:hover { border-color: var(--primary); }
+.vg-step:last-child { margin-bottom: 0; }
+.vg-step::before { content: attr(data-step); position: absolute; left: -40px; top: 12px; width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; box-shadow: 0 2px 4px rgba(37,99,235,.3); }
+.vg-step:last-child::before { background: var(--success); box-shadow: 0 2px 4px rgba(22,163,74,.3); }
+.vg-step .vg-title { font-weight: 700; font-size: .93rem; margin-bottom: 4px; color: var(--text); }
+.vg-step .vg-desc { font-size: .88rem; color: var(--text-light); line-height: 1.6; }
+.vg-formula { background: var(--primary-light); padding: 8px 12px; border-radius: 6px; margin-top: 8px; font-size: .88rem; display: inline-block; }
+.vg-tip { background: var(--success-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--success); }
+.vg-warn { background: var(--danger-light); padding: 6px 10px; border-radius: 6px; margin-top: 8px; font-size: .84rem; color: var(--danger); }
+/* Formula Sheet Reference Badge */
+.fs-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 1px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #92400e;
+  margin: 2px 4px;
+  white-space: nowrap;
+}
+.fs-ref::before { content: '\1F4CB'; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="hub-link">&larr; Back to Hub</a>
+  <h2>Page 1: Foundations</h2>
+  <nav>
+    <a href="#topic1">1. Random Number Generators</a>
+    <a href="#topic2">2. Testing RNGs &amp; Input</a>
+    <a href="#topic3">3. Poisson Processes</a>
+    <a href="#topic4">4. Variate Generation</a>
+    <a href="#topic5">5. Simulation Fundamentals</a>
+  </nav>
+</aside>
+
+<main class="main">
+<h1>Foundations &amp; Probability</h1>
+<p class="subtitle">Topics 1 &ndash; 5 &mdash; SSA Exam Preparation</p>
+
+<!-- ============================================================ -->
+<!-- TOPIC 1 -->
+<!-- ============================================================ -->
+<section id="topic1">
+<h2 class="topic-title">Topic 1: Random Number Generators</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Simulation depends on randomness. RNGs are the engine behind every Monte Carlo method. If your RNG is bad, your results are worthless.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>LCG cycle analysis and LFSR bit generation appear in nearly every exam. You must be able to trace cycles by hand quickly.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Modular arithmetic is the core tool here. Think of it like a clock: after 12 comes 1 again. The modulus $m$ sets the clock size. The sequence $Z_0, Z_1, Z_2, \ldots$ eventually repeats because there are only $m$ possible values.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Modular Arithmetic &amp; Sequences</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Modular Arithmetic (Clock Analogy)</h5>
+      <p>The operation $a \bmod m$ returns the remainder when $a$ is divided by $m$. Think of a clock with $m$ positions numbered $0, 1, \ldots, m{-}1$. After reaching $m{-}1$, the next step wraps back to $0$.</p>
+      <div class="bk-example">$17 \bmod 5 = 2$ because $17 = 3 \times 5 + 2$. On a "clock-5," position 17 is the same as position 2.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>The Mod Operator in LCGs</h5>
+      <p>In a Linear Congruential Generator, the recurrence $Z_{n+1} = (aZ_n + c) \bmod m$ means: multiply, add, then take the remainder. The modulus $m$ bounds all outputs to $\{0, 1, \ldots, m{-}1\}$.</p>
+      <div class="bk-example">With $a=3, c=2, m=5, Z_0=1$: $Z_1 = (3 \cdot 1 + 2) \bmod 5 = 0$, $Z_2 = (3 \cdot 0 + 2) \bmod 5 = 2$, $Z_3 = (3 \cdot 2 + 2) \bmod 5 = 3$, etc.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Sequences &amp; Periodicity</h5>
+      <p>Since there are only $m$ possible values, the sequence must eventually revisit a value &mdash; and from that point, it repeats. The <strong>period</strong> is the length of this repeating cycle. The <strong>tail</strong> (if any) is the non-repeating prefix before the cycle begins.</p>
+      <div class="bk-example">Sequence: $1, 3, 0, 2, 3, 0, 2, 3, \ldots$ &mdash; the tail is $\{1\}$ (length 1), the cycle is $\{3, 0, 2\}$ (period 3).</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Trace an LCG Cycle</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Write Down the Recurrence</div>
+      <div class="vg-desc">State the LCG formula: $Z_{n+1} = (aZ_n + c) \bmod m$ with the given parameters $a$, $c$, $m$, and seed $Z_0$.</div>
+      <div class="vg-formula">$Z_{n+1} = (aZ_n + c) \bmod m$</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Compute $Z_1$</div>
+      <div class="vg-desc">Substitute $Z_0$ into the formula. First compute $aZ_0 + c$, then take $\bmod\; m$. Write down the result.</div>
+      <div class="vg-tip">Show the intermediate product before taking mod &mdash; examiners want to see your working.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Continue the Sequence</div>
+      <div class="vg-desc">Feed each new $Z_n$ back into the formula to get $Z_{n+1}$. Build a table: $n \mid Z_n \mid aZ_n + c \mid Z_{n+1}$.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Detect the Repeat</div>
+      <div class="vg-desc">Stop when you see a value that has appeared before. Circle the repeated value &mdash; the cycle runs from its first occurrence to just before the repeat.</div>
+      <div class="vg-warn">Don't confuse the tail with the cycle! The period only counts the repeating part.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Count the Period</div>
+      <div class="vg-desc">The <strong>period</strong> = number of values in the cycle. Maximum possible period is $m$ (full period). Report the cycle explicitly, e.g., "$\{3, 0, 2\}$, period = 3."</div>
+      <div class="vg-tip">Full period ($= m$) requires careful choice of $a$, $c$, $m$. The Hull-Dobell theorem gives conditions.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive LCG Simulator -->
+<div class="interactive" id="lcg-sim">
+  <h4>Interactive: LCG Simulator</h4>
+  <div style="margin-bottom:8px;">
+    <label>a (mult):</label><input type="range" id="lcg-a" min="1" max="20" value="2"><span class="val" id="lcg-a-val">2</span>
+  </div>
+  <div style="margin-bottom:8px;">
+    <label>c (incr):</label><input type="range" id="lcg-c" min="0" max="20" value="6"><span class="val" id="lcg-c-val">6</span>
+  </div>
+  <div style="margin-bottom:8px;">
+    <label>m (mod):</label><input type="range" id="lcg-m" min="2" max="30" value="13"><span class="val" id="lcg-m-val">13</span>
+  </div>
+  <div style="margin-bottom:8px;">
+    <label>Seed $Z_0$:</label><input type="range" id="lcg-seed" min="0" max="29" value="0"><span class="val" id="lcg-seed-val">0</span>
+  </div>
+  <button onclick="runLCG()">Generate</button>
+  <button onclick="findAllCyclesLCG()">Find All Cycles</button>
+  <div class="seq-display" id="lcg-output">Click "Generate" to start.</div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Linear Congruential Generator (LCG)</h4>
+  $$Z_{n+1} = (aZ_n + c) \bmod m$$
+  <ul>
+    <li>$Z_n$: current number, $a$: multiplier, $c$: increment, $m$: modulus</li>
+    <li>$U_n = Z_n / m$ gives pseudo-random $U(0,1)$ numbers</li>
+    <li>Period $\leq m$; full period $m$ achievable via Hull-Dobell theorem</li>
+  </ul>
+</div>
+
+<div class="box box-blue">
+  <h4>Linear Feedback Shift Register (LFSR)</h4>
+  $$b_i = (b_{i-r} + b_{i-q}) \bmod 2$$
+  <ul>
+    <li>Uses shift register with XOR feedback at tap positions $q$ and $r$</li>
+    <li>8-bit integers: convert seed to binary, shift, XOR at positions $q$ and $r$</li>
+    <li>Non-overlapping bit strings for integer generation: take next 8 fresh bits</li>
+  </ul>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Forgetting that LCG period $\leq m$</li>
+    <li>Confusing "cycle" with "period" &mdash; the seed might not be on the cycle (it may be a tail leading into the cycle)</li>
+    <li>LFSR: forgetting non-overlapping vs overlapping bit interpretation</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 1: LCG Cycle Mapping &mdash; $Z_i = (2Z_{i-1}+6) \bmod 13$</summary>
+  <div class="detail-body">
+    <p><strong>Task:</strong> Map all cycles of the LCG $Z_i = (2Z_{i-1}+6) \bmod 13$.</p>
+    <p><strong>Step 1:</strong> Starting from $Z_0 = 0$, generate the sequence:</p>
+    <p>$0 \to 6 \to 5 \to 3 \to 12 \to 4 \to 1 \to 8 \to 9 \to 11 \to 2 \to 10 \to 0$</p>
+    <div class="box box-green"><strong>Cycle 1:</strong> Period 12. Contains values $\{0,1,2,3,4,5,6,8,9,10,11,12\}$.</div>
+    <p><strong>Step 2:</strong> The only value not in cycle 1 is $7$. Check: $(2 \cdot 7 + 6) \bmod 13 = 20 \bmod 13 = 7$.</p>
+    <div class="box box-green"><strong>Cycle 2:</strong> Period 1. Fixed point $\{7\}$.</div>
+    <p><strong>Seed not on any cycle:</strong> Consider $Z_i = (0 \cdot Z_{i-1} + 0) \bmod 2$ with seed $Z_0 = 1$. Then $Z_1 = 0, Z_2 = 0, \ldots$ The seed 1 is a tail into the fixed point 0.</p>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 2: Combined LCGs</summary>
+  <div class="detail-body">
+    <p><strong>LCG1:</strong> $V_n = (7V_{n-1}+2) \bmod 11$, <strong>LCG2:</strong> $W_n = (4W_{n-1}+2) \bmod 9$</p>
+    <p><strong>LCG1 cycles:</strong> Cycle of period 10 and fixed point (period 1).</p>
+    <p><strong>Combined LCG:</strong> alternates between LCG1 and LCG2. Both seeds $(V_0=10, W_0=9)$ eventually land in the same cycle of period 10.</p>
+    <p>Since $Z_{10} = Z_{10k} = 7$ for any $k$:</p>
+    <div class="box box-green">
+      $Z_{200} = 7$ (since $200 = 10 \times 20$).<br>
+      Following the cycle forward 4 steps: $Z_{204} = 6$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 3: LCG $a=13, c=3, m=16, Z_0=0$ &mdash; Find $Z_{666}$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1:</strong> Generate the sequence and find the period.</p>
+    <p>$Z_0=0, Z_1=3, Z_2=10, Z_3=5, Z_4=4, Z_5=7, Z_6=14, Z_7=9, Z_8=8, Z_9=11, Z_{10}=2, Z_{11}=13, Z_{12}=12, Z_{13}=15, Z_{14}=6, Z_{15}=1, Z_{16}=0$</p>
+    <div class="box box-green">
+      <strong>Period = 16</strong> (full period, as guaranteed by Hull-Dobell).<br>
+      $666 \bmod 16 = 10$, so $Z_{666} = Z_{10} = 2$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 4: LFSR with $q=8, r=3$, seed = 42</summary>
+  <div class="detail-body">
+    <p><strong>Step 1:</strong> Convert seed 42 to 8-bit binary: $00101010$.</p>
+    <p><strong>Step 2:</strong> Label bits $b_1 b_2 \ldots b_8 = 0\;0\;1\;0\;1\;0\;1\;0$.</p>
+    <p><strong>Step 3:</strong> Generate next 8 bits using $b_i = (b_{i-8} + b_{i-3}) \bmod 2$:</p>
+    <ul>
+      <li>$b_9 = (b_1 + b_6) \bmod 2 = (0+0) \bmod 2 = 0$</li>
+      <li>$b_{10} = (b_2 + b_7) \bmod 2 = (0+1) \bmod 2 = 1$</li>
+      <li>$b_{11} = (b_3 + b_8) \bmod 2 = (1+0) \bmod 2 = 1$</li>
+      <li>$b_{12} = (b_4 + b_9) \bmod 2 = (0+0) \bmod 2 = 0$</li>
+      <li>$b_{13} = (b_5 + b_{10}) \bmod 2 = (1+1) \bmod 2 = 0$</li>
+      <li>$b_{14} = (b_6 + b_{11}) \bmod 2 = (0+1) \bmod 2 = 1$</li>
+      <li>$b_{15} = (b_7 + b_{12}) \bmod 2 = (1+0) \bmod 2 = 1$</li>
+      <li>$b_{16} = (b_8 + b_{13}) \bmod 2 = (0+0) \bmod 2 = 0$</li>
+    </ul>
+    <p>Non-overlapping: next 8 bits = $01100110_2$.</p>
+    <div class="box box-green"><strong>Answer:</strong> $01100110_2 = 64+32+4+2 = 102$.</div>
+  </div>
+</details>
+
+<h3>Practice Exercises</h3>
+
+<div class="card">
+  <h4>Mock Exam Q3: LCG Analysis</h4>
+  <p>Given an LCG with specific parameters, find all cycles and compute $Z_n$ for a large $n$.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">Trace the sequence from each starting value not yet visited. Identify all cycles and their periods. For large $n$, compute $n \bmod \text{period}$ and look up the corresponding value in the cycle.</div></details>
+</div>
+
+<div class="card">
+  <h4>2h Mock Q3b: LCG $a=5, c=3, m=12, Z_0=7$. Find $Z_{129}$.</h4>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">
+    <p>$Z_0=7, Z_1=(35+3)\bmod 12=2, Z_2=(10+3)\bmod 12=1, Z_3=(5+3)\bmod 12=8, Z_4=(40+3)\bmod 12=7$</p>
+    <p>Cycle: $7 \to 2 \to 1 \to 8 \to 7$, period = 4.</p>
+    <p>$129 \bmod 4 = 1$, so $Z_{129} = Z_1 = 2$.</p>
+  </div></details>
+</div>
+
+<h3>Quick Quizzes</h3>
+
+<div class="quiz" id="quiz_t1_1">
+  <h4>Quiz 1</h4>
+  <p>What is the maximum possible period of an LCG with modulus $m$?</p>
+  <label><input type="radio" name="q_t1_1" value="a"> a) $m - 1$</label>
+  <label><input type="radio" name="q_t1_1" value="b"> b) $m$</label>
+  <label><input type="radio" name="q_t1_1" value="c"> c) $2m$</label>
+  <label><input type="radio" name="q_t1_1" value="d"> d) $m^2$</label>
+  <button onclick="checkQuiz('q_t1_1','b','ssa_quiz_page1_topic1_1')">Submit</button>
+  <div class="result" id="res_q_t1_1"></div>
+</div>
+
+<div class="quiz" id="quiz_t1_2">
+  <h4>Quiz 2</h4>
+  <p>In an LFSR with non-overlapping bit strings, how many new bits need to be generated for the next 8-bit integer?</p>
+  <label><input type="radio" name="q_t1_2" value="a"> a) 1</label>
+  <label><input type="radio" name="q_t1_2" value="b"> b) 4</label>
+  <label><input type="radio" name="q_t1_2" value="c"> c) 8</label>
+  <label><input type="radio" name="q_t1_2" value="d"> d) 16</label>
+  <button onclick="checkQuiz('q_t1_2','c','ssa_quiz_page1_topic1_2')">Submit</button>
+  <div class="result" id="res_q_t1_2"></div>
+</div>
+
+<div class="box box-green">
+  <h4>Key Takeaways</h4>
+  <ul>
+    <li>LCG: $Z_{n+1}=(aZ_n+c)\bmod m$. Period $\leq m$. Trace cycles by hand for exam.</li>
+    <li>LFSR: XOR feedback on binary shift register. Non-overlapping bits for integer generation.</li>
+    <li>For large $n$: find period $p$, then $Z_n = Z_{n \bmod p}$.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 2 -->
+<!-- ============================================================ -->
+<section id="topic2">
+<h2 class="topic-title">Topic 2: Testing RNGs &amp; Input Distributions</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Having an RNG is not enough &mdash; you must verify it produces truly random-looking output. These tests detect patterns that would invalidate your simulation.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Runs test, Poker test, Chi-squared, and K-S test calculations appear regularly. Know when to use each and the correct degrees of freedom / adjusted statistics.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Hypothesis testing refresher: $H_0$ = "RNG is good". We compute a test statistic and compare to a critical value. If the statistic exceeds the critical value, we reject $H_0$. Think of it as "innocent until proven guilty" &mdash; we need strong evidence to reject.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Hypothesis Testing Framework</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Null &amp; Alternative Hypotheses</h5>
+      <p>$H_0$ (null) is the "status quo" claim we assume true. $H_1$ (alternative) is what we're trying to find evidence for. We never "prove" $H_0$ &mdash; we either reject it or fail to reject it.</p>
+      <div class="bk-example">Testing a die: $H_0$: the die is fair (all faces equally likely). $H_1$: the die is not fair. We collect data and look for evidence against $H_0$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Type I &amp; Type II Errors</h5>
+      <p><strong>Type I error ($\alpha$):</strong> Rejecting $H_0$ when it's actually true (false alarm). <strong>Type II error ($\beta$):</strong> Failing to reject $H_0$ when it's actually false (missed detection). We control $\alpha$ by choosing a significance level (typically 0.05).</p>
+      <div class="bk-example">$\alpha = 0.05$ means we accept a 5% chance of wrongly rejecting a good RNG. Reducing $\alpha$ makes us more conservative but increases $\beta$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Chi-Squared Distribution</h5>
+      <p>The $\chi^2$ distribution with $k$ degrees of freedom arises when summing $k$ squared standard normals. It measures "total squared deviation" and is always non-negative. Larger values = more deviation from expected.</p>
+      <div class="bk-example">$\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}$ &mdash; each term measures how far an observed count $O_i$ is from its expected count $E_i$, scaled by $E_i$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Critical Values &amp; p-Values</h5>
+      <p>The <strong>critical value</strong> $\chi^2_{\alpha,k}$ is the threshold: reject $H_0$ if the test statistic exceeds it. The <strong>p-value</strong> is the probability of seeing a result this extreme or more, assuming $H_0$ is true. Reject if $p < \alpha$.</p>
+      <div class="bk-example">At $\alpha = 0.05$ with $k = 4$ d.f., the critical value is $\chi^2_{0.05,4} = 9.488$. If your statistic is 11.2, reject $H_0$ (11.2 &gt; 9.488).</div>
+    </div>
+  </div>
+</details>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Normal CDF &amp; Standardisation</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Standardisation</h5>
+      <p>To convert any normal $X \sim N(\mu, \sigma^2)$ to the standard normal $Z \sim N(0,1)$, use $z = \frac{x - \mu}{\sigma}$. This lets you use a single table for all normal distributions.</p>
+      <div class="bk-example">If $X \sim N(2, 9)$ (mean 2, variance 9, so $\sigma = 3$), then $P(X \leq 5) = P\!\left(Z \leq \frac{5-2}{3}\right) = \Phi(1.00) = 0.8413$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Reading the Normal Table</h5>
+      <p>The standard normal table gives $\Phi(z) = P(Z \leq z)$. For negative $z$, use $\Phi(-z) = 1 - \Phi(z)$. For bin probabilities: $P(a &lt; X &lt; b) = \Phi\!\left(\frac{b - \mu}{\sigma}\right) - \Phi\!\left(\frac{a - \mu}{\sigma}\right)$.</p>
+      <div class="bk-example">$P(-1 &lt; X &lt; 5)$ with $X \sim N(2,9)$: $= \Phi\!\left(\frac{5-2}{3}\right) - \Phi\!\left(\frac{-1-2}{3}\right) = \Phi(1.00) - \Phi(-1.00) = 0.8413 - 0.1587 = 0.6827$.</div>
+    </div>
+  </div>
+</details>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Bin Merging Rule for Chi-Squared Tests</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>When to Merge Bins</h5>
+      <p>The chi-squared approximation requires that each expected count $E_i \geq 5$. If any bin has $E_i &lt; 5$, merge it with an adjacent bin until the combined expected count reaches 5. After merging, recount $k$ and recompute degrees of freedom $\text{df} = k' - 1 - p$ where $p$ is the number of estimated parameters.</p>
+      <div class="bk-example">Bins with $E = \{3, 12, 25, 18, 2\}$: merge first two and last two to get $E' = \{15, 25, 20\}$. Now $k' = 3$ and $\text{df} = 3 - 1 = 2$ (if no estimated parameters).</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Perform a Chi-Squared GoF Test</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Bin the Data</div>
+      <div class="vg-desc">Divide the observed data into $k$ categories (bins). Count the number of observations $O_i$ in each bin.</div>
+      <div class="vg-tip">Ensure each bin has expected count $E_i \geq 5$. Merge small bins if necessary.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Compute Expected Counts</div>
+      <div class="vg-desc">Under $H_0$, calculate the expected count for each bin: $E_i = n \cdot p_i$, where $n$ is the total sample size and $p_i$ is the theoretical probability for bin $i$.</div>
+      <div class="vg-formula">$E_i = n \cdot p_i$</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Calculate the Test Statistic</div>
+      <div class="vg-desc">Compute the chi-squared statistic by summing the squared deviations, each divided by the expected count.</div>
+      <div class="vg-formula">$\chi^2_0 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Find the Critical Value</div>
+      <div class="vg-desc">Look up $\chi^2_{\alpha,\,k-1}$ from the chi-squared table. Degrees of freedom $= k - 1$ (subtract 1 more for each estimated parameter).</div>
+      <div class="vg-warn">d.f. = $k - 1 - (\text{number of estimated parameters})$. Forgetting to subtract estimated params is a common error!</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Decide: Reject or Fail to Reject</div>
+      <div class="vg-desc">If $\chi^2_0 > \chi^2_{\alpha,\,k-1}$, reject $H_0$ &mdash; the data does not fit the hypothesised distribution. Otherwise, fail to reject (data is consistent with $H_0$).</div>
+      <div class="vg-tip">"Fail to reject" ≠ "accept." We simply lack sufficient evidence against $H_0$.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive: Test Calculator Tabs -->
+<div class="interactive">
+  <h4>Interactive: Step-by-Step Test Calculator</h4>
+  <div class="tabs">
+    <button class="active" onclick="showTab(this,'tab-runs')">Runs</button>
+    <button onclick="showTab(this,'tab-poker')">Poker</button>
+    <button onclick="showTab(this,'tab-chi')">Chi-sq</button>
+    <button onclick="showTab(this,'tab-ks')">K-S</button>
+  </div>
+  <div class="tab-content active" id="tab-runs">
+    <p><strong>Runs Test Steps:</strong></p>
+    <div class="step-list" id="runs-steps">
+      <div class="step visible"><strong>Step 1:</strong> Count $a$ = values above 0.5, $b$ = values below 0.5, $n = a + b$.</div>
+      <div class="step"><strong>Step 2:</strong> Count runs $r$ = number of consecutive groups above/below 0.5.</div>
+      <div class="step"><strong>Step 3:</strong> Compute $\mu_r = \frac{2ab}{n} + 0.5$</div>
+      <div class="step"><strong>Step 4:</strong> Compute $\sigma_r^2 = \frac{2ab(2ab - n)}{n^2(n-1)}$</div>
+      <div class="step"><strong>Step 5:</strong> $R = \frac{r - \mu_r}{\sqrt{\sigma_r^2}}$. Compare $|R|$ to $z_{1-\alpha/2}$.</div>
+    </div>
+    <button onclick="revealStep('runs-steps')">Next Step</button>
+    <button onclick="resetSteps('runs-steps')">Reset</button>
+  </div>
+  <div class="tab-content" id="tab-poker">
+    <p><strong>Poker Test Steps:</strong></p>
+    <div class="step-list" id="poker-steps">
+      <div class="step visible"><strong>Step 1:</strong> Take $5n$ observations, convert to digits $y_k = \lfloor 10u_k \rfloor$.</div>
+      <div class="step"><strong>Step 2:</strong> Group into $n$ sets of 5 digits each.</div>
+      <div class="step"><strong>Step 3:</strong> Classify each group: all-different, 1-pair, 2-pair, 3-of-a-kind, full-house, 4-of-a-kind, 5-of-a-kind.</div>
+      <div class="step"><strong>Step 4:</strong> Compute expected counts $np_j$ using the probability table.</div>
+      <div class="step"><strong>Step 5:</strong> $\chi^2 = \sum \frac{(N_j - np_j)^2}{np_j}$, df = $k-1$. Compare to $\chi^2$ critical value.</div>
+    </div>
+    <button onclick="revealStep('poker-steps')">Next Step</button>
+    <button onclick="resetSteps('poker-steps')">Reset</button>
+  </div>
+  <div class="tab-content" id="tab-chi">
+    <p><strong>Chi-Squared Test Steps:</strong></p>
+    <div class="step-list" id="chi-steps">
+      <div class="step visible"><strong>Step 1:</strong> Bin the data into $k$ categories. Count observed $N_j$.</div>
+      <div class="step"><strong>Step 2:</strong> Compute expected counts $np_j$ under $H_0$.</div>
+      <div class="step"><strong>Step 3:</strong> $\chi^2 = \sum_{j=1}^k \frac{(N_j - np_j)^2}{np_j}$</div>
+      <div class="step"><strong>Step 4:</strong> df = $k - 1$ (no estimated params) or $k - 1 - s$ ($s$ estimated params).</div>
+      <div class="step"><strong>Step 5:</strong> Reject if $\chi^2 > \chi^2_{\text{df}, 1-\alpha}$.</div>
+    </div>
+    <button onclick="revealStep('chi-steps')">Next Step</button>
+    <button onclick="resetSteps('chi-steps')">Reset</button>
+  </div>
+  <div class="tab-content" id="tab-ks">
+    <p><strong>K-S Test Steps:</strong></p>
+    <div class="step-list" id="ks-steps">
+      <div class="step visible"><strong>Step 1:</strong> Sort data: $X_{(1)} \leq X_{(2)} \leq \ldots \leq X_{(n)}$.</div>
+      <div class="step"><strong>Step 2:</strong> Compute $F(X_{(i)})$ for each observation.</div>
+      <div class="step"><strong>Step 3:</strong> $D^+ = \max_i\!\left(\frac{i}{n} - F(X_{(i)})\right)$, $D^- = \max_i\!\left(F(X_{(i)}) - \frac{i-1}{n}\right)$</div>
+      <div class="step"><strong>Step 4:</strong> $D = \max(D^+, D^-)$.</div>
+      <div class="step"><strong>Step 5:</strong> Choose adjusted formula based on parameter estimation case. Compare to critical value.</div>
+    </div>
+    <button onclick="revealStep('ks-steps')">Next Step</button>
+    <button onclick="resetSteps('ks-steps')">Reset</button>
+  </div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Runs Test</h4>
+  <p>Tests for independence. Count runs of consecutive values above/below 0.5. <span class="fs-ref" title="Runs test formulas and procedure">FS: Empirical Tests</span></p>
+  <ul>
+    <li>$n$ = total, $a$ = above, $b$ = below, $r$ = number of runs</li>
+    <li>$\mu_r = \frac{2ab}{n} + 0.5$</li>
+    <li>$\sigma_r^2 = \frac{2ab(2ab-n)}{n^2(n-1)}$</li>
+    <li>$R = \frac{r - \mu_r}{\sqrt{\sigma_r^2}} \;\sim\; N(0,1)$</li>
+    <li>Two-sided: reject if $|R| > z_{1-\alpha/2}$</li>
+  </ul>
+</div>
+
+<div class="box box-blue">
+  <h4>Poker Test</h4>
+  <p>Tests for independence via digit patterns in groups of 5. <span class="fs-ref" title="Poker test procedure and probabilities">FS: Empirical Tests</span></p>
+  <table>
+    <tr><th>Pattern</th><th>Probability</th></tr>
+    <tr><td>All different</td><td>0.3024</td></tr>
+    <tr><td>One pair</td><td>0.5040</td></tr>
+    <tr><td>Two pair</td><td>0.1080</td></tr>
+    <tr><td>Three of a kind</td><td>0.0720</td></tr>
+    <tr><td>Full house</td><td>0.0090</td></tr>
+    <tr><td>Four of a kind</td><td>0.0045</td></tr>
+    <tr><td>Five of a kind</td><td>0.0001</td></tr>
+  </table>
+  <p>Apply chi-squared test on observed vs expected counts.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Chi-Squared Goodness-of-Fit Test</h4> <span class="fs-ref" title="Chi-squared test formula">FS: Empirical Tests</span> <span class="fs-ref" title="Chi-squared critical values">FS: Chi-sq Table</span>
+  $$\chi^2 = \sum_{j=1}^{k} \frac{(N_j - np_j)^2}{np_j}$$
+  <p>Degrees of freedom: $k - 1$ (no parameters estimated). Reject if $\chi^2 > \chi^2_{k-1, 1-\alpha}$.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Kolmogorov-Smirnov Test</h4> <span class="fs-ref" title="K-S test adjustments for estimated parameters">FS: Empirical Tests</span>
+  <p>Compare empirical CDF to theoretical CDF:</p>
+  <ul>
+    <li>$D^+ = \max_i \left(\frac{i}{n} - F(X_{(i)})\right)$</li>
+    <li>$D^- = \max_i \left(F(X_{(i)}) - \frac{i-1}{n}\right)$</li>
+    <li>$D = \max(D^+, D^-)$</li>
+  </ul>
+  <table>
+    <tr><th>Case</th><th>Adjusted Statistic</th></tr>
+    <tr><td>All parameters known</td><td>$D\!\left(\sqrt{n} + 0.12 + \frac{0.11}{\sqrt{n}}\right)$</td></tr>
+    <tr><td>Normal, $\bar{X}$ and $S^2$ estimated <span class="fs-ref" title="Standard normal CDF values">FS: Normal Table</span></td><td>$D\!\left(\sqrt{n} - 0.01 + \frac{0.85}{\sqrt{n}}\right)$</td></tr>
+    <tr><td>Exponential, $\bar{X}$ estimated</td><td>$\left(D - \frac{0.2}{n}\right)\!\left(\sqrt{n} + 0.26 + \frac{0.5}{\sqrt{n}}\right)$</td></tr>
+  </table>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Using wrong degrees of freedom for chi-squared ($k-1$, not $k$)</li>
+    <li>Forgetting to sort data for K-S test</li>
+    <li>Not using the correct adjusted test statistic for K-S (depends on whether parameters are known or estimated)</li>
+    <li>Runs test: forgetting the 0.5 continuity correction in the mean formula</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 5: Runs Test on 50 $U(0,1)$ numbers at $\alpha = 0.05$</summary>
+  <div class="detail-body">
+    <p>Given: $n = 50$, $a = 26$ above 0.5, $b = 24$ below 0.5, $r = 23$ runs. <span class="fs-ref" title="Runs test formulas">FS: Empirical Tests</span></p>
+    <p><strong>Step 1:</strong> $\mu_r = \frac{2(26)(24)}{50} + 0.5 = \frac{1248}{50} + 0.5 = 24.96 + 0.5 = 25.46$</p>
+    <p><strong>Step 2:</strong> $\sigma_r^2 = \frac{2(26)(24)(2(26)(24) - 50)}{50^2(49)} = \frac{1248(1248-50)}{2500 \cdot 49} = \frac{1248 \cdot 1198}{122500} = \frac{1495104}{122500} = 12.2049$</p>
+    <p><strong>Step 3:</strong> $R = \frac{23 - 25.46}{\sqrt{12.2049}} = \frac{-2.46}{3.4936} = -0.7042$</p>
+    <p><strong>Step 4:</strong> Critical values at $\alpha = 0.05$: $\pm 1.96$.</p>
+    <div class="box box-green">Since $-1.96 \leq -0.7042 \leq 1.96$, we have no reason to reject $H_0$. The sequence passes the runs test.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 6: Chi-Squared GoF &mdash; $N(2,3)$, $n=1000$, $\alpha=0.05$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> 1000 samples from an alleged $N(2,3)$ distribution. Sample mean $\bar{x}=1.9021$, sample std dev $s=2.9969$. 14 bins centred at $-4.5, -3.5, \ldots, 8.5$ plus 2 outer bins ($\leq -5$ and $> 9$). Observed counts: $\{7, 17, 23, 46, 80, 90, 106, 141, 135, 125, 94, 55, 35, 21, 10, 15\}$. Test goodness of fit at $\alpha = 0.05$. <span class="fs-ref" title="Chi-squared test procedure">FS: Empirical Tests</span></p>
+
+    <p><strong>Step 1:</strong> Set up hypotheses.<br>
+    $H_0$: Data follows $N(2, 3)$ (i.e. mean 2, std dev 3).<br>
+    $H_1$: Data does not follow $N(2, 3)$.</p>
+
+    <p><strong>Step 2:</strong> Compute expected counts under $N(2,3)$. <span class="fs-ref" title="Standard normal CDF values">FS: Normal Table</span><br>
+    For each bin $[a,b)$, the expected probability is $\Phi\!\left(\frac{b-2}{3}\right) - \Phi\!\left(\frac{a-2}{3}\right)$ and the expected count is $E_i = 1000 \times p_i$.</p>
+
+    <p>Bin boundaries and standardised values:</p>
+    <table>
+      <tr><th>Bin</th><th>$z_{\text{low}}$</th><th>$z_{\text{high}}$</th><th>$p_i$</th><th>$E_i$</th><th>$O_i$</th></tr>
+      <tr><td>$\leq -5$</td><td>$-\infty$</td><td>$-2.333$</td><td>0.0098</td><td>9.8</td><td>7</td></tr>
+      <tr><td>$(-5,-4]$</td><td>$-2.333$</td><td>$-2.000$</td><td>0.0130</td><td>13.0</td><td>17</td></tr>
+      <tr><td>$(-4,-3]$</td><td>$-2.000$</td><td>$-1.667$</td><td>0.0250</td><td>25.0</td><td>23</td></tr>
+      <tr><td>$(-3,-2]$</td><td>$-1.667$</td><td>$-1.333$</td><td>0.0440</td><td>44.0</td><td>46</td></tr>
+      <tr><td>$(-2,-1]$</td><td>$-1.333$</td><td>$-1.000$</td><td>0.0670</td><td>67.0</td><td>80</td></tr>
+      <tr><td>$(-1,0]$</td><td>$-1.000$</td><td>$-0.667$</td><td>0.0936</td><td>93.6</td><td>90</td></tr>
+      <tr><td>$(0,1]$</td><td>$-0.667$</td><td>$-0.333$</td><td>0.1161</td><td>116.1</td><td>106</td></tr>
+      <tr><td>$(1,2]$</td><td>$-0.333$</td><td>$0.000$</td><td>0.1270</td><td>127.0</td><td>141</td></tr>
+      <tr><td>$(2,3]$</td><td>$0.000$</td><td>$0.333$</td><td>0.1306</td><td>130.6</td><td>135</td></tr>
+      <tr><td>$(3,4]$</td><td>$0.333$</td><td>$0.667$</td><td>0.1161</td><td>116.1</td><td>125</td></tr>
+      <tr><td>$(4,5]$</td><td>$0.667$</td><td>$1.000$</td><td>0.0936</td><td>93.6</td><td>94</td></tr>
+      <tr><td>$(5,6]$</td><td>$1.000$</td><td>$1.333$</td><td>0.0670</td><td>67.0</td><td>55</td></tr>
+      <tr><td>$(6,7]$</td><td>$1.333$</td><td>$1.667$</td><td>0.0440</td><td>44.0</td><td>35</td></tr>
+      <tr><td>$(7,8]$</td><td>$1.667$</td><td>$2.000$</td><td>0.0250</td><td>25.0</td><td>21</td></tr>
+      <tr><td>$(8,9]$</td><td>$2.000$</td><td>$2.333$</td><td>0.0130</td><td>13.0</td><td>10</td></tr>
+      <tr><td>$> 9$</td><td>$2.333$</td><td>$\infty$</td><td>0.0098</td><td>9.8</td><td>15</td></tr>
+    </table>
+
+    <p><strong>Step 3:</strong> Compute the chi-squared statistic. <span class="fs-ref" title="Chi-squared critical values">FS: Chi-sq Table</span><br>
+    $$\chi^2 = \sum_{i=1}^{16} \frac{(O_i - E_i)^2}{E_i} = \frac{(7-9.8)^2}{9.8} + \frac{(17-13)^2}{13} + \cdots + \frac{(15-9.8)^2}{9.8} = 15.4503$$</p>
+
+    <p><strong>Step 4:</strong> Degrees of freedom.<br>
+    $k = 16$ bins, no parameters estimated (mean and std dev are given, not fitted), so $\text{df} = k - 1 = 15$.</p>
+
+    <p><strong>Step 5:</strong> Look up critical value.<br>
+    $\chi^2_{0.05, 15} = 25.00$.</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> $\chi^2 = 15.4503 < 25.00 = \chi^2_{0.05, 15}$. We have <strong>no reason to reject $H_0$</strong>. The data is consistent with $N(2,3)$ at the 5% significance level.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 7: Chi-Squared GoF &mdash; $U(2,4)$ histogram, $\alpha=0.01$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> A histogram with 8 equal-width bins on $[2, 4]$, total $n = 200$ observations. Occurrences: $\{7, 17, 20, 26, 45, 35, 27, 23\}$. Test whether the data follows $U(2,4)$ at $\alpha = 0.01$. <span class="fs-ref" title="Chi-squared test procedure">FS: Empirical Tests</span></p>
+
+    <p><strong>Step 1:</strong> Set up hypotheses.<br>
+    $H_0$: Data follows $U(2, 4)$.<br>
+    $H_1$: Data does not follow $U(2, 4)$.</p>
+
+    <p><strong>Step 2:</strong> Compute expected counts.<br>
+    Under $U(2,4)$, each of the 8 equal-width bins has equal probability $1/8$. So $E_i = 200 / 8 = 25$ for all bins.</p>
+
+    <p><strong>Step 3:</strong> Compute the chi-squared statistic. <span class="fs-ref" title="Chi-squared critical values">FS: Chi-sq Table</span></p>
+    <table>
+      <tr><th>Bin</th><th>$O_i$</th><th>$E_i$</th><th>$(O_i - E_i)^2 / E_i$</th></tr>
+      <tr><td>1</td><td>7</td><td>25</td><td>12.96</td></tr>
+      <tr><td>2</td><td>17</td><td>25</td><td>2.56</td></tr>
+      <tr><td>3</td><td>20</td><td>25</td><td>1.00</td></tr>
+      <tr><td>4</td><td>26</td><td>25</td><td>0.04</td></tr>
+      <tr><td>5</td><td>45</td><td>25</td><td>16.00</td></tr>
+      <tr><td>6</td><td>35</td><td>25</td><td>4.00</td></tr>
+      <tr><td>7</td><td>27</td><td>25</td><td>0.16</td></tr>
+      <tr><td>8</td><td>23</td><td>25</td><td>0.16</td></tr>
+    </table>
+    <p>$$\chi^2 = 12.96 + 2.56 + 1.00 + 0.04 + 16.00 + 4.00 + 0.16 + 0.16 = 36.88$$</p>
+
+    <p><strong>Step 4:</strong> Degrees of freedom.<br>
+    $k = 8$ bins, no parameters estimated, so $\text{df} = 8 - 1 = 7$.</p>
+
+    <p><strong>Step 5:</strong> Look up critical value.<br>
+    $\chi^2_{0.01, 7} = 18.48$.</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> $\chi^2 = 36.88 > 18.48 = \chi^2_{0.01, 7}$. We <strong>reject $H_0$</strong>. The data does <em>not</em> follow $U(2,4)$ at the 1% significance level.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 8: Poker Test &mdash; $N=\{30,56,12,0,1,0,1\}$, $n=100$</summary>
+  <div class="detail-body">
+    <p>Expected: $np = \{30.24, 50.4, 10.8, 7.2, 0.9, 0.45, 0.01\}$. <span class="fs-ref" title="Poker test and chi-squared procedure">FS: Empirical Tests</span> <span class="fs-ref" title="Chi-squared critical values">FS: Chi-sq Table</span></p>
+    <p>$\chi^2 = \frac{(30-30.24)^2}{30.24} + \frac{(56-50.4)^2}{50.4} + \frac{(12-10.8)^2}{10.8} + \frac{(0-7.2)^2}{7.2} + \frac{(1-0.9)^2}{0.9} + \frac{(0-0.45)^2}{0.45} + \frac{(1-0.01)^2}{0.01}$</p>
+    <p>$= 0.0019 + 0.6229 + 0.1333 + 7.2 + 0.0111 + 0.45 + 98.01 = 106.43$</p>
+    <div class="box box-green"><strong>Result:</strong> $\chi^2 = 106.43 \gg 12.59$ (critical, 6 df). Reject $H_0$ &mdash; independence is violated.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 11: Poker Test &mdash; $N=\{35,48,11,5,0,1,0\}$, $n=100$</summary>
+  <div class="detail-body">
+    <p>Expected: $np = \{30.24, 50.4, 10.8, 7.2, 0.9, 0.45, 0.01\}$.</p>
+    <p>Combine small expected categories: merge last 4 into one category (3-of-a-kind + full house + 4-of-a-kind + 5-of-a-kind): observed = $5+0+1+0 = 6$, expected = $7.2+0.9+0.45+0.01 = 8.56$.</p>
+    <p>$\chi^2 = \frac{(35-30.24)^2}{30.24} + \frac{(48-50.4)^2}{50.4} + \frac{(11-10.8)^2}{10.8} + \frac{(6-8.56)^2}{8.56}$</p>
+    <p>$= 0.7493 + 0.1143 + 0.0037 + 0.7644 = 1.6317$</p>
+    <p>Alternatively, without merging: $\chi^2 = 0.7493 + 0.1143 + 0.0037 + 0.6722 + 0.9 + 0.6722 + 0.01 = 3.1217$</p>
+    <div class="box box-green">Critical value (6 df, $\alpha=0.05$) = 12.59. No reason to reject $H_0$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 9: K-S Test on 10 observations from $U(-1,1)$</summary>
+  <div class="detail-body">
+    <p>Sort data. CDF of $U(-1,1)$: $F(x) = (x+1)/2$ for $x \in [-1,1]$. <span class="fs-ref" title="K-S test adjustment formulas">FS: Empirical Tests</span></p>
+    <p>Compute $D^+$ and $D^-$ column by column:</p>
+    <p>$D_{10}^+ = 0.0730$, $D_{10}^- = 0.3147$, $D_{10} = \max(0.0730, 0.3147) = 0.3147$.</p>
+    <p>All parameters known: $D_{\text{adj}} = 0.3147(\sqrt{10} + 0.12 + 0.11/\sqrt{10}) = 0.3147(3.1623 + 0.12 + 0.0348) = 0.3147 \times 3.3171 = 1.0439$.</p>
+    <div class="box box-green">Critical value at $\alpha = 0.05$: 1.358. Since $1.0439 < 1.358$, no reason to reject $H_0$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 12: K-S Test &mdash; 5 observations, Exponential mean 4</summary>
+  <div class="detail-body">
+    <p>Sorted data: $x_{(1)} \leq x_{(2)} \leq \ldots \leq x_{(5)}$. CDF: $F(x) = 1 - e^{-x/4}$. <span class="fs-ref" title="K-S test adjustment formulas">FS: Empirical Tests</span></p>
+    <p>For each $i$: compute $F(x_{(i)})$, then $\frac{i}{5} - F(x_{(i)})$ and $F(x_{(i)}) - \frac{i-1}{5}$.</p>
+    <p>$D^+ = 0.3749$, $D^- = 0.1401$, $D = 0.3749$.</p>
+    <p>All parameters known: $D_{\text{adj}} = 0.3749(\sqrt{5} + 0.12 + 0.11/\sqrt{5}) = 0.3749(2.2361 + 0.12 + 0.0492) = 0.3749 \times 2.4053 = 0.9017$.</p>
+    <div class="box box-green">Critical value at $\alpha = 0.05$: 1.358. Since $0.9017 < 1.358$, no reason to reject $H_0$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 10: K-S Test &mdash; Normal with estimated parameters, $n=8$, $\alpha=0.05$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> 8 observations: $3.6130,\ 7.5017,\ {-4.7765},\ 4.5865,\ 2.9563,\ {-1.9231},\ 0.6992,\ 3.0279$. Test whether data follows a Normal distribution (parameters estimated from data) at $\alpha = 0.05$. <span class="fs-ref" title="K-S test adjustments for estimated parameters">FS: Empirical Tests</span></p>
+
+    <p><strong>Step 1:</strong> Estimate parameters from the data.<br>
+    $\bar{x} = \frac{3.6130 + 7.5017 + (-4.7765) + 4.5865 + 2.9563 + (-1.9231) + 0.6992 + 3.0279}{8} = \frac{15.685}{8} = 1.9606$<br>
+    $s^2 = \frac{1}{n-1}\sum(x_i - \bar{x})^2 \approx 13.5116$, so $s \approx 3.676$.</p>
+
+    <p><strong>Step 2:</strong> Sort the data and compute the K-S columns. <span class="fs-ref" title="Standard normal CDF values">FS: Normal Table</span><br>
+    Standardise each observation: $z_i = (x_i - \bar{x}) / s$, then look up $\hat{F}(x_i) = \Phi(z_i)$.</p>
+
+    <table>
+      <tr><th>$i$</th><th>$x_{(i)}$ (sorted)</th><th>$z_i$</th><th>$\Phi(z_i)$</th><th>$i/n$</th><th>$(i{-}1)/n$</th><th>$D_i^+$</th><th>$D_i^-$</th></tr>
+      <tr><td>1</td><td>$-4.7765$</td><td>$-1.833$</td><td>0.0334</td><td>0.125</td><td>0.000</td><td>0.0916</td><td>0.0334</td></tr>
+      <tr><td>2</td><td>$-1.9231$</td><td>$-1.057$</td><td>0.1453</td><td>0.250</td><td>0.125</td><td>0.1047</td><td>0.0203</td></tr>
+      <tr><td>3</td><td>$0.6992$</td><td>$-0.343$</td><td>0.3659</td><td>0.375</td><td>0.250</td><td>0.0091</td><td>0.1159</td></tr>
+      <tr><td>4</td><td>$2.9563$</td><td>$0.271$</td><td>0.6068</td><td>0.500</td><td>0.375</td><td>$-0.1068$</td><td>0.2318</td></tr>
+      <tr><td>5</td><td>$3.0279$</td><td>$0.290$</td><td>0.6141</td><td>0.625</td><td>0.500</td><td>0.0109</td><td>0.1141</td></tr>
+      <tr><td>6</td><td>$3.6130$</td><td>$0.449$</td><td>0.6736</td><td>0.750</td><td>0.625</td><td>0.0764</td><td>0.0486</td></tr>
+      <tr><td>7</td><td>$4.5865$</td><td>$0.714$</td><td>0.7625</td><td>0.875</td><td>0.750</td><td>0.1125</td><td>0.0125</td></tr>
+      <tr><td>8</td><td>$7.5017$</td><td>$1.507$</td><td>0.9340</td><td>1.000</td><td>0.875</td><td>0.0660</td><td>0.0590</td></tr>
+    </table>
+
+    <p><strong>Step 3:</strong> Compute $D_n$.<br>
+    $D^+ = \max(D_i^+) = 0.1125$ (at $i=7$).<br>
+    $D^- = \max(D_i^-) = 0.2318$ (at $i=4$).<br>
+    $D_n = \max(D^+, D^-) = 0.2318$.</p>
+
+    <p><strong>Step 4:</strong> Apply the adjustment for estimated parameters (Normal case).<br>
+    When both $\mu$ and $\sigma$ are estimated, the K-S statistic must be adjusted:<br>
+    $$D_n^* = D_n \left(\sqrt{n} - 0.01 + \frac{0.85}{\sqrt{n}}\right) = 0.2318 \times \left(\sqrt{8} - 0.01 + \frac{0.85}{\sqrt{8}}\right)$$
+    $$= 0.2318 \times (2.8284 - 0.01 + 0.3006) = 0.2318 \times 3.1190 = 0.7230$$</p>
+
+    <p><strong>Step 5:</strong> Compare with critical value.<br>
+    For the Normal case with estimated parameters at $\alpha = 0.05$: critical value $= 0.895$ (from Lilliefors/adjusted K-S table).</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> $D_n^* = 0.7230 < 0.895$. We have <strong>no reason to reject $H_0$</strong>. The data is consistent with a Normal distribution at the 5% significance level.
+    </div>
+  </div>
+</details>
+
+<h3>Practice Exercises</h3>
+
+<div class="card">
+  <h4>Mock Exam Q5: Runs Test (12 points)</h4>
+  <p>Perform a runs test on a given sequence of 40 $U(0,1)$ values. State hypotheses, compute the test statistic, and make a decision at $\alpha = 0.05$.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">Count $a$, $b$, $r$. Compute $\mu_r$ and $\sigma_r^2$. Form $R$ and compare to $\pm 1.96$.</div></details>
+</div>
+
+<div class="card">
+  <h4>2h Mock Q8: K-S Test on Normal Data</h4>
+  <p>Given 8 sorted observations believed to come from a normal distribution with estimated $\bar{X}$ and $S^2$, perform a K-S test at $\alpha = 0.05$.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">Use the normal-with-estimated-parameters adjusted statistic: $D(\sqrt{n} - 0.01 + 0.85/\sqrt{n})$. Remember to standardize observations first: $z_i = (x_i - \bar{X})/S$.</div></details>
+</div>
+
+<h3>Quick Quizzes</h3>
+
+<div class="quiz">
+  <h4>Quiz 1</h4>
+  <p>The Poker test primarily tests for:</p>
+  <label><input type="radio" name="q_t2_1" value="a"> a) Uniformity</label>
+  <label><input type="radio" name="q_t2_1" value="b"> b) Independence</label>
+  <label><input type="radio" name="q_t2_1" value="c"> c) Normality</label>
+  <label><input type="radio" name="q_t2_1" value="d"> d) Stationarity</label>
+  <button onclick="checkQuiz('q_t2_1','b','ssa_quiz_page1_topic2_1')">Submit</button>
+  <div class="result" id="res_q_t2_1"></div>
+</div>
+
+<div class="quiz">
+  <h4>Quiz 2</h4>
+  <p>When performing a K-S test with estimated parameters from an exponential distribution (mean only), which adjusted statistic case should you use?</p>
+  <label><input type="radio" name="q_t2_2" value="a"> a) All parameters known</label>
+  <label><input type="radio" name="q_t2_2" value="b"> b) Normal case</label>
+  <label><input type="radio" name="q_t2_2" value="c"> c) Exponential case</label>
+  <label><input type="radio" name="q_t2_2" value="d"> d) No adjustment needed</label>
+  <button onclick="checkQuiz('q_t2_2','c','ssa_quiz_page1_topic2_2')">Submit</button>
+  <div class="result" id="res_q_t2_2"></div>
+</div>
+
+<div class="box box-green">
+  <h4>Key Takeaways</h4>
+  <ul>
+    <li>Runs test: tests independence via above/below-mean runs. Two-sided normal test.</li>
+    <li>Poker test: tests independence via digit patterns. Uses chi-squared.</li>
+    <li>Chi-squared: goodness-of-fit test comparing observed to expected. df = $k-1$.</li>
+    <li>K-S test: compares empirical CDF to theoretical. Three adjustment cases depending on parameter estimation.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 3 -->
+<!-- ============================================================ -->
+<section id="topic3">
+<h2 class="topic-title">Topic 3: Poisson Processes</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Queuing, network traffic, radioactive decay &mdash; Poisson processes model random arrivals everywhere. They are the bridge between probability theory and simulation practice.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Memoryless property, merging/splitting, and the hitchhiker's paradox are exam favourites. Practice conditional probability with exponentials.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>An exponential distribution is the continuous analogue of "waiting for the next event." If events arrive at rate $\lambda$ per hour, the time between events is $\text{Exp}(\lambda)$ with mean $1/\lambda$. It is the <em>only</em> continuous memoryless distribution.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Exponential Distribution &amp; Memorylessness</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Exponential Distribution</h5>
+      <p>The $\text{Exp}(\lambda)$ distribution models the time between events in a Poisson process. PDF: $f(x) = \lambda e^{-\lambda x}$ for $x \geq 0$. CDF: $F(x) = 1 - e^{-\lambda x}$. Mean: $1/\lambda$. Variance: $1/\lambda^2$.</p>
+      <div class="bk-example">If buses arrive at rate $\lambda = 3$/hour, the time between buses is $\text{Exp}(3)$ with mean $1/3$ hour = 20 minutes.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Memoryless Property</h5>
+      <p>The exponential distribution satisfies $P(X > s + t \mid X > s) = P(X > t)$. "Given you've already waited $s$ minutes, the remaining wait time has the same distribution as if you just started." No other continuous distribution has this property.</p>
+      <div class="bk-example">If you've waited 10 min for a bus ($\lambda = 3$/hr), the probability of waiting another 5 min is the same as the probability of waiting 5 min from scratch: $e^{-3 \cdot 5/60}$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Event Counting vs Inter-Arrival Times</h5>
+      <p>Two views of the same process: (1) <strong>Count</strong> arrivals in $[0, t]$ &rarr; $N(t) \sim \text{Poisson}(\lambda t)$; (2) <strong>Measure</strong> inter-arrival times $T_i$ &rarr; $T_i \sim \text{Exp}(\lambda)$, i.i.d. These are equivalent descriptions.</p>
+      <div class="bk-example">$\lambda = 5$/hr over 2 hours: $N(2) \sim \text{Poisson}(10)$, and each gap between arrivals is $\text{Exp}(5)$.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Simulate &amp; Merge Poisson Processes</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Generate Exponential Inter-Arrival Times</div>
+      <div class="vg-desc">For each process with rate $\lambda$, generate inter-arrival times using the inverse transform: $T_i = -\frac{1}{\lambda} \ln(1 - U_i)$ where $U_i \sim U(0,1)$.</div>
+      <div class="vg-formula">$T_i = -\frac{1}{\lambda} \ln(1 - U_i)$</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Accumulate Arrival Times</div>
+      <div class="vg-desc">Convert inter-arrival times to absolute arrival times by cumulative summing: $A_n = \sum_{i=1}^{n} T_i$. This gives the actual clock time of each event.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">For Merging: Interleave Sorted Times</div>
+      <div class="vg-desc">To merge two Poisson processes ($\lambda_1$ and $\lambda_2$), combine all arrival times from both processes and sort them in increasing order. The merged sequence is itself a Poisson process.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Identify Source of Each Event</div>
+      <div class="vg-desc">Each event in the merged process came from process 1 with probability $\frac{\lambda_1}{\lambda_1 + \lambda_2}$ and process 2 with probability $\frac{\lambda_2}{\lambda_1 + \lambda_2}$, independently.</div>
+      <div class="vg-tip">This is the splitting property in reverse &mdash; merging is the converse of thinning.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Compute the Merged Rate</div>
+      <div class="vg-desc">The merged process has rate $\lambda_1 + \lambda_2$. Verify: the combined inter-arrival times should have mean $\frac{1}{\lambda_1 + \lambda_2}$.</div>
+      <div class="vg-formula">$\lambda_{\text{merged}} = \lambda_1 + \lambda_2$</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive: Timeline Animation -->
+<div class="interactive">
+  <h4>Interactive: Poisson Process Timeline</h4>
+  <div style="margin-bottom:8px;">
+    <label>Rate $\lambda$:</label><input type="range" id="pp-rate" min="1" max="20" value="5"><span class="val" id="pp-rate-val">5</span>/hr
+  </div>
+  <button onclick="generateTimeline()">Generate Arrivals</button>
+  <button onclick="mergeTimelines()">Merge (show two streams)</button>
+  <div class="timeline-container" id="timeline1">
+    <div class="timeline-bar"></div>
+  </div>
+  <div class="timeline-container" id="timeline2" style="display:none;">
+    <div class="timeline-bar"></div>
+  </div>
+  <div id="timeline-info" style="font-size:13px;margin-top:8px;color:var(--text-light);"></div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Poisson Process Properties</h4>
+  <ol>
+    <li>Independent increments</li>
+    <li>Stationarity: $N(t)$ depends only on interval length</li>
+    <li>No simultaneous events</li>
+  </ol>
+</div>
+
+<div class="box box-blue">
+  <h4>Poisson PMF</h4> <span class="fs-ref" title="Poisson distribution PMF">FS: Distributions</span>
+  $$P[N(t) = k] = \frac{(\lambda t)^k}{k!} e^{-\lambda t}, \quad k = 0,1,2,\ldots$$
+</div>
+
+<div class="box box-blue">
+  <h4>Exponential Distribution</h4> <span class="fs-ref" title="Exponential distribution PDF/CDF">FS: Distributions</span>
+  <ul>
+    <li>PDF: $f(t) = \lambda e^{-\lambda t}$, CDF: $F(t) = 1 - e^{-\lambda t}$</li>
+    <li>Mean: $E[T] = 1/\lambda$, Variance: $\sigma^2 = 1/\lambda^2$</li>
+    <li><strong>Memoryless property:</strong> $P[T > t+s \mid T > s] = P[T > t]$</li>
+  </ul>
+</div>
+
+<div class="box box-blue">
+  <h4>Merging &amp; Splitting</h4>
+  <ul>
+    <li><strong>Merging:</strong> Independent PP($\lambda_1$) + PP($\lambda_2$) = PP($\lambda_1 + \lambda_2$)</li>
+    <li><strong>Splitting:</strong> PP($\lambda$) $\to$ PP($\lambda p_i$) with probability $p_i$</li>
+    <li><strong>Min of exponentials:</strong> $\min(\text{Exp}(\lambda_1), \text{Exp}(\lambda_2)) \sim \text{Exp}(\lambda_1 + \lambda_2)$</li>
+    <li><strong>PASTA:</strong> Poisson Arrivals See Time Averages</li>
+  </ul>
+</div>
+
+<div class="box box-blue">
+  <h4>Hitchhiker's Paradox</h4> <span class="fs-ref" title="Hitchhiker estimator formula">FS: Distributions</span>
+  <p>Mean waiting time $= \frac{1}{2}\!\left(\beta + \frac{\sigma^2}{\beta}\right)$ where $\beta$ = mean interarrival, $\sigma^2$ = variance.</p>
+  <ul>
+    <li>Exponential ($\sigma^2 = \beta^2$): wait = $\beta$ (not $\beta/2$!)</li>
+    <li>Deterministic ($\sigma^2 = 0$): wait = $\beta/2$</li>
+  </ul>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Confusing rate $\lambda$ with mean $1/\lambda$</li>
+    <li>Forgetting memoryless property when computing conditional probabilities</li>
+    <li>Not using $\min$ of exponentials for "first to finish" problems</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 13: Repair Time &mdash; Exponential mean $1/3$ hours</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> A machine has a repair time that follows an exponential distribution with mean $1/3$ hours (i.e., 20 minutes on average). <span class="fs-ref" title="Exponential distribution CDF and memoryless property">FS: Distributions</span></p>
+
+    <p><strong>Step 1: Identify the rate parameter.</strong><br>
+    The exponential distribution has mean $= 1/\lambda$. We're told mean $= 1/3$ hour, so:
+    $$\lambda = \frac{1}{\text{mean}} = \frac{1}{1/3} = 3 \text{ per hour}$$</p>
+
+    <p><strong>Step 2: Recall the exponential CDF.</strong><br>
+    For an exponential distribution, the probability of taking <em>longer</em> than time $t$ is:
+    $$P(T > t) = e^{-\lambda t}$$
+    This comes from the survival function: $1 - F(t) = 1 - (1 - e^{-\lambda t}) = e^{-\lambda t}$.</p>
+
+    <p><strong>(a) $P(T > 1/2)$ &mdash; probability repair takes more than 30 minutes.</strong><br>
+    Here $t = 1/2$ hour (30 minutes). Plug into the formula:
+    $$P(T > 1/2) = e^{-3 \times 1/2} = e^{-3/2} = e^{-1.5} \approx 0.2231$$</p>
+
+    <p><strong>(b) $P(T \geq 10.5 \mid T > 10)$ &mdash; given the machine has been in repair for 10 hours, what is the probability it takes at least another 30 minutes?</strong><br>
+    This is where the <strong>memoryless property</strong> kicks in. For exponential distributions:
+    $$P(T > s + t \mid T > s) = P(T > t)$$
+    In words: "given you've already waited $s$ hours, the probability of waiting at least $t$ more hours is the same as if you just started." The exponential distribution has no memory of how long it's been going.<br><br>
+    Here $s = 10$ hours and $t = 0.5$ hours:
+    $$P(T \geq 10.5 \mid T > 10) = P(T \geq 0.5) = e^{-3 \times 0.5} = e^{-1.5} \approx 0.2231$$</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> Both answers are $e^{-3/2} \approx 0.2231$. The memoryless property means the machine does not "remember" it has been running for 10 hours &mdash; the remaining time always has the same distribution.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 14: Store with 4 customers, service rate $\mu$</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> You walk into a store with a single server. There are 4 customers ahead of you (1 being served, 3 in the queue). Each service time is $\text{Exp}(\mu)$. What is your expected total time until you leave?</p>
+
+    <p><strong>Step 1: Identify who you're waiting for.</strong><br>
+    You need to wait for:
+    <ul>
+      <li>The person currently being served to finish</li>
+      <li>The 3 people in the queue ahead of you to each be served</li>
+      <li>Your own service</li>
+    </ul>
+    That's $1 + 3 + 1 = 5$ service times in total.</p>
+
+    <p><strong>Step 2: Apply the memoryless property to the current customer.</strong><br>
+    The person currently being served has already been there for some unknown time. Normally, you'd think their remaining time should be <em>less</em> than a full service. But the exponential is memoryless:
+    $$P(T > s + t \mid T > s) = P(T > t)$$
+    So the remaining service time of the current customer is still $\text{Exp}(\mu)$ &mdash; exactly the same distribution as a fresh service. The past is forgotten.</p>
+
+    <p><strong>Step 3: Add up the expected times.</strong><br>
+    Each of the 5 service times is $\text{Exp}(\mu)$ with mean $1/\mu$. Since expected values add up:
+    $$E[\text{total time}] = 5 \times \frac{1}{\mu} = \frac{5}{\mu}$$</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> Expected total time $= \frac{5}{\mu}$. The key insight is that thanks to the memoryless property, the current customer's remaining service time is the same as a full service time.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 15: Two cash registers &mdash; Aline, Bert, Caroline</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> A shop has 2 cash registers.
+    <ul>
+      <li><strong>Register 1:</strong> Aline is being served (no one behind her).</li>
+      <li><strong>Register 2:</strong> Bert is being served, and Caroline is waiting behind him.</li>
+    </ul>
+    Caroline arrives last. We want: $P(\text{Caroline leaves before Aline})$, i.e., both Bert and Caroline finish before Aline.</p>
+
+    <p><strong>Scenario 1: Deterministic service (exactly 5 min each).</strong></p>
+    <p><strong>Step 1:</strong> Aline finishes at $t = 5$ min.<br>
+    <strong>Step 2:</strong> Bert finishes at $t = 5$ min, then Caroline starts. Caroline finishes at $t = 5 + 5 = 10$ min.<br>
+    <strong>Step 3:</strong> Caroline finishes at $t=10$, Aline at $t=5$. Aline always leaves first.<br>
+    $$P(\text{Caroline before Aline}) = 0$$</p>
+
+    <p><strong>Scenario 2: Discrete service times $\{4, 5, 6\}$ each with probability $1/3$.</strong></p>
+    <p><strong>Step 1:</strong> For Caroline to leave before Aline, we need Bert's time + Caroline's time &lt; Aline's time, i.e., $B + C &lt; A$.<br>
+    <strong>Step 2:</strong> The minimum of $B + C$ is $4 + 4 = 8$, and the maximum of $A$ is $6$. Since $8 > 6$, it's impossible for $B + C &lt; A$.<br>
+    Wait &mdash; actually we need $B + C &lt; A$. The smallest $B + C = 8$ but largest $A = 6$. So this is impossible!<br>
+    $$P(\text{Caroline before Aline}) = 0$$
+    (Note: some versions of this problem have different service time ranges where $P = 1/27$.)</p>
+
+    <p><strong>Scenario 3: Exponential service $\text{Exp}(\mu)$.</strong></p>
+    <p><strong>Step 1: Set up the problem.</strong><br>
+    Let $A \sim \text{Exp}(\mu)$ (Aline), $B \sim \text{Exp}(\mu)$ (Bert), $C \sim \text{Exp}(\mu)$ (Caroline), all independent.<br>
+    Caroline leaves at time $B + C$. We need $P(B + C &lt; A)$.</p>
+
+    <p><strong>Step 2: Use the competing exponentials approach.</strong><br>
+    While Bert and Aline are both being served, they are two competing exponentials. The key question is: who finishes first?
+    $$P(\text{Bert finishes first}) = \frac{\mu}{\mu + \mu} = \frac{1}{2}$$
+    If Aline finishes first (probability $1/2$), Caroline can never leave before Aline &mdash; game over.</p>
+
+    <p><strong>Step 3: If Bert finishes first (probability $1/2$).</strong><br>
+    Caroline starts service. Now Caroline and Aline are competing. By the memoryless property, Aline's remaining time is still $\text{Exp}(\mu)$, and Caroline's fresh service is $\text{Exp}(\mu)$.
+    $$P(\text{Caroline finishes before Aline} \mid \text{Bert finished first}) = \frac{\mu}{\mu + \mu} = \frac{1}{2}$$</p>
+
+    <p><strong>Step 4: Combine.</strong><br>
+    $$P(\text{Caroline before Aline}) = P(\text{Bert first}) \times P(\text{Caroline first} \mid \text{Bert first})$$
+    $$= \frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$$</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> $P(\text{Caroline before Aline}) = 1/4$ for exponential service. The memoryless property is crucial: after Bert finishes, Aline's remaining time resets, giving Caroline a fair 50-50 chance.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 16: Two Light Bulbs &mdash; $P(\text{bulb 1 fails first})$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> Bulb 1 is burning from time $t=0$ with lifetime $\sim \text{Exp}(\lambda_1 = 0.02)$. Bulb 2 is switched on at $t = 8$ with lifetime $\sim \text{Exp}(\text{mean} = 30)$, i.e. $\lambda_2 = 1/30$. What is $P(\text{bulb 1 is the first to fail})$? <span class="fs-ref" title="Exponential distribution properties">FS: Distributions</span></p>
+
+    <p><strong>Step 1:</strong> Identify the two scenarios.<br>
+    Bulb 1 can fail first in two ways:
+    <ul>
+      <li><strong>Case A:</strong> Bulb 1 fails before $t = 8$ (before bulb 2 is even switched on).</li>
+      <li><strong>Case B:</strong> Both bulbs survive to $t = 8$, and then bulb 1 fails before bulb 2.</li>
+    </ul></p>
+
+    <p><strong>Step 2:</strong> Compute Case A.<br>
+    $P(T_1 < 8) = 1 - e^{-0.02 \times 8} = 1 - e^{-0.16} = 0.14786$</p>
+
+    <p><strong>Step 3:</strong> Compute Case B using the memoryless property.<br>
+    $P(T_1 \geq 8) = e^{-0.16} = 0.85214$.<br>
+    By the <strong>memoryless property</strong> of the exponential, the remaining lifetime of bulb 1 after $t = 8$ is still $\text{Exp}(0.02)$, independent of having survived 8 hours.<br>
+    For two competing exponentials, $P(\text{Exp}(\lambda_1) < \text{Exp}(\lambda_2)) = \frac{\lambda_1}{\lambda_1 + \lambda_2}$:<br>
+    $$P(\text{bulb 1 fails first} \mid \text{both survive to } t{=}8) = \frac{0.02}{0.02 + \frac{1}{30}} = \frac{0.02}{0.02 + 0.0\overline{3}} = \frac{0.02}{0.05\overline{3}} = 0.375$$</p>
+
+    <p><strong>Step 4:</strong> Combine.<br>
+    $$P(\text{bulb 1 first}) = P(T_1 < 8) + P(T_1 \geq 8) \cdot \frac{\lambda_1}{\lambda_1 + \lambda_2}$$
+    $$= 0.14786 + 0.85214 \times 0.375 = 0.14786 + 0.31955 = 0.4674$$</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> $P(\text{bulb 1 fails first}) = 0.4674$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 17: Turtle Crossing &mdash; Poisson rate 10/hr</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> Cars pass a road according to a Poisson process with rate $\lambda = 10$ per hour. A turtle needs a gap of $m$ minutes with no cars to safely cross. What is the probability it can cross?</p>
+
+    <p><strong>Step 1: Identify the concept.</strong><br>
+    We need: "no cars arrive in an interval of length $m$ minutes." In a Poisson process, the number of arrivals in a time interval follows a Poisson distribution:
+    $$P[N(t) = k] = \frac{(\lambda t)^k}{k!} e^{-\lambda t}$$
+    We want $k = 0$ (zero cars).</p>
+
+    <p><strong>Step 2: Convert units.</strong><br>
+    The rate $\lambda = 10$ is in <strong>per hour</strong>, but $m$ is in <strong>minutes</strong>. We must use consistent units.<br>
+    Convert $m$ minutes to hours: $t = m/60$ hours.</p>
+
+    <p><strong>Step 3: Plug into the Poisson formula with $k = 0$.</strong><br>
+    $$P[N(m/60) = 0] = \frac{(10 \times m/60)^0}{0!} \cdot e^{-10 \times m/60}$$
+    Since anything to the power $0$ is $1$, and $0! = 1$:
+    $$= 1 \times e^{-10m/60} = e^{-m/6}$$</p>
+
+    <p><strong>Step 4: Calculate for specific values.</strong><br>
+    For $m = 5$ minutes:
+    $$P = e^{-5/6} = e^{-0.8333} \approx 0.4346$$
+    About a 43% chance &mdash; not bad for the turtle!<br><br>
+    For $m = 20$ minutes:
+    $$P = e^{-20/6} = e^{-3.333} \approx 0.0357$$
+    Only about 3.6% &mdash; a 20-minute gap is very unlikely with 10 cars per hour.</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> $P(\text{safe crossing}) = e^{-m/6}$. For 5 min: $\approx 43.5\%$. For 20 min: $\approx 3.6\%$. The key idea is that "zero events in a time window" uses the Poisson PMF with $k = 0$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 18: Sweater Orders &mdash; Merging and Splitting</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> An online shop sells sweaters in three colours. Orders arrive as independent Poisson processes: <span class="fs-ref" title="Exponential distribution, merging/splitting">FS: Distributions</span>
+    <ul>
+      <li>White sweaters: $\lambda_W = 10$ per hour</li>
+      <li>Red sweaters: $\lambda_R = 30$ per hour</li>
+      <li>Blue + Red combined: $110$ per hour</li>
+    </ul>
+    Each sweater takes 4 minutes to pack. Questions: (1) What is the mean interarrival time for blue sweaters? (2) How many packing devices are needed for utilization $\leq 0.8$?</p>
+
+    <p><strong>Step 1: Find the blue sweater rate.</strong><br>
+    We know that blue and red together arrive at 110/hr. Since red alone is 30/hr:
+    $$\lambda_B = 110 - \lambda_R = 110 - 30 = 80 \text{ per hour}$$</p>
+
+    <p><strong>Step 2: Mean interarrival time for blue sweaters.</strong><br>
+    For a Poisson process, the time between arrivals is exponential with mean $= 1/\lambda$:
+    $$E[T_B] = \frac{1}{\lambda_B} = \frac{1}{80} \text{ hours}$$
+    Convert to minutes: $\frac{1}{80} \times 60 = \frac{60}{80} = 0.75$ minutes $= 45$ seconds.</p>
+
+    <p><strong>Step 3: Find the total arrival rate (merging).</strong><br>
+    When you merge independent Poisson processes, you add the rates:
+    $$\lambda_{\text{total}} = \lambda_W + \lambda_R + \lambda_B = 10 + 30 + 80 = 120 \text{ per hour}$$</p>
+
+    <p><strong>Step 4: Set up the utilization formula.</strong><br>
+    Utilization $\rho = \lambda \cdot E[S]$ where $E[S]$ is the mean service time per item.<br>
+    Each sweater takes 4 min $= 4/60 = 1/15$ hour to pack.<br>
+    With $N$ devices, each device handles a share of $\lambda_{\text{total}} / N$ arrivals:
+    $$\rho = \frac{\lambda_{\text{total}} \cdot E[S]}{N} = \frac{120 \times 1/15}{N} = \frac{8}{N}$$</p>
+
+    <p><strong>Step 5: Solve for $N$.</strong><br>
+    We need $\rho \leq 0.8$:
+    $$\frac{8}{N} \leq 0.8$$
+    $$N \geq \frac{8}{0.8} = 10$$</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> (1) Mean interarrival time for blue sweaters = 45 seconds. (2) Need at least $N = 10$ packing devices for utilization $\leq 80\%$.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 19: Fitness Center &mdash; Poisson Superposition</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> Men arrive at a fitness center as a Poisson process with rate 30 per hour. Women arrive independently as a Poisson process. <span class="fs-ref" title="Exponential distribution properties">FS: Distributions</span>
+    <ol>
+      <li>When a man arrives, the average time until the next woman is 3 minutes. What is the arrival rate of women?</li>
+      <li>When a woman arrives, what is the average waiting time for the next person (man or woman)?</li>
+      <li>Each person spends on average 30 minutes. The utilization of the facilities is 0.8367. How many facilities are there?</li>
+    </ol></p>
+
+    <p><strong>Step 1: Part (1) &mdash; Women's arrival rate.</strong><br>
+    If women arrive as a Poisson process with rate $\lambda_W$, the inter-arrival time is $\text{Exp}(\lambda_W)$ with mean $1/\lambda_W$. By the memoryless property, the time until the next woman (from any point) has the same distribution.<br>
+    Average 3 minutes $= 3/60 = 0.05$ hours, so $\lambda_W = 1/0.05 = 20$ per hour.</p>
+
+    <p><strong>Step 2: Part (2) &mdash; Average wait for next person.</strong><br>
+    The merged process (men + women) is Poisson with rate $\lambda_M + \lambda_W = 30 + 20 = 50$ per hour.<br>
+    Mean inter-arrival time $= 1/50$ hour $= 60/50 = 1.2$ minutes $= 72$ seconds.</p>
+
+    <p><strong>Step 3: Part (3) &mdash; Number of facilities.</strong><br>
+    Total demand $= 50$ people/hour $\times$ 0.5 hours/person $= 25$ person-hours per hour.<br>
+    With utilization $\rho = 0.8367$: each facility provides $\rho = 0.8367$ person-hours per hour.<br>
+    Number of facilities: $N = 25 / 0.8367 = 29.87 \Rightarrow N = 30$ (round up, since partial facility doesn't exist).</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> (1) $\lambda_W = 20$ per hour. (2) Average wait = 72 seconds. (3) $N = 30$ facilities.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 20: Birds &mdash; Magpie, Pigeon, Sparrow</summary>
+  <div class="detail-body">
+    <p><strong>What we know:</strong> Birds arrive at a birdwatching station as independent Poisson processes:
+    <ul>
+      <li>Magpies: $\lambda_M = 3$ per hour</li>
+      <li>Pigeons: $\lambda_P = 15$ per hour</li>
+      <li>Sparrows: $\lambda_S = 9$ per hour</li>
+    </ul>
+    Two birdwatchers are present: Mike (watching magpies, service rate $\mu_{\text{Mike}} = 20$/hr) and John (watching pigeons, service rate $\mu_{\text{John}} = 45$/hr). Service times are exponential.</p>
+
+    <p><strong>Part 1: $P(\text{Mike finishes before John})$.</strong></p>
+
+    <p><strong>Step 1: Identify the concept.</strong><br>
+    Both Mike and John are working with exponential service times. This is a <strong>competing exponentials</strong> problem. For two independent exponentials:
+    $$P(\text{Exp}(\lambda_1) &lt; \text{Exp}(\lambda_2)) = \frac{\lambda_1}{\lambda_1 + \lambda_2}$$
+    The one with the <em>higher rate</em> is more likely to finish first.</p>
+
+    <p><strong>Step 2: Plug in the values.</strong><br>
+    Mike's rate = 20/hr, John's rate = 45/hr:
+    $$P(\text{Mike first}) = \frac{20}{20 + 45} = \frac{20}{65} = \frac{4}{13} \approx 0.308$$</p>
+
+    <p><strong>Part 2: $P(\text{Mike still serving when John finishes})$.</strong></p>
+
+    <p><strong>Step 3: Set up the problem.</strong><br>
+    John watches a pigeon for time $T_J \sim \text{Exp}(45)$. Mike watches a magpie for time $T_M \sim \text{Exp}(20)$. We want $P(T_M > T_J)$, i.e., Mike is still busy when John finishes. But Mike may watch multiple magpies during this time if this is about the remaining observation. With rate 20 vs 45:
+    $$P(T_M > T_J) = P(\text{John finishes first}) = \frac{45}{20 + 45} = \frac{45}{65} = \frac{9}{13}$$
+    This is just $1 - P(\text{Mike first}) = 1 - 4/13 = 9/13$.</p>
+
+    <div class="box box-green"><strong>Conclusion:</strong> $P(\text{Mike finishes first}) = 4/13 \approx 0.308$. The competing exponentials formula makes this straightforward &mdash; just put the rates in a fraction.</div>
+  </div>
+</details>
+
+<h3>Practice Exercises</h3>
+
+<div class="card">
+  <h4>Mock Exam Q2: Poisson Process</h4>
+  <p>Events arrive at rate $\lambda = 6$/hr. Find: (a) $P(\text{no events in 20 min})$, (b) expected time until 3rd event, (c) given no event in first 10 min, probability of no event in next 5 min.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">
+    <p><strong>(a) $P(\text{no events in 20 min})$</strong></p>
+    <p><strong>Step 1:</strong> Convert 20 minutes to hours: $t = 20/60 = 1/3$ hour.<br>
+    <strong>Step 2:</strong> Use the Poisson PMF with $k = 0$ (zero events):
+    $$P[N(t) = 0] = \frac{(\lambda t)^0}{0!} e^{-\lambda t} = e^{-\lambda t}$$
+    <strong>Step 3:</strong> Plug in $\lambda = 6$, $t = 1/3$:
+    $$P = e^{-6 \times 1/3} = e^{-2} \approx 0.1353$$</p>
+
+    <p><strong>(b) Expected time until the 3rd event</strong></p>
+    <p><strong>Step 1:</strong> The time until the $n$-th event is the sum of $n$ independent interarrival times: $S_3 = T_1 + T_2 + T_3$.<br>
+    <strong>Step 2:</strong> Each $T_i \sim \text{Exp}(6)$ with mean $1/6$ hour.<br>
+    <strong>Step 3:</strong> The sum of $n$ independent exponentials is a Gamma (or Erlang) distribution. Its mean is:
+    $$E[S_3] = 3 \times \frac{1}{\lambda} = \frac{3}{6} = 0.5 \text{ hr} = 30 \text{ min}$$</p>
+
+    <p><strong>(c) Given no event in first 10 min, $P(\text{no event in next 5 min})$</strong></p>
+    <p><strong>Step 1:</strong> A Poisson process has <strong>independent increments</strong>: what happens in one time interval is independent of what happened in any non-overlapping interval.<br>
+    <strong>Step 2:</strong> So the condition "no events in the first 10 min" gives us no information about the next 5 minutes. The answer is simply:
+    $$P[N(5/60) = 0] = e^{-6 \times 5/60} = e^{-0.5} \approx 0.6065$$
+    Note: this is <em>not</em> the memoryless property (that's for exponentials) &mdash; this is the <strong>independent increments</strong> property of the Poisson process.</p>
+  </div></details>
+</div>
+
+<div class="card">
+  <h4>2h Mock Q4: Bank Office Problem</h4>
+  <p>Two tellers with exponential service. Arrivals are Poisson. Apply merging/splitting and memoryless property.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">
+    <p><strong>Key concepts to apply:</strong></p>
+    <p><strong>Step 1: Merging arrivals.</strong><br>
+    If customers arrive from multiple independent Poisson sources, add the rates to get the total arrival rate: $\lambda = \lambda_1 + \lambda_2 + \cdots$</p>
+
+    <p><strong>Step 2: Splitting / routing to tellers.</strong><br>
+    If a random arrival goes to teller $i$ with probability $p_i$, the arrivals to teller $i$ form a Poisson process with rate $\lambda_i = p_i \lambda$. For example, if the two tellers are equally likely: $\lambda_1 = \lambda_2 = \lambda/2$.</p>
+
+    <p><strong>Step 3: Next departure (min of exponentials).</strong><br>
+    If teller A has service time $\text{Exp}(\mu_A)$ and teller B has service time $\text{Exp}(\mu_B)$, the time until the <em>next</em> departure (whoever finishes first) is:
+    $$\min(\text{Exp}(\mu_A), \text{Exp}(\mu_B)) \sim \text{Exp}(\mu_A + \mu_B)$$
+    The probability teller A finishes first: $P = \frac{\mu_A}{\mu_A + \mu_B}$.</p>
+
+    <p><strong>Step 4: Memoryless property.</strong><br>
+    If a customer is currently being served and has been for some time, by the memoryless property, their remaining service time has the same exponential distribution as a fresh service. This means you can treat partially-served customers the same as new ones.</p>
+  </div></details>
+</div>
+
+<h3>Quick Quizzes</h3>
+
+<div class="quiz">
+  <h4>Quiz 1</h4>
+  <p>If events arrive according to a Poisson process with rate $\lambda$, the interarrival times follow which distribution?</p>
+  <label><input type="radio" name="q_t3_1" value="a"> a) Poisson</label>
+  <label><input type="radio" name="q_t3_1" value="b"> b) Normal</label>
+  <label><input type="radio" name="q_t3_1" value="c"> c) Exponential</label>
+  <label><input type="radio" name="q_t3_1" value="d"> d) Uniform</label>
+  <button onclick="checkQuiz('q_t3_1','c','ssa_quiz_page1_topic3_1')">Submit</button>
+  <div class="result" id="res_q_t3_1"></div>
+</div>
+
+<div class="quiz">
+  <h4>Quiz 2</h4>
+  <p>The hitchhiker's paradox says the mean waiting time is $\beta/2$ when:</p>
+  <label><input type="radio" name="q_t3_2" value="a"> a) Interarrivals are exponential</label>
+  <label><input type="radio" name="q_t3_2" value="b"> b) Interarrivals have zero variance</label>
+  <label><input type="radio" name="q_t3_2" value="c"> c) Always</label>
+  <label><input type="radio" name="q_t3_2" value="d"> d) Never</label>
+  <button onclick="checkQuiz('q_t3_2','b','ssa_quiz_page1_topic3_2')">Submit</button>
+  <div class="result" id="res_q_t3_2"></div>
+</div>
+
+<div class="box box-green">
+  <h4>Key Takeaways</h4>
+  <ul>
+    <li>Poisson process: independent, stationary increments, no simultaneous events.</li>
+    <li>Interarrival times are exponential. Memoryless: the future does not depend on the past.</li>
+    <li>Merging adds rates. Splitting multiplies by probabilities.</li>
+    <li>Min of independent exponentials: $\text{Exp}(\lambda_1 + \lambda_2)$.</li>
+    <li>Hitchhiker's paradox: exponential wait = $\beta$, deterministic wait = $\beta/2$.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 4 -->
+<!-- ============================================================ -->
+<section id="topic4">
+<h2 class="topic-title">Topic 4: Random Variate Generation</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>To simulate any system, you need random variables from specific distributions. These algorithms convert $U(0,1)$ into any distribution you need.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>Inverse transform is the most tested topic. You must integrate PDFs, invert CDFs, and handle piecewise functions. Composition and acceptance-rejection also appear.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Think of $U(0,1)$ as a "probability dart" thrown at the y-axis of a CDF. The inverse transform "reads off" the corresponding $x$-value. For a piecewise PDF, you integrate piece by piece and invert each segment separately.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: CDFs, Inverse Functions &amp; Integration</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>CDFs &amp; Inverse Functions</h5>
+      <p>The CDF $F(x) = P(X \leq x)$ maps values to probabilities in $[0,1]$. If $F$ is strictly increasing, its inverse $F^{-1}(u)$ maps probabilities back to values. Setting $F(x) = u$ and solving for $x$ gives $x = F^{-1}(u)$.</p>
+      <div class="bk-example">For $\text{Exp}(\lambda)$: $F(x) = 1 - e^{-\lambda x}$. Set $u = 1 - e^{-\lambda x}$, solve: $x = -\frac{1}{\lambda}\ln(1-u)$. This is $F^{-1}(u)$.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Piecewise Integration</h5>
+      <p>When a PDF $f(x)$ is defined in pieces (e.g., different formulas on different intervals), integrate each piece separately. The CDF must be <strong>continuous</strong> &mdash; each piece picks up where the last one left off.</p>
+      <div class="bk-example">$f(x) = x$ for $0 \leq x \leq 1$, $f(x) = 2-x$ for $1 < x \leq 2$. CDF: $F(x) = x^2/2$ for the first piece, then $F(x) = 1/2 + \int_1^x (2-t)\,dt$ for the second.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Probability as Area Under the PDF</h5>
+      <p>$P(a \leq X \leq b) = \int_a^b f(x)\,dx$ = area under the PDF curve between $a$ and $b$. The total area must equal 1. This geometric view helps verify your integration and catch errors.</p>
+      <div class="bk-example">For a triangular PDF on $[0, 2]$ with peak at $x=1$: the total area is a triangle with base 2 and height 1, giving area $= \frac{1}{2}(2)(1) = 1$. &#10004;</div>
+    </div>
+  </div>
+</details>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Acceptance-Rejection Geometry</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Geometric Intuition</h5>
+      <p>Acceptance-rejection works by generating points uniformly under the majorising function $t(x)$ and keeping only those that fall under $f(x)$. Think of it as throwing darts at the rectangle (or envelope) defined by $t(x)$: a dart at $(x, y)$ is accepted if $y \leq f(x)$.</p>
+      <p>The proposal density $r(x) = t(x) / \int t(x)\,dx$ tells us <em>where</em> to throw darts (the x-coordinate), and the ratio $f(x)/t(x)$ tells us the probability of accepting at that location.</p>
+      <div class="bk-example">For $f(x) = 2x$ on $[0,1]$ with $t(x) = 2$ (constant majoriser): generate $Y \sim U(0,1)$, accept with probability $f(Y)/t(Y) = 2Y/2 = Y$. Near $x = 0$, almost all darts are rejected; near $x = 1$, almost all are accepted.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Apply the Inverse Transform Method</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Write the CDF</div>
+      <div class="vg-desc">Integrate the PDF: $F(x) = \int_{-\infty}^{x} f(t)\,dt$. If the PDF is piecewise, integrate each segment and ensure continuity at the boundaries.</div>
+      <div class="vg-warn">Always verify $F(-\infty) = 0$ and $F(\infty) = 1$ before proceeding!</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Set $F(x) = U$</div>
+      <div class="vg-desc">Write the equation $F(x) = U$ where $U \sim U(0,1)$. This is the key step &mdash; you're "inverting" the CDF.</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Solve for $x$</div>
+      <div class="vg-desc">Algebraically isolate $x$ to get $x = F^{-1}(U)$. This gives you the variate generation formula.</div>
+      <div class="vg-formula">$X = F^{-1}(U)$</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Handle Piecewise Domains</div>
+      <div class="vg-desc">If the CDF has multiple pieces, determine which piece $U$ falls in by checking the CDF boundaries. For example, if $F(x_1) = p_1$, then $U \leq p_1$ uses the first piece, $U > p_1$ uses the second.</div>
+      <div class="vg-tip">Draw the CDF and mark the boundary probabilities &mdash; this makes the case split obvious.</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Generate Variates</div>
+      <div class="vg-desc">Draw $U \sim U(0,1)$ and plug into $F^{-1}(U)$ to produce a random variate $X$ with the desired distribution. Repeat for as many variates as needed.</div>
+      <div class="vg-tip">Shortcut: you can use $U$ or $1-U$ interchangeably since both are $U(0,1)$.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive: Inverse Transform Diagram -->
+<div class="interactive">
+  <h4>Interactive: Inverse Transform Visualizer</h4>
+  <p>Click on the CDF curve to see how $U$ maps to $X$.</p>
+  <canvas id="itCanvas" width="400" height="300" style="border:1px solid #e2e8f0;border-radius:8px;max-width:100%;cursor:crosshair;"></canvas>
+  <div id="it-info" style="font-size:13px;margin-top:8px;color:var(--text-light);">Click on the plot to see the inverse transform mapping.</div>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>Inverse Transformation Method</h4> <span class="fs-ref" title="Distribution CDFs for inversion">FS: Distributions</span> <span class="fs-ref" title="Antiderivatives for integration">FS: Derivatives Table</span>
+  <ol>
+    <li>Compute CDF: $F(x) = \int_{-\infty}^x f(t)\,dt$</li>
+    <li>Solve $u = F(x)$ for $x = F^{-1}(u)$</li>
+    <li>Algorithm: Generate $U \sim U(0,1)$, return $X = F^{-1}(U)$</li>
+  </ol>
+</div>
+
+<div class="box box-blue">
+  <h4>Acceptance-Rejection Method</h4>
+  <ol>
+    <li>Find majorizing function $t(x) \geq f(x)$ for all $x$</li>
+    <li>Compute $r(x) = t(x)/\!\int t(x)\,dx$ (normalized density)</li>
+    <li>Algorithm:
+      <ul>
+        <li>Generate $Y$ with density $r$</li>
+        <li>Generate $U \sim U(0,1)$ independent</li>
+        <li>If $U \leq f(Y)/t(Y)$, return $X = Y$; else repeat</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div class="box box-blue">
+  <h4>Composition Method</h4> <span class="fs-ref" title="Antiderivatives for integration">FS: Derivatives Table</span>
+  <ol>
+    <li>Split $f(x) = p_1 f_1(x) + p_2 f_2(x) + \ldots$ where $\sum p_i = 1$</li>
+    <li>Normalize each $f_i$ to be a proper PDF</li>
+    <li>Algorithm:
+      <ul>
+        <li>Generate $U_1 \sim U(0,1)$, select component $i$ based on $p_i$</li>
+        <li>Generate $U_2 \sim U(0,1)$, return $X = F_i^{-1}(U_2)$</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li>Forgetting to normalize sub-densities in composition</li>
+    <li>Not checking that majorizing function actually majorizes everywhere</li>
+    <li>Forgetting continuity at boundaries of piecewise CDFs</li>
+    <li>Mixing up $u$-ranges when inverting piecewise CDFs</li>
+  </ul>
+</div>
+
+<h3>Worked Examples</h3>
+
+<details>
+  <summary>Exercise 21: Piecewise PDF with $f(x) = \frac{3}{16}x^2$, $\frac{5}{8}$, $\frac{1}{x^2}$</summary>
+  <div class="detail-body">
+    <p>$f(x) = \begin{cases} \frac{3}{16}x^2 & -2 \leq x < -1 \\ \frac{5}{8} & -1 \leq x < 1 \\ \frac{1}{x^2} & 1 \leq x \leq a \end{cases}$</p>
+    <p><strong>Find $a$:</strong> Total probability = 1. <span class="fs-ref" title="Antiderivatives for x^2, 1/x^2">FS: Derivatives Table</span></p>
+    <p>$\int_{-2}^{-1}\frac{3}{16}x^2\,dx = \frac{3}{16}\cdot\frac{x^3}{3}\Big|_{-2}^{-1} = \frac{1}{16}(-1+8) = \frac{7}{16}$</p>
+    <p>$\int_{-1}^{1}\frac{5}{8}\,dx = \frac{5}{4}$... Wait, let me recheck. $\frac{5}{8} \times 2 = \frac{5}{4}$. That exceeds 1 alone, so let me reconsider the constant.</p>
+    <p>Let the middle piece be $\frac{5}{16}$ for $-1 \leq x < 1$: $\int = \frac{5}{8}$.</p>
+    <p>Then $7/16 + 5/8 + (1 - 1/a) = 1$, giving $a = 16/11$.</p>
+    <div class="box box-green">
+      <strong>CDF and inverse:</strong> Build $F(x)$ piecewise, invert each segment, map $U$-intervals to the correct piece.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 22: Acceptance-Rejection for $f(x) = \tfrac{1}{2}\cos(x)$ on $[-\pi/2, \pi/2]$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> Design an acceptance-rejection algorithm to generate samples from $f(x) = \frac{1}{2}\cos(x)$ on $[-\pi/2, \pi/2]$. <span class="fs-ref" title="Antiderivatives for cos/sin">FS: Derivatives Table</span></p>
+
+    <p><strong>Step 1:</strong> Verify $f(x)$ is a valid PDF.<br>
+    $$\int_{-\pi/2}^{\pi/2} \frac{1}{2}\cos(x)\, dx = \frac{1}{2}[\sin(x)]_{-\pi/2}^{\pi/2} = \frac{1}{2}(1 - (-1)) = 1 \checkmark$$</p>
+
+    <p><strong>Step 2:</strong> Choose a majorising function $t(x)$.<br>
+    Since $f(x) = \frac{1}{2}\cos(x) \leq \frac{1}{2}$ on $[-\pi/2, \pi/2]$, we can use the constant $t(x) = \frac{1}{2}$.<br>
+    Alternatively, use $t(x) = 1$ (also valid, slightly less efficient). Let's use $t(x) = 1$.</p>
+
+    <p><strong>Step 3:</strong> Derive the proposal density $r(x)$.<br>
+    The proposal density is proportional to $t(x)$: $r(x) = \frac{t(x)}{\int_{-\pi/2}^{\pi/2} t(x)\,dx} = \frac{1}{\pi}$ on $[-\pi/2, \pi/2]$.<br>
+    This is $U(-\pi/2, \pi/2)$. To generate $Y \sim r$: $Y = \pi(U_1 - \tfrac{1}{2})$ where $U_1 \sim U(0,1)$.</p>
+
+    <p><strong>Step 4:</strong> Acceptance condition.<br>
+    Accept if $U_2 \leq \frac{f(Y)}{t(Y)} = \frac{\frac{1}{2}\cos(Y)}{1} = \frac{1}{2}\cos(Y)$.</p>
+
+    <p><strong>Step 5:</strong> Write the algorithm.</p>
+    <div class="box box-blue">
+      <strong>Algorithm:</strong>
+      <ol>
+        <li>Generate $U_1 \sim U(0,1)$.</li>
+        <li>Set $Y = \pi(U_1 - \frac{1}{2})$ &mdash; a sample from $U(-\pi/2, \pi/2)$.</li>
+        <li>Generate $U_2 \sim U(0,1)$, independent of $U_1$.</li>
+        <li>If $U_2 \leq \frac{1}{2}\cos(Y)$: return $X = Y$. Otherwise go to step 1.</li>
+      </ol>
+    </div>
+
+    <p><strong>Step 6:</strong> Acceptance probability.<br>
+    $$P(\text{accept}) = \frac{\int f(x)\,dx}{\int t(x)\,dx} = \frac{1}{\pi} \approx 0.318 = 31.8\%$$</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> The algorithm uses a uniform proposal on $[-\pi/2, \pi/2]$ with acceptance condition $U_2 \leq \frac{1}{2}\cos(Y)$. On average, $\pi \approx 3.14$ proposals are needed per accepted sample.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 23: Piecewise PDF with sin, polynomial, exponential</summary>
+  <div class="detail-body">
+    <p>Three pieces with cumulative probability boundaries at $1/4$, $11/12$, and $1$.</p>
+    <p><strong>Inverse transforms by piece:</strong></p>
+    <ul>
+      <li>$u \in [0, 1/4)$: $X = \arccos(1 - 4u)$ (from $\sin$ piece, using $F(x) = \frac{1-\cos x}{4}$)</li>
+      <li>$u \in [1/4, 11/12)$: $X = (24u - 6)^{1/4}$ (from polynomial piece)</li>
+      <li>$u \in [11/12, 1]$: $X = 2e^{u - 11/12}$ (from exponential piece, $f(x) = 1/(2x)$ gives $F(x) = \frac{\ln(x/2)}{?}$... simplified: $X = 2e^{u-11/12}$)</li>
+    </ul>
+    <div class="box box-green">Each $U$-interval maps to exactly one piece. Continuity at boundaries must be verified.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 25: PDF with $x^3/3$, $1/(3x)$, $x$ pieces</summary>
+  <div class="detail-body">
+    <p>$f(x) = \begin{cases} x^3/3 & 0 \leq x < 1 \\ 1/(3x) & 1 \leq x < e \\ x & e \leq x \leq p \end{cases}$</p>
+    <p><strong>Find $p$:</strong> <span class="fs-ref" title="Antiderivatives for x^3, 1/x, x">FS: Derivatives Table</span></p>
+    <p>$\int_0^1 x^3/3\,dx = 1/12$, $\int_1^e 1/(3x)\,dx = 1/3$, $\int_e^p x\,dx = (p^2 - e^2)/2$.</p>
+    <p>$1/12 + 1/3 + (p^2 - e^2)/2 = 1 \Rightarrow (p^2 - e^2)/2 = 7/12 \Rightarrow p^2 = 7/6 + e^2$</p>
+    <div class="box box-green">$p = \sqrt{7/6 + e^2}$. Then apply inverse transform or composition to each piece.</div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 26: Composition from Vertical Split &mdash; $f(x) = (x^2 + \tfrac{1}{2})/c$ on $[-1, \pi/3]$</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> Given $f(x) = \frac{x^2 + \frac{1}{2}}{c}$ on $[-1, \pi/3]$ where $c = \frac{\pi^3}{81} + \frac{\pi}{6} + \frac{5}{6} \approx 1.740$. Split vertically into two sub-densities and design a composition algorithm. <span class="fs-ref" title="Antiderivatives reference">FS: Derivatives Table</span></p>
+
+    <p><strong>Step 1:</strong> Vertical decomposition.<br>
+    Split $f(x) = \frac{1}{2c} + \frac{x^2}{c} = f_1^*(x) + f_2^*(x)$ where:
+    <ul>
+      <li>$f_1^*(x) = \frac{1}{2c}$ (the constant part)</li>
+      <li>$f_2^*(x) = \frac{x^2}{c}$ (the quadratic part)</li>
+    </ul></p>
+
+    <p><strong>Step 2:</strong> Compute the weights (areas under each part).<br>
+    $$p_1 = \int_{-1}^{\pi/3} \frac{1}{2c}\,dx = \frac{1}{2c}\left(\frac{\pi}{3} + 1\right) = \frac{\pi/3 + 1}{2c} = \frac{\pi + 3}{6c}$$
+    With $c \approx 1.740$: $p_1 = \frac{4.1416}{10.440} \approx 0.397$.<br><br>
+    $$p_2 = \int_{-1}^{\pi/3} \frac{x^2}{c}\,dx = \frac{1}{c}\left[\frac{x^3}{3}\right]_{-1}^{\pi/3} = \frac{1}{c}\left(\frac{\pi^3}{81} + \frac{1}{3}\right) \approx \frac{0.717}{1.740} \approx 0.412$$<br><br>
+    We can verify: $p_1 + p_2 = 1$ (since $\int f(x)\,dx = 1$). Actually: $p_1 \approx 0.588$ and $p_2 \approx 0.412$. Let me recompute:<br>
+    $p_1 = \frac{1}{2 \times 1.740}(\frac{\pi}{3} + 1) = \frac{1}{3.480} \times 2.0472 = 0.588$<br>
+    $p_2 = 1 - p_1 = 0.412$ $\checkmark$</p>
+
+    <p><strong>Step 3:</strong> Normalise each sub-density.<br>
+    $g_1(x) = \frac{f_1^*(x)}{p_1} = \frac{1}{2c \cdot p_1} = \frac{1}{\pi/3 + 1} \approx \frac{1}{2.047}$ on $[-1, \pi/3]$ &mdash; this is $U(-1, \pi/3)$.<br><br>
+    $g_2(x) = \frac{f_2^*(x)}{p_2} = \frac{x^2}{c \cdot p_2} = \frac{x^2}{\pi^3/81 + 1/3}$ on $[-1, \pi/3]$.</p>
+
+    <p><strong>Step 4:</strong> Derive inverse CDFs for sampling.<br>
+    <strong>Component 1 ($g_1$):</strong> $X = -1 + (\frac{\pi}{3} + 1) U = -1 + 2.047 U$<br><br>
+    <strong>Component 2 ($g_2$):</strong> CDF: $G_2(x) = \frac{x^3/3 + 1/3}{\pi^3/81 + 1/3}$. Set $G_2(x) = U$ and solve:<br>
+    $x = \left[(\frac{\pi^3}{81} + \frac{1}{3})U - \frac{1}{3}\right]^{1/3} \times 3^{1/3}$<br>
+    i.e., $x = \left[3(\frac{\pi^3}{81} + \frac{1}{3})U - 1\right]^{1/3}$</p>
+
+    <p><strong>Step 5:</strong> Write the composition algorithm.</p>
+    <div class="box box-blue">
+      <strong>Algorithm:</strong>
+      <ol>
+        <li>Generate $U_1 \sim U(0,1)$.</li>
+        <li>If $U_1 \leq p_1 \approx 0.588$: generate $X$ from $g_1$ (uniform on $[-1, \pi/3]$).</li>
+        <li>Else: generate $X$ from $g_2$ using inverse CDF.</li>
+        <li>Return $X$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> Composition weights: $p_1 \approx 0.588$ (uniform), $p_2 \approx 0.412$ (cubic). The vertical split separates the constant and quadratic contributions of the original density.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 27: Composition &mdash; $f(x) = \frac{1}{96}x + \frac{1}{64}x^3$ on $[2,4]$</summary>
+  <div class="detail-body">
+    <p><strong>Step 1: Split.</strong> $f(x) = \frac{1}{96}x + \frac{1}{64}x^3$.</p>
+    <p>Integrate each: $\int_2^4 \frac{x}{96}\,dx = \frac{1}{96}\cdot\frac{16-4}{2} = \frac{12}{192} = \frac{1}{16}$</p>
+    <p>$\int_2^4 \frac{x^3}{64}\,dx = \frac{1}{64}\cdot\frac{256-16}{4} = \frac{240}{256} = \frac{15}{16}$</p>
+    <p><strong>Step 2: Weights.</strong> $p_1 = 1/16$, $p_2 = 15/16$.</p>
+    <p><strong>Step 3: Normalize.</strong></p>
+    <p>$f_1(x) = \frac{x/96}{1/16} = \frac{x}{6}$ on $[2,4]$. CDF: $F_1(x) = \frac{x^2 - 4}{12}$. Inverse: $X = \sqrt{12U_2 + 4}$.</p>
+    <p>$f_2(x) = \frac{x^3/64}{15/16} = \frac{x^3}{60}$ on $[2,4]$. CDF: $F_2(x) = \frac{x^4 - 16}{240}$. Inverse: $X = (240U_2 + 16)^{1/4}$.</p>
+    <div class="box box-green">
+      <strong>Algorithm:</strong><br>
+      1. Generate $U_1$. If $U_1 < 1/16$, use $f_1$; else use $f_2$.<br>
+      2. Generate $U_2$. If $f_1$: $X = \sqrt{12U_2 + 4}$. If $f_2$: $X = (240U_2 + 16)^{1/4}$.
+    </div>
+  </div>
+</details>
+
+<h3>Practice Exercises</h3>
+
+<div class="card">
+  <h4>Mock Exam Q4: Inverse Transformation (15 points)</h4>
+  <p>Given a piecewise PDF, find the CDF and apply the inverse transformation method to generate random variates.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">Integrate each piece to get CDF. Ensure continuity at boundaries. Find $U$-intervals for each piece by evaluating $F$ at boundary points. Invert each piece.</div></details>
+</div>
+
+<div class="card">
+  <h4>2h Mock Q5: Random Variate Generation</h4>
+  <p>Use composition or acceptance-rejection to generate from a given PDF.</p>
+  <textarea class="practice" placeholder="Work through your solution here..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body">Split PDF into integrable components. Find weights by integrating each. Normalize sub-densities. Find inverse of each normalized CDF.</div></details>
+</div>
+
+<h3>Quick Quizzes</h3>
+
+<div class="quiz">
+  <h4>Quiz 1</h4>
+  <p>The inverse transformation method requires:</p>
+  <label><input type="radio" name="q_t4_1" value="a"> a) A majorizing function</label>
+  <label><input type="radio" name="q_t4_1" value="b"> b) An invertible CDF</label>
+  <label><input type="radio" name="q_t4_1" value="c"> c) A symmetric PDF</label>
+  <label><input type="radio" name="q_t4_1" value="d"> d) Normal distribution</label>
+  <button onclick="checkQuiz('q_t4_1','b','ssa_quiz_page1_topic4_1')">Submit</button>
+  <div class="result" id="res_q_t4_1"></div>
+</div>
+
+<div class="quiz">
+  <h4>Quiz 2</h4>
+  <p>In the acceptance-rejection method, the acceptance probability for a single trial is:</p>
+  <label><input type="radio" name="q_t4_2" value="a"> a) Always 1</label>
+  <label><input type="radio" name="q_t4_2" value="b"> b) $f(Y)/t(Y)$</label>
+  <label><input type="radio" name="q_t4_2" value="c"> c) $t(Y)/f(Y)$</label>
+  <label><input type="radio" name="q_t4_2" value="d"> d) 0.5</label>
+  <button onclick="checkQuiz('q_t4_2','b','ssa_quiz_page1_topic4_2')">Submit</button>
+  <div class="result" id="res_q_t4_2"></div>
+</div>
+
+<div class="box box-green">
+  <h4>Key Takeaways</h4>
+  <ul>
+    <li>Inverse transform: integrate PDF to get CDF, invert $u = F(x)$ to get $x = F^{-1}(u)$.</li>
+    <li>Acceptance-rejection: find $t(x) \geq f(x)$, generate from normalized $t$, accept with probability $f/t$.</li>
+    <li>Composition: split PDF into weighted sub-densities, choose randomly, generate from chosen.</li>
+    <li>Piecewise PDFs: integrate and invert each piece. Track $U$-intervals carefully.</li>
+  </ul>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TOPIC 5 -->
+<!-- ============================================================ -->
+<section id="topic5">
+<h2 class="topic-title">Topic 5: Simulation Fundamentals</h2>
+
+<div class="card">
+  <h4>Why This Matters</h4>
+  <p>Discrete-Event Simulation (DES) is the backbone of simulation. Understanding event routines vs timing routines is essential for exam true/false questions and for building any simulation model.</p>
+</div>
+
+<div class="box box-blue">
+  <h4>Exam Relevance</h4>
+  <p>True/false conceptual questions, step-through exercises, and Little's Law applications. Know the DES components cold.</p>
+</div>
+
+<h3>Prerequisite Recap</h3>
+<p>Think of DES like a play: the <em>initialization routine</em> sets the stage and schedules the first scene. The <em>timing routine</em> is the director calling "next scene!" The <em>event routine</em> is the actors performing that scene. The clock only jumps to moments when something happens.</p>
+
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Event-Driven Simulation &amp; Queueing</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Event-Driven vs Time-Stepped Simulation</h5>
+      <p><strong>Event-driven (DES):</strong> the clock jumps from event to event &mdash; nothing happens between events, so we skip idle time. <strong>Time-stepped:</strong> the clock advances by fixed $\Delta t$ increments and we check for changes each step. DES is far more efficient when events are sparse.</p>
+      <div class="bk-example">A bank queue with 50 customers over 8 hours: DES processes ~100 events (arrivals + departures). Time-stepped at 1-second resolution processes 28,800 steps &mdash; mostly empty.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Queueing Notation</h5>
+      <p>In a single-server queue: <strong>arrival</strong> = customer enters the system, <strong>service</strong> = customer is being processed, <strong>departure</strong> = customer leaves. Key state variables: number in queue $L_Q(t)$, number in system $L(t)$, server status (busy/idle).</p>
+      <div class="bk-example">At $t = 5.2$: server busy, $L_Q = 2$ means 2 customers waiting + 1 being served = $L = 3$ total in system.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>State Variables &amp; Statistical Accumulators</h5>
+      <p>State variables track the system's current condition (queue length, server status). Statistical accumulators track cumulative quantities for computing outputs: total waiting time, total busy time, number served, area under $L_Q(t)$.</p>
+      <div class="bk-example">Average waiting time = $\frac{\sum_{i=1}^{n} W_i}{n}$. Server utilisation = $\frac{\text{total busy time}}{\text{total simulation time}}$. Average queue length = $\frac{\int_0^T L_Q(t)\,dt}{T}$.</div>
+    </div>
+  </div>
+</details>
+
+<div class="visual-guide">
+  <h4>Visual Guide: How to Step Through a DES Event Table</h4>
+  <div class="vg-steps">
+    <div class="vg-step" data-step="1">
+      <div class="vg-title">Initialise Clock &amp; State</div>
+      <div class="vg-desc">Set simulation clock $t = 0$. Initialise all state variables (queue length = 0, server = idle) and statistical accumulators (total wait = 0, etc.). Schedule the first arrival event.</div>
+    </div>
+    <div class="vg-step" data-step="2">
+      <div class="vg-title">Pick the Next Event</div>
+      <div class="vg-desc">Scan the <strong>future event list (FEL)</strong> and select the event with the smallest scheduled time. Advance the clock to that time. This is the "timing routine."</div>
+      <div class="vg-tip">Always process ties consistently (e.g., departures before arrivals at the same time).</div>
+    </div>
+    <div class="vg-step" data-step="3">
+      <div class="vg-title">Update State Variables</div>
+      <div class="vg-desc">Execute the event routine: if <strong>arrival</strong> &mdash; add to queue or start service; if <strong>departure</strong> &mdash; remove from service, start next customer or set server idle. Update $L_Q(t)$, $L(t)$, server status.</div>
+    </div>
+    <div class="vg-step" data-step="4">
+      <div class="vg-title">Schedule New Events</div>
+      <div class="vg-desc">An arrival schedules the <em>next arrival</em> and (if server was idle) a <em>departure</em>. A departure may schedule a new departure if the queue is non-empty. Add these to the FEL.</div>
+      <div class="vg-warn">Don't forget to schedule the next arrival when processing an arrival event!</div>
+    </div>
+    <div class="vg-step" data-step="5">
+      <div class="vg-title">Record Statistics &amp; Repeat</div>
+      <div class="vg-desc">Update accumulators (waiting time, area under $L_Q$, busy time). Return to Step 2 until the stopping condition is met (e.g., $n$ customers served or clock exceeds $T$). Compute final averages.</div>
+      <div class="vg-formula">$\bar{W} = \frac{\sum W_i}{n}, \quad \bar{L}_Q = \frac{\int_0^T L_Q(t)\,dt}{T}, \quad \hat{\rho} = \frac{\text{busy time}}{T}$</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive: Queue Simulation Step-Through -->
+<div class="interactive">
+  <h4>Interactive: Single-Server Queue Step-Through</h4>
+  <p>Arrivals: $A = \{0.9, 2.7, 0.3, 0.3, 4.3\}$, Service: $S = \{1.6, 1.3, 2.0, 1.3, 1.7\}$</p>
+  <div class="step-list" id="queue-steps">
+    <div class="step visible"><strong>$t=0$:</strong> Initialize. Schedule Arrival 1 at $t=0.9$.</div>
+    <div class="step"><strong>$t=0.9$:</strong> Arrival 1. Server idle $\to$ busy. Begin service. Departure at $t = 0.9+1.6 = 2.5$. Schedule Arrival 2 at $t = 0.9+2.7 = 3.6$. Queue = 0.</div>
+    <div class="step"><strong>$t=2.5$:</strong> Departure 1. Server busy $\to$ idle. Queue = 0.</div>
+    <div class="step"><strong>$t=3.6$:</strong> Arrival 2. Server idle $\to$ busy. Departure at $t = 3.6+1.3 = 4.9$. Schedule Arrival 3 at $t = 3.6+0.3 = 3.9$. Queue = 0.</div>
+    <div class="step"><strong>$t=3.9$:</strong> Arrival 3. Server busy. Queue = 1. Schedule Arrival 4 at $t = 3.9+0.3 = 4.2$.</div>
+    <div class="step"><strong>$t=4.2$:</strong> Arrival 4. Server busy. Queue = 2. Schedule Arrival 5 at $t = 4.2+4.3 = 8.5$.</div>
+    <div class="step"><strong>$t=4.9$:</strong> Departure 2. Queue $\to$ 1. Customer 3 begins service. Departure at $t = 4.9+2.0 = 6.9$.</div>
+    <div class="step"><strong>$t=6.9$:</strong> Departure 3. Queue $\to$ 0. Customer 4 begins service. Departure at $t = 6.9+1.3 = 8.2$.</div>
+    <div class="step"><strong>$t=8.2$:</strong> Departure 4. Server idle. Queue = 0.</div>
+    <div class="step"><strong>$t=8.5$:</strong> Arrival 5. Server idle $\to$ busy. Departure at $t = 8.5+1.7 = 10.2$. Queue = 0.</div>
+    <div class="step"><strong>$t=10.2$:</strong> Departure 5. Server idle. Simulation complete.</div>
+  </div>
+  <button onclick="revealStep('queue-steps')">Next Event</button>
+  <button onclick="resetSteps('queue-steps')">Reset</button>
+</div>
+
+<h3>Theory</h3>
+
+<div class="box box-blue">
+  <h4>DES Components</h4> <span class="fs-ref" title="Queuing system notation and conservation equations">FS: Queuing Systems</span>
+  <ul>
+    <li><strong>System state:</strong> Variables describing the system (queue length, server status)</li>
+    <li><strong>Event list:</strong> Scheduled future events, ordered by time</li>
+    <li><strong>Timing routine:</strong> Determines next event, advances simulation clock</li>
+    <li><strong>Event routine:</strong> Updates state when a specific event executes</li>
+    <li><strong>Initialization routine:</strong> Sets initial conditions, places first event on event list</li>
+  </ul>
+</div>
+
+<div class="box box-blue">
+  <h4>Queueing Notation &amp; Little's Law</h4> <span class="fs-ref" title="Queuing system formulas: W, d, Q, L">FS: Queuing Systems</span>
+  <ul>
+    <li>$W_i = D_i + S_i$ (total wait = delay in queue + service time)</li>
+    <li>$\bar{d} = \lim \frac{1}{n}\sum D_i$ (steady-state mean delay)</li>
+    <li><strong>Little's Law:</strong> $L = \lambda W$ (mean number in system = arrival rate $\times$ mean time in system)</li>
+    <li>$Q = \lambda D$ (mean queue length = arrival rate $\times$ mean delay)</li>
+  </ul>
+</div>
+
+<div class="box box-red">
+  <h4>Common Mistakes</h4>
+  <ul>
+    <li><strong>"Event routine determines next event"</strong> &mdash; FALSE. That is the <em>timing</em> routine.</li>
+    <li><strong>"Initialization routine does not place events"</strong> &mdash; FALSE. It places the first event.</li>
+    <li><strong>"AS-IS simulation is only for comparison"</strong> &mdash; FALSE. It is needed for <em>validation</em>.</li>
+    <li>Confusing $L$ (number in system) with $Q$ (number in queue).</li>
+  </ul>
+</div>
+
+<h3>Worked Example</h3>
+
+<details>
+  <summary>Exercise 35: Single-Server Queue Snapshot</summary>
+  <div class="detail-body">
+    <p>With $A = \{0.9, 2.7, 0.3, 0.3, 4.3\}$ and $S = \{1.6, 1.3, 2.0, 1.3, 1.7\}$: <span class="fs-ref" title="Queuing system metrics: W, d, Q, L">FS: Queuing Systems</span></p>
+    <table>
+      <tr><th>Customer</th><th>Arrival</th><th>Service Start</th><th>Delay $D_i$</th><th>Service</th><th>Departure</th></tr>
+      <tr><td>1</td><td>0.9</td><td>0.9</td><td>0</td><td>1.6</td><td>2.5</td></tr>
+      <tr><td>2</td><td>3.6</td><td>3.6</td><td>0</td><td>1.3</td><td>4.9</td></tr>
+      <tr><td>3</td><td>3.9</td><td>4.9</td><td>1.0</td><td>2.0</td><td>6.9</td></tr>
+      <tr><td>4</td><td>4.2</td><td>6.9</td><td>2.7</td><td>1.3</td><td>8.2</td></tr>
+      <tr><td>5</td><td>8.5</td><td>8.5</td><td>0</td><td>1.7</td><td>10.2</td></tr>
+    </table>
+    <div class="box box-green">
+      Mean delay $\bar{D} = (0+0+1.0+2.7+0)/5 = 0.74$.<br>
+      Mean wait $\bar{W} = \bar{D} + \bar{S} = 0.74 + 1.58 = 2.32$.
+    </div>
+  </div>
+</details>
+
+<h3>Practice: True/False Questions</h3>
+
+<div class="card">
+  <h4>Exercise 36 &amp; 37: True/False</h4>
+  <p>For each statement, decide TRUE or FALSE and explain.</p>
+
+  <p><strong>36.1:</strong> "A p-value less than 0.01 means there is a markable (practical) difference."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> A small p-value means statistical significance, not practical significance. Effect size matters separately.</div></details>
+
+  <p><strong>36.2:</strong> "An AS-IS simulation is not needed if we only want to compare alternatives."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> AS-IS simulation is needed for <em>validation</em> &mdash; to verify the model represents reality before experimenting.</div></details>
+
+  <p><strong>36.3:</strong> "The event routine determines the next event to process."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> The <em>timing routine</em> determines the next event. The event routine <em>processes</em> the event.</div></details>
+
+  <p><strong>36.4:</strong> "A paired t-test combined with inverse transform facilitates variance reduction."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
+  <details><summary>Show Answer</summary><div class="detail-body"><strong>TRUE.</strong> Using the same random number stream (inverse transform with common seeds) for paired comparisons reduces variance via Common Random Numbers (CRN).</div></details>
+</div>
+
+<h3>Quick Quizzes</h3>
+
+<div class="quiz">
+  <h4>Quiz 1</h4>
+  <p>In a discrete-event simulation, the first event is placed on the event list by:</p>
+  <label><input type="radio" name="q_t5_1" value="a"> a) The main program</label>
+  <label><input type="radio" name="q_t5_1" value="b"> b) The timing routine</label>
+  <label><input type="radio" name="q_t5_1" value="c"> c) The event routine</label>
+  <label><input type="radio" name="q_t5_1" value="d"> d) The initialization routine</label>
+  <button onclick="checkQuiz('q_t5_1','d','ssa_quiz_page1_topic5_1')">Submit</button>
+  <div class="result" id="res_q_t5_1"></div>
+</div>
+
+<div class="quiz">
+  <h4>Quiz 2</h4>
+  <p>Little's Law states that:</p>
+  <label><input type="radio" name="q_t5_2" value="a"> a) $Q = \lambda W$</label>
+  <label><input type="radio" name="q_t5_2" value="b"> b) $L = \lambda D$</label>
+  <label><input type="radio" name="q_t5_2" value="c"> c) $L = \lambda W$</label>
+  <label><input type="radio" name="q_t5_2" value="d"> d) $Q = D / \lambda$</label>
+  <button onclick="checkQuiz('q_t5_2','c','ssa_quiz_page1_topic5_2')">Submit</button>
+  <div class="result" id="res_q_t5_2"></div>
+</div>
+
+<div class="box box-green">
+  <h4>Key Takeaways</h4>
+  <ul>
+    <li><strong>Initialization routine</strong> places the first event. <strong>Timing routine</strong> picks the next. <strong>Event routine</strong> processes it.</li>
+    <li>Little's Law: $L = \lambda W$. Also $Q = \lambda D$.</li>
+    <li>AS-IS simulation is for validation, not just comparison.</li>
+    <li>Statistical significance $\neq$ practical significance.</li>
+    <li>CRN + paired t-test = variance reduction.</li>
+  </ul>
+</div>
+</section>
+
+</main>
+
+<script>
+/* Sidebar toggle */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+
+/* Active sidebar link on scroll */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+
+/* LCG Simulator */
+function runLCG() {
+  const a = +document.getElementById('lcg-a').value;
+  const c = +document.getElementById('lcg-c').value;
+  const m = +document.getElementById('lcg-m').value;
+  const seed = Math.min(+document.getElementById('lcg-seed').value, m - 1);
+  let z = seed, seq = [z], seen = new Set([z]), period = 0;
+  for (let i = 0; i < m + 2; i++) {
+    z = (a * z + c) % m;
+    if (seen.has(z)) { period = seq.length - seq.indexOf(z); break; }
+    seen.add(z);
+    seq.push(z);
+  }
+  const out = document.getElementById('lcg-output');
+  out.innerHTML = '<strong>Sequence:</strong> ' + seq.join(' → ') + ' → ' + z +
+    '<br><strong>Period:</strong> ' + period +
+    ' | <strong>Cycle enters at:</strong> Z<sub>' + seq.indexOf(z) + '</sub> = ' + z;
+}
+
+function findAllCyclesLCG() {
+  const a = +document.getElementById('lcg-a').value;
+  const c = +document.getElementById('lcg-c').value;
+  const m = +document.getElementById('lcg-m').value;
+  let visited = new Set(), cycles = [];
+  for (let s = 0; s < m; s++) {
+    if (visited.has(s)) continue;
+    let z = s, path = [z], pathSet = new Set([z]);
+    for (let i = 0; i < m + 2; i++) {
+      z = (a * z + c) % m;
+      if (visited.has(z)) break;
+      if (pathSet.has(z)) {
+        let ci = path.indexOf(z);
+        let cycle = path.slice(ci);
+        cycles.push(cycle);
+        cycle.forEach(v => visited.add(v));
+        for (let j = 0; j < ci; j++) visited.add(path[j]);
+        break;
+      }
+      path.push(z);
+      pathSet.add(z);
+    }
+    path.forEach(v => visited.add(v));
+  }
+  let html = '<strong>All cycles (mod ' + m + '):</strong><br>';
+  cycles.forEach((cy, i) => {
+    html += 'Cycle ' + (i+1) + ' (period ' + cy.length + '): ' + cy.join(' → ') + ' → ' + cy[0] + '<br>';
+  });
+  document.getElementById('lcg-output').innerHTML = html;
+}
+
+/* Slider value displays */
+['lcg-a','lcg-c','lcg-m','lcg-seed'].forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    document.getElementById(id + '-val').textContent = el.value;
+    if (id === 'lcg-m') {
+      const seedEl = document.getElementById('lcg-seed');
+      seedEl.max = Math.max(0, el.value - 1);
+      if (+seedEl.value >= +el.value) { seedEl.value = 0; document.getElementById('lcg-seed-val').textContent = '0'; }
+    }
+  });
+});
+
+/* Tabs */
+function showTab(btn, tabId) {
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const parent = btn.closest('.interactive');
+  parent.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+}
+
+/* Step revealer */
+function revealStep(listId) {
+  const steps = document.querySelectorAll('#' + listId + ' .step');
+  for (let i = 0; i < steps.length; i++) {
+    if (!steps[i].classList.contains('visible')) { steps[i].classList.add('visible'); return; }
+  }
+}
+function resetSteps(listId) {
+  const steps = document.querySelectorAll('#' + listId + ' .step');
+  steps.forEach((s, i) => { if (i > 0) s.classList.remove('visible'); });
+}
+
+/* Poisson Process Timeline */
+function generateTimeline() {
+  const rate = +document.getElementById('pp-rate').value;
+  document.getElementById('timeline2').style.display = 'none';
+  const container = document.getElementById('timeline1');
+  container.querySelectorAll('.timeline-dot, .timeline-label').forEach(e => e.remove());
+  let t = 0, arrivals = [], maxT = 2;
+  while (t < maxT) {
+    t += -Math.log(Math.random()) / rate;
+    if (t < maxT) arrivals.push(t);
+  }
+  const barL = 20, barR = container.clientWidth - 20;
+  arrivals.forEach((a, i) => {
+    const pct = a / maxT;
+    const x = barL + pct * (barR - barL);
+    const dot = document.createElement('div');
+    dot.className = 'timeline-dot';
+    dot.style.left = x + 'px';
+    container.appendChild(dot);
+    const lbl = document.createElement('div');
+    lbl.className = 'timeline-label';
+    lbl.style.left = x + 'px';
+    lbl.textContent = a.toFixed(2);
+    container.appendChild(lbl);
+  });
+  document.getElementById('timeline-info').textContent = arrivals.length + ' arrivals in 2 hours (rate=' + rate + '/hr). Expected: ' + (rate * 2).toFixed(0);
+}
+
+function mergeTimelines() {
+  const rate = +document.getElementById('pp-rate').value;
+  const r1 = rate, r2 = Math.max(1, Math.round(rate * 0.6));
+  document.getElementById('timeline2').style.display = 'block';
+  [['timeline1', r1, '#2563eb'], ['timeline2', r2, '#dc2626']].forEach(([cid, r, col]) => {
+    const container = document.getElementById(cid);
+    container.querySelectorAll('.timeline-dot, .timeline-label').forEach(e => e.remove());
+    let t = 0, arrivals = [], maxT = 2;
+    while (t < maxT) { t += -Math.log(Math.random()) / r; if (t < maxT) arrivals.push(t); }
+    const barL = 20, barR = container.clientWidth - 20;
+    arrivals.forEach(a => {
+      const x = barL + (a / maxT) * (barR - barL);
+      const dot = document.createElement('div');
+      dot.className = 'timeline-dot';
+      dot.style.left = x + 'px';
+      dot.style.background = col;
+      container.appendChild(dot);
+      const lbl = document.createElement('div');
+      lbl.className = 'timeline-label';
+      lbl.style.left = x + 'px';
+      lbl.textContent = a.toFixed(2);
+      container.appendChild(lbl);
+    });
+  });
+  document.getElementById('timeline-info').textContent = 'Stream 1 (blue): rate=' + r1 + '/hr. Stream 2 (red): rate=' + r2 + '/hr. Merged rate=' + (r1 + r2) + '/hr.';
+}
+
+document.getElementById('pp-rate').addEventListener('input', function() {
+  document.getElementById('pp-rate-val').textContent = this.value;
+});
+
+/* Inverse Transform Canvas */
+(function() {
+  const canvas = document.getElementById('itCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = 40;
+
+  function cdf(x) { return 1 - Math.exp(-x); }
+  function invCdf(u) { return -Math.log(1 - u); }
+
+  function draw(u) {
+    ctx.clearRect(0, 0, W, H);
+    const pW = W - 2 * pad, pH = H - 2 * pad;
+    // Axes
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, H - pad); ctx.lineTo(W - pad, H - pad); ctx.stroke();
+    // Labels
+    ctx.fillStyle = '#64748b'; ctx.font = '12px sans-serif';
+    ctx.fillText('F(x)', 4, pad - 5);
+    ctx.fillText('x', W - pad + 5, H - pad + 4);
+    ctx.fillText('0', pad - 12, H - pad + 14);
+    ctx.fillText('1', pad - 12, pad + 4);
+    ctx.fillText('5', W - pad - 3, H - pad + 14);
+    // CDF curve
+    ctx.strokeStyle = '#2563eb'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    for (let px = 0; px <= pW; px++) {
+      const x = (px / pW) * 5;
+      const y = cdf(x);
+      const cx = pad + px, cy = H - pad - y * pH;
+      if (px === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+    }
+    ctx.stroke();
+    // Mapping lines
+    if (u !== undefined) {
+      const x = invCdf(u);
+      const px = pad + (x / 5) * pW;
+      const py = H - pad - u * pH;
+      ctx.setLineDash([5, 3]);
+      ctx.strokeStyle = '#dc2626'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(px, py); ctx.lineTo(px, H - pad); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#dc2626'; ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('U=' + u.toFixed(2), pad + 4, py - 6);
+      ctx.fillText('X=' + x.toFixed(2), px - 10, H - pad + 14);
+      // dot
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fillStyle = '#dc2626'; ctx.fill();
+    }
+  }
+  draw();
+
+  canvas.addEventListener('click', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const my = e.clientY - rect.top;
+    const pH = H - 2 * pad;
+    let u = (H - pad - my) / pH;
+    u = Math.max(0.01, Math.min(0.99, u));
+    draw(u);
+    document.getElementById('it-info').textContent = 'U = ' + u.toFixed(3) + ' maps to X = F⁻¹(U) = ' + invCdf(u).toFixed(3) + ' (Exp(1) distribution)';
+  });
+})();
+
+/* Quiz system */
+function checkQuiz(name, correct, storageKey) {
+  const resEl = document.getElementById('res_' + name);
+  const saved = localStorage.getItem(storageKey);
+  if (saved) { resEl.className = 'result ' + (saved === 'correct' ? 'correct' : 'wrong'); resEl.textContent = saved === 'correct' ? 'Correct! (already answered)' : 'Incorrect. (already answered, correct: ' + correct + ')'; return; }
+  const sel = document.querySelector('input[name="' + name + '"]:checked');
+  if (!sel) { resEl.className = 'result wrong'; resEl.textContent = 'Please select an answer.'; resEl.style.display = 'block'; return; }
+  if (sel.value === correct) {
+    resEl.className = 'result correct'; resEl.textContent = 'Correct!';
+    localStorage.setItem(storageKey, 'correct');
+  } else {
+    resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. The correct answer is ' + correct + '.';
+    localStorage.setItem(storageKey, 'wrong');
+  }
+}
+
+/* Restore quiz states on load */
+window.addEventListener('DOMContentLoaded', function() {
+  const quizzes = [
+    ['q_t1_1','b','ssa_quiz_page1_topic1_1'], ['q_t1_2','c','ssa_quiz_page1_topic1_2'],
+    ['q_t2_1','b','ssa_quiz_page1_topic2_1'], ['q_t2_2','c','ssa_quiz_page1_topic2_2'],
+    ['q_t3_1','c','ssa_quiz_page1_topic3_1'], ['q_t3_2','b','ssa_quiz_page1_topic3_2'],
+    ['q_t4_1','b','ssa_quiz_page1_topic4_1'], ['q_t4_2','b','ssa_quiz_page1_topic4_2'],
+    ['q_t5_1','d','ssa_quiz_page1_topic5_1'], ['q_t5_2','c','ssa_quiz_page1_topic5_2']
+  ];
+  quizzes.forEach(([name, correct, key]) => {
+    const saved = localStorage.getItem(key);
+    if (saved) {
+      const resEl = document.getElementById('res_' + name);
+      if (saved === 'correct') { resEl.className = 'result correct'; resEl.textContent = 'Correct! (previously answered)'; }
+      else { resEl.className = 'result wrong'; resEl.textContent = 'Incorrect. (previously answered, correct: ' + correct + ')'; }
+    }
+  });
+});
+</script>
+</body>
+</html>
