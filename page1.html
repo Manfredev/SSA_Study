@@ -1184,39 +1184,42 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <details>
   <summary>Exercise 18: Sweater Orders &mdash; Merging and Splitting</summary>
   <div class="detail-body">
-    <p><strong>What we know:</strong> An online shop sells sweaters in three colours. Orders arrive as independent Poisson processes: <span class="fs-ref" title="Exponential distribution, merging/splitting">FS: Distributions</span>
+    <p><strong>What we know:</strong> An e-business sells sweaters online in three colours: white, blue, and red. Orders for each colour arrive as independent Poisson processes. <span class="fs-ref" title="Exponential distribution, merging/splitting">FS: Distributions</span>
     <ul>
       <li>White sweaters: $\lambda_W = 10$ per hour</li>
-      <li>Red sweaters: $\lambda_R = 30$ per hour</li>
-      <li>Blue + Red combined: $110$ per hour</li>
+      <li>After a white sweater is ordered, it takes on average 2 minutes until a red sweater is ordered</li>
+      <li>On average, 110 orders for blue or red sweaters are placed per hour</li>
     </ul>
-    Each sweater takes 4 minutes to pack. Questions: (1) What is the mean interarrival time for blue sweaters? (2) How many packing devices are needed for utilization $\leq 0.8$?</p>
+    Each order takes on average 4 minutes to pack with a special packing device. Questions:
+    <ol>
+      <li>What is the arrival rate for red sweaters?</li>
+      <li>What is the mean interarrival time for blue sweaters?</li>
+      <li>The utilization of the packing devices is 80%. How many packing devices are there?</li>
+    </ol></p>
 
-    <p><strong>Step 1: Find the blue sweater rate.</strong><br>
-    We know that blue and red together arrive at 110/hr. Since red alone is 30/hr:
-    $$\lambda_B = 110 - \lambda_R = 110 - 30 = 80 \text{ per hour}$$</p>
+    <p><strong>Step 1: Find the red sweater rate (memoryless property).</strong><br>
+    Red orders follow a Poisson process, so inter-arrival times are exponential. By the <strong>memoryless property</strong>, the time from <em>any</em> moment until the next red order has the same exponential distribution &mdash; it doesn't matter that a white order just happened.<br>
+    Average wait = 2 minutes $= 2/60 = 1/30$ hour, and for an exponential distribution $E[T] = 1/\lambda$:
+    $$\lambda_R = \frac{1}{1/30} = 30 \text{ per hour}$$</p>
 
-    <p><strong>Step 2: Mean interarrival time for blue sweaters.</strong><br>
-    For a Poisson process, the time between arrivals is exponential with mean $= 1/\lambda$:
-    $$E[T_B] = \frac{1}{\lambda_B} = \frac{1}{80} \text{ hours}$$
-    Convert to minutes: $\frac{1}{80} \times 60 = \frac{60}{80} = 0.75$ minutes $= 45$ seconds.</p>
+    <p><strong>Step 2: Find the blue sweater rate and its mean interarrival time.</strong><br>
+    Blue + red together arrive at 110/hr. Since red alone is 30/hr:
+    $$\lambda_B = 110 - \lambda_R = 110 - 30 = 80 \text{ per hour}$$
+    The mean interarrival time for blue sweaters is:
+    $$E[T_B] = \frac{1}{\lambda_B} = \frac{1}{80} \text{ hours} = \frac{60}{80} = 0.75 \text{ minutes} = 45 \text{ seconds}$$</p>
 
     <p><strong>Step 3: Find the total arrival rate (merging).</strong><br>
     When you merge independent Poisson processes, you add the rates:
     $$\lambda_{\text{total}} = \lambda_W + \lambda_R + \lambda_B = 10 + 30 + 80 = 120 \text{ per hour}$$</p>
 
-    <p><strong>Step 4: Set up the utilization formula.</strong><br>
-    Utilization $\rho = \lambda \cdot E[S]$ where $E[S]$ is the mean service time per item.<br>
-    Each sweater takes 4 min $= 4/60 = 1/15$ hour to pack.<br>
-    With $N$ devices, each device handles a share of $\lambda_{\text{total}} / N$ arrivals:
-    $$\rho = \frac{\lambda_{\text{total}} \cdot E[S]}{N} = \frac{120 \times 1/15}{N} = \frac{8}{N}$$</p>
+    <p><strong>Step 4: Number of packing devices.</strong><br>
+    Utilization $\rho = \lambda \cdot E[S] / N$ where $E[S]$ is the mean service time per item and $N$ is the number of devices.<br>
+    Each order takes 4 min $= 4/60 = 1/15$ hour to pack:
+    $$\rho = \frac{\lambda_{\text{total}} \cdot E[S]}{N} = \frac{120 \times 1/15}{N} = \frac{8}{N}$$
+    We need $\rho = 0.8$:
+    $$\frac{8}{N} = 0.8 \implies N = \frac{8}{0.8} = 10$$</p>
 
-    <p><strong>Step 5: Solve for $N$.</strong><br>
-    We need $\rho \leq 0.8$:
-    $$\frac{8}{N} \leq 0.8$$
-    $$N \geq \frac{8}{0.8} = 10$$</p>
-
-    <div class="box box-green"><strong>Conclusion:</strong> (1) Mean interarrival time for blue sweaters = 45 seconds. (2) Need at least $N = 10$ packing devices for utilization $\leq 80\%$.</div>
+    <div class="box box-green"><strong>Conclusion:</strong> (1) $\lambda_R = 30$ per hour (memoryless property). (2) Mean interarrival time for blue sweaters = 45 seconds. (3) $N = 10$ packing devices.</div>
   </div>
 </details>
 
