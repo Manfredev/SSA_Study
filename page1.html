@@ -1153,14 +1153,16 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   <div class="detail-body">
     <p><strong>What we know:</strong> Cars pass a road according to a Poisson process with rate $\lambda = 10$ per hour. A turtle needs a gap of $m$ minutes with no cars to safely cross. What is the probability it can cross?</p>
 
-    <p><strong>Step 1: Identify the concept.</strong><br>
-    We need: "no cars arrive in an interval of length $m$ minutes." In a Poisson process, the number of arrivals in a time interval follows a Poisson distribution:
-    $$P[N(t) = k] = \frac{(\lambda t)^k}{k!} e^{-\lambda t}$$
+    <p><strong>Step 1: From the formula sheet to a Poisson process.</strong> <span class="fs-ref" title="Poisson PMF: p(x) = e^{-λ} λ^x / x!">FS: Distributions</span><br>
+    We need: "no cars arrive in an interval of length $m$ minutes."<br><br>
+    The formula sheet gives the Poisson PMF:
+    $$p(x) = \frac{e^{-\lambda}\,\lambda^x}{x!}$$
+    Here $\lambda$ is the <em>expected number of events</em>. For a Poisson <strong>process</strong> with rate $\lambda_{\text{rate}}$ events per unit time, the expected count over a time window $t$ is $\lambda_{\text{rate}} \cdot t$. Substitute $\lambda = \lambda_{\text{rate}} \cdot t$:
+    $$P[N(t) = k] = \frac{(\lambda_{\text{rate}}\, t)^k}{k!}\, e^{-\lambda_{\text{rate}}\, t}$$
     We want $k = 0$ (zero cars).</p>
 
-    <p><strong>Step 2: Convert units.</strong><br>
-    The rate $\lambda = 10$ is in <strong>per hour</strong>, but $m$ is in <strong>minutes</strong>. We must use consistent units.<br>
-    Convert $m$ minutes to hours: $t = m/60$ hours.</p>
+    <p><strong>Step 2: Convert units and set up.</strong><br>
+    The rate $\lambda_{\text{rate}} = 10$ is in <strong>per hour</strong>, but $m$ is in <strong>minutes</strong>. Convert: $t = m/60$ hours.</p>
 
     <p><strong>Step 3: Plug into the Poisson formula with $k = 0$.</strong><br>
     $$P[N(m/60) = 0] = \frac{(10 \times m/60)^0}{0!} \cdot e^{-10 \times m/60}$$
