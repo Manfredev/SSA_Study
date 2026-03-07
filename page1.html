@@ -1255,33 +1255,81 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <details>
   <summary>Exercise 20: Birds &mdash; Magpie, Pigeon, Sparrow</summary>
   <div class="detail-body">
-    <p><strong>What we know:</strong> Birds arrive at a birdwatching station as independent Poisson processes:
+    <p><strong>What we know:</strong> John has a garden fountain visited by pigeons, sparrows, and magpies, arriving as independent Poisson processes.
     <ul>
-      <li>Magpies: $\lambda_M = 3$ per hour</li>
-      <li>Pigeons: $\lambda_P = 15$ per hour</li>
-      <li>Sparrows: $\lambda_S = 9$ per hour</li>
+      <li>Magpie arrival rate: $\lambda_M = 3$ per hour</li>
+      <li>After a magpie arrives, the average time until a pigeon visits is 4 minutes</li>
+      <li>Total bird arrival rate: 27 birds per hour</li>
+    </ul></p>
+
+    <p><strong>Part 1: Find the sparrow arrival rate $\lambda_S$.</strong></p>
+
+    <p><strong>Step 1: Derive $\lambda_P$ using the memoryless property.</strong><br>
+    Pigeons arrive as a Poisson process, so the inter-arrival times are exponential (memoryless). The time until the next pigeon from <em>any</em> moment &mdash; including right after a magpie arrives &mdash; has the same distribution as a fresh inter-arrival time.<br>
+    Average time until next pigeon = 4 min = $\frac{1}{15}$ hour, so:
+    $$\lambda_P = \frac{1}{1/15} = 15 \text{ per hour}$$</p>
+
+    <p><strong>Step 2: Derive $\lambda_S$.</strong><br>
+    Total rate = sum of independent Poisson rates:
+    $$\lambda_S = 27 - \lambda_M - \lambda_P = 27 - 3 - 15 = 9 \text{ per hour}$$</p>
+
+    <div class="box box-green"><strong>Part 1 Answer:</strong> $\lambda_P = 15$/hr, $\lambda_S = 9$/hr.</div>
+
+    <p><strong>Part 2: A magpie, a pigeon, and a sparrow are all at the fountain. What is the probability the magpie flies away first?</strong></p>
+
+    <p>Visit durations are independent exponentials:
+    <ul>
+      <li>Pigeon: mean 4 min → rate $\mu_P = 1/4$ per min</li>
+      <li>Sparrow: mean 2 min → rate $\mu_S = 1/2$ per min</li>
+      <li>Magpie: mean 3 min → rate $\mu_M = 1/3$ per min</li>
+    </ul></p>
+
+    <p><strong>Step 3: Apply competing exponentials.</strong><br>
+    For independent exponentials, the probability that one finishes first equals its rate divided by the sum of all rates:
+    $$P(\text{magpie first}) = \frac{\mu_M}{\mu_P + \mu_S + \mu_M} = \frac{1/3}{1/4 + 1/2 + 1/3} = \frac{1/3}{13/12} = \frac{12}{39} = \frac{4}{13} \approx 0.308$$</p>
+
+    <div class="box box-green"><strong>Part 2 Answer:</strong> $P(\text{magpie flies away first}) = 4/13 \approx 0.308$.</div>
+
+    <p><strong>Part 3: Pet shop queueing problem.</strong></p>
+
+    <p>A pet shop has two registers:
+    <ul>
+      <li>Register 1: exponential service, mean 3 min (rate $\mu_1 = 1/3$ per min)</li>
+      <li>Register 2: exponential service, mean 4 min (rate $\mu_2 = 1/4$ per min)</li>
     </ul>
-    Two birdwatchers are present: Mike (watching magpies, service rate $\mu_{\text{Mike}} = 20$/hr) and John (watching pigeons, service rate $\mu_{\text{John}} = 45$/hr). Service times are exponential.</p>
+    Lisa is being served at register 1, Omar at register 2. Mike and John are waiting in the queue (Mike first, then John). Each person takes the first available register.<br>
+    <strong>Find:</strong> $P(\text{Mike is still being served when John finishes})$.</p>
 
-    <p><strong>Part 1: $P(\text{Mike finishes before John})$.</strong></p>
+    <p><strong>Step 4: First departure &mdash; Mike gets a register.</strong><br>
+    The first register to free up is determined by competing exponentials:
+    $$P(\text{Reg 1 frees first}) = \frac{\mu_1}{\mu_1 + \mu_2} = \frac{1/3}{1/3 + 1/4} = \frac{1/3}{7/12} = \frac{4}{7}$$
+    $$P(\text{Reg 2 frees first}) = \frac{3}{7}$$
+    Mike takes whichever register frees first.</p>
 
-    <p><strong>Step 1: Identify the concept.</strong><br>
-    Both Mike and John are working with exponential service times. This is a <strong>competing exponentials</strong> problem. For two independent exponentials:
-    $$P(\text{Exp}(\lambda_1) &lt; \text{Exp}(\lambda_2)) = \frac{\lambda_1}{\lambda_1 + \lambda_2}$$
-    The one with the <em>higher rate</em> is more likely to finish first.</p>
+    <p><strong>Step 5: Second departure &mdash; John gets a register.</strong><br>
+    After Mike starts service, there are two people being served. John waits for the next departure, then takes that register.</p>
 
-    <p><strong>Step 2: Plug in the values.</strong><br>
-    Mike's rate = 20/hr, John's rate = 45/hr:
-    $$P(\text{Mike first}) = \frac{20}{20 + 45} = \frac{20}{65} = \frac{4}{13} \approx 0.308$$</p>
+    <p><strong>Case A</strong> (prob $4/7$): Reg 1 freed first → Mike at Reg 1, Omar still at Reg 2.<br>
+    Now Mike (rate $1/3$) and Omar (rate $1/4$) compete:
+    <ul>
+      <li><strong>A1</strong> (prob $4/7$): Mike finishes first → John goes to Reg 1. Mike is <em>done</em> → $P = 0$.</li>
+      <li><strong>A2</strong> (prob $3/7$): Omar finishes first → John goes to Reg 2. Mike at Reg 1 (rate $1/3$), John at Reg 2 (rate $1/4$).
+      $$P(\text{John finishes first}) = \frac{1/4}{1/3 + 1/4} = \frac{3}{7}$$</li>
+    </ul></p>
 
-    <p><strong>Part 2: $P(\text{Mike still serving when John finishes})$.</strong></p>
+    <p><strong>Case B</strong> (prob $3/7$): Reg 2 freed first → Mike at Reg 2, Lisa still at Reg 1.<br>
+    Now Lisa (rate $1/3$) and Mike (rate $1/4$) compete:
+    <ul>
+      <li><strong>B1</strong> (prob $4/7$): Lisa finishes first → John goes to Reg 1. Mike at Reg 2 (rate $1/4$), John at Reg 1 (rate $1/3$).
+      $$P(\text{John finishes first}) = \frac{1/3}{1/4 + 1/3} = \frac{4}{7}$$</li>
+      <li><strong>B2</strong> (prob $3/7$): Mike finishes first → John goes to Reg 2. Mike is <em>done</em> → $P = 0$.</li>
+    </ul></p>
 
-    <p><strong>Step 3: Set up the problem.</strong><br>
-    John watches a pigeon for time $T_J \sim \text{Exp}(45)$. Mike watches a magpie for time $T_M \sim \text{Exp}(20)$. We want $P(T_M > T_J)$, i.e., Mike is still busy when John finishes. But Mike may watch multiple magpies during this time if this is about the remaining observation. With rate 20 vs 45:
-    $$P(T_M > T_J) = P(\text{John finishes first}) = \frac{45}{20 + 45} = \frac{45}{65} = \frac{9}{13}$$
-    This is just $1 - P(\text{Mike first}) = 1 - 4/13 = 9/13$.</p>
+    <p><strong>Step 6: Combine all cases.</strong><br>
+    $$P(\text{Mike still serving when John leaves}) = \underbrace{\frac{4}{7} \cdot \frac{3}{7} \cdot \frac{3}{7}}_{\text{Case A2}} + \underbrace{\frac{3}{7} \cdot \frac{4}{7} \cdot \frac{4}{7}}_{\text{Case B1}}$$
+    $$= \frac{36}{343} + \frac{48}{343} = \frac{84}{343} = \frac{12}{49} \approx 0.245$$</p>
 
-    <div class="box box-green"><strong>Conclusion:</strong> $P(\text{Mike finishes first}) = 4/13 \approx 0.308$. The competing exponentials formula makes this straightforward &mdash; just put the rates in a fraction.</div>
+    <div class="box box-green"><strong>Part 3 Answer:</strong> $P(\text{Mike still being served when John finishes}) = 12/49 \approx 0.245$.</div>
   </div>
 </details>
 
