@@ -2113,20 +2113,73 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <h3>Worked Example</h3>
 
 <details>
-  <summary>Exercise 35: Single-Server Queue Snapshot</summary>
+  <summary>Exercise 35: Single-Server Queue &mdash; Process the Next Event</summary>
   <div class="detail-body">
-    <p>With $A = \{0.9, 2.7, 0.3, 0.3, 4.3\}$ and $S = \{1.6, 1.3, 2.0, 1.3, 1.7\}$: <span class="fs-ref" title="Queuing system metrics: W, d, Q, L">FS: Queuing Systems</span></p>
+    <p>Given this mid-simulation snapshot of a single-server queuing system: <span class="fs-ref" title="Queuing system metrics: W, d, Q, L">FS: Queuing Systems</span></p>
+
     <table>
-      <tr><th>Customer</th><th>Arrival</th><th>Service Start</th><th>Delay $D_i$</th><th>Service</th><th>Departure</th></tr>
-      <tr><td>1</td><td>0.9</td><td>0.9</td><td>0</td><td>1.6</td><td>2.5</td></tr>
-      <tr><td>2</td><td>3.6</td><td>3.6</td><td>0</td><td>1.3</td><td>4.9</td></tr>
-      <tr><td>3</td><td>3.9</td><td>4.9</td><td>1.0</td><td>2.0</td><td>6.9</td></tr>
-      <tr><td>4</td><td>4.2</td><td>6.9</td><td>2.7</td><td>1.3</td><td>8.2</td></tr>
-      <tr><td>5</td><td>8.5</td><td>8.5</td><td>0</td><td>1.7</td><td>10.2</td></tr>
+      <tr><th>Variable</th><th>Value</th></tr>
+      <tr><td>Server status</td><td>1 (busy)</td></tr>
+      <tr><td>Number in queue $L_Q$</td><td>3</td></tr>
+      <tr><td>Clock</td><td>18.1</td></tr>
+      <tr><td>Time of last event</td><td>18.1</td></tr>
+      <tr><td>Customers in system</td><td><strong>13.2</strong> (being served), 13.6, 14.9, 18.1 (in queue)</td></tr>
+      <tr><td>Event list</td><td>$A = 19.5$, $D = 18.6$</td></tr>
+      <tr><td>Number delayed</td><td>9</td></tr>
+      <tr><td>Total delay</td><td>24.2</td></tr>
+      <tr><td>Area under $Q(t)$</td><td>42.6</td></tr>
+      <tr><td>Area under $B(t)$</td><td>33.2</td></tr>
     </table>
+
+    <p>Unused interarrival times: $A = \{0.9, 2.7, 0.3, 0.3, 4.3\}$<br>
+    Unused service times: $S = \{1.6, 1.3, 2.0, 1.3, 1.7\}$</p>
+
+    <p><strong>Task:</strong> Process the next event and fill out the updated snapshot.</p>
+
+    <h4>Solution</h4>
+
+    <p><strong>Step 1 &mdash; Identify the next event.</strong><br>
+    Compare $A = 19.5$ vs $D = 18.6$. Since $18.6 < 19.5$, the next event is a <strong>departure</strong> at $t = 18.6$.</p>
+
+    <p><strong>Step 2 &mdash; Advance clock and compute $\Delta t$.</strong><br>
+    $\Delta t = 18.6 - 18.1 = 0.5$. Clock: $18.1 \to 18.6$.</p>
+
+    <p><strong>Step 3 &mdash; Update statistical accumulators</strong> (before changing state).<br>
+    Area under $Q(t)$: $42.6 + L_Q \times \Delta t = 42.6 + 3 \times 0.5 = 42.6 + 1.5 = 44.1$<br>
+    Area under $B(t)$: $33.2 + B \times \Delta t = 33.2 + 1 \times 0.5 = 33.2 + 0.5 = 33.7$</p>
+
+    <p><strong>Step 4 &mdash; Execute the departure event routine.</strong></p>
+    <ul>
+      <li>Customer who arrived at 13.2 <strong>departs</strong>.</li>
+      <li>Queue is non-empty &rarr; next customer (arrived at 13.6) <strong>begins service</strong>.</li>
+      <li>Delay for this customer: $d = 18.6 - 13.6 = 5.0$.</li>
+      <li>Number delayed: $9 \to 10$. Total delay: $24.2 + 5.0 = 29.2$.</li>
+      <li>Number in queue: $3 \to 2$.</li>
+    </ul>
+
+    <p><strong>Step 5 &mdash; Schedule new events.</strong><br>
+    New departure: $18.6 + S_1 = 18.6 + 1.6 = 20.2$.<br>
+    Next arrival unchanged: $A = 19.5$.<br>
+    Updated event list: $A = 19.5$, $D = 20.2$.</p>
+
+    <p><strong>Step 6 &mdash; Update time of last event.</strong><br>
+    Time of last event: $18.1 \to 18.6$.</p>
+
     <div class="box box-green">
-      Mean delay $\bar{D} = (0+0+1.0+2.7+0)/5 = 0.74$.<br>
-      Mean wait $\bar{W} = \bar{D} + \bar{S} = 0.74 + 1.58 = 2.32$.
+      <strong>Updated snapshot:</strong>
+      <table>
+        <tr><th>Variable</th><th>Value</th></tr>
+        <tr><td>Server status</td><td>1 (busy)</td></tr>
+        <tr><td>Number in queue $L_Q$</td><td>2</td></tr>
+        <tr><td>Clock</td><td>18.6</td></tr>
+        <tr><td>Time of last event</td><td>18.6</td></tr>
+        <tr><td>Customers in system</td><td><strong>13.6</strong> (being served), 14.9, 18.1 (in queue)</td></tr>
+        <tr><td>Event list</td><td>$A = 19.5$, $D = 20.2$</td></tr>
+        <tr><td>Number delayed</td><td>10</td></tr>
+        <tr><td>Total delay</td><td>29.2</td></tr>
+        <tr><td>Area under $Q(t)$</td><td>44.1</td></tr>
+        <tr><td>Area under $B(t)$</td><td>33.7</td></tr>
+      </table>
     </div>
   </div>
 </details>
