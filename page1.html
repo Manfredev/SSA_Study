@@ -1562,16 +1562,59 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <h3>Worked Examples</h3>
 
 <details>
-  <summary>Exercise 21: Piecewise PDF with $f(x) = \frac{3}{16}x^2$, $\frac{5}{8}$, $\frac{1}{x^2}$</summary>
+  <summary>Exercise 21: Inverse Transform &mdash; Piecewise PDF with $\tfrac{3}{16}x^2$, $\tfrac{5}{8}x^4$, $\tfrac{1}{x^2}$</summary>
   <div class="detail-body">
-    <p>$f(x) = \begin{cases} \frac{3}{16}x^2 & -2 \leq x < -1 \\ \frac{5}{8} & -1 \leq x < 1 \\ \frac{1}{x^2} & 1 \leq x \leq a \end{cases}$</p>
-    <p><strong>Find $a$:</strong> Total probability = 1. <span class="fs-ref" title="Antiderivatives for x^2, 1/x^2">FS: Derivatives Table</span></p>
-    <p>$\int_{-2}^{-1}\frac{3}{16}x^2\,dx = \frac{3}{16}\cdot\frac{x^3}{3}\Big|_{-2}^{-1} = \frac{1}{16}(-1+8) = \frac{7}{16}$</p>
-    <p>$\int_{-1}^{1}\frac{5}{8}\,dx = \frac{5}{4}$... Wait, let me recheck. $\frac{5}{8} \times 2 = \frac{5}{4}$. That exceeds 1 alone, so let me reconsider the constant.</p>
-    <p>Let the middle piece be $\frac{5}{16}$ for $-1 \leq x < 1$: $\int = \frac{5}{8}$.</p>
-    <p>Then $7/16 + 5/8 + (1 - 1/a) = 1$, giving $a = 16/11$.</p>
-    <div class="box box-green">
-      <strong>CDF and inverse:</strong> Build $F(x)$ piecewise, invert each segment, map $U$-intervals to the correct piece.
+    <p><strong>Problem:</strong> Given the piecewise PDF below, find the unknown constant $a$, build the CDF, and derive the inverse transform. <span class="fs-ref" title="Antiderivatives for x^2, x^4, 1/x^2">FS: Derivatives Table</span></p>
+    <p>$$f(x) = \begin{cases} \dfrac{3}{16}x^2 & -2 \leq x < -1 \\[6pt] \dfrac{5}{8}x^4 & -1 \leq x < 1 \\[6pt] \dfrac{1}{x^2} & 1 \leq x \leq a \\[6pt] 0 & \text{otherwise} \end{cases}$$</p>
+
+    <p><strong>Step 1: Find $a$ by requiring total probability = 1.</strong></p>
+    <p>Integrate each piece separately:</p>
+    <p>$$\text{Piece 1: } \int_{-2}^{-1}\frac{3}{16}x^2\,dx = \frac{3}{16}\cdot\frac{x^3}{3}\bigg|_{-2}^{-1} = \frac{1}{16}\Big[(-1)^3 - (-2)^3\Big] = \frac{1}{16}(-1+8) = \frac{7}{16}$$</p>
+    <p>$$\text{Piece 2: } \int_{-1}^{1}\frac{5}{8}x^4\,dx = \frac{5}{8}\cdot\frac{x^5}{5}\bigg|_{-1}^{1} = \frac{1}{8}\Big[1 - (-1)\Big] = \frac{2}{8} = \frac{1}{4}$$</p>
+    <p>$$\text{Piece 3: } \int_{1}^{a}\frac{1}{x^2}\,dx = \left[-\frac{1}{x}\right]_1^a = -\frac{1}{a} + 1 = 1 - \frac{1}{a}$$</p>
+    <p>Set total = 1:</p>
+    <p>$$\frac{7}{16} + \frac{1}{4} + 1 - \frac{1}{a} = 1 \quad\Longrightarrow\quad \frac{7}{16} + \frac{4}{16} = \frac{1}{a} \quad\Longrightarrow\quad \frac{11}{16} = \frac{1}{a}$$</p>
+    <div class="box box-green">$$\boxed{a = \frac{16}{11}}$$</div>
+
+    <p><strong>Step 2: Build the CDF $F(x)$ piecewise.</strong></p>
+    <p>For $-2 \leq x < -1$ (integrate piece 1 from $-2$):</p>
+    <p>$$F(x) = \int_{-2}^{x}\frac{3}{16}t^2\,dt = \frac{1}{16}\Big[x^3 - (-8)\Big] = \frac{x^3 + 8}{16}$$</p>
+    <p>Check: $F(-2) = 0$ and $F(-1) = \frac{-1+8}{16} = \frac{7}{16}$ $\checkmark$</p>
+
+    <p>For $-1 \leq x < 1$ (add piece 2 starting from $F(-1) = 7/16$):</p>
+    <p>$$F(x) = \frac{7}{16} + \int_{-1}^{x}\frac{5}{8}t^4\,dt = \frac{7}{16} + \frac{1}{8}\Big[x^5 - (-1)\Big] = \frac{7}{16} + \frac{x^5 + 1}{8}$$</p>
+    <p>Check: $F(-1) = \frac{7}{16} + 0 = \frac{7}{16}$ $\checkmark$ and $F(1) = \frac{7}{16} + \frac{2}{8} = \frac{7}{16} + \frac{4}{16} = \frac{11}{16}$ $\checkmark$</p>
+
+    <p>For $1 \leq x \leq \frac{16}{11}$ (add piece 3 starting from $F(1) = 11/16$):</p>
+    <p>$$F(x) = \frac{11}{16} + \int_{1}^{x}\frac{1}{t^2}\,dt = \frac{11}{16} + 1 - \frac{1}{x} = \frac{27}{16} - \frac{1}{x}$$</p>
+    <p>Check: $F(1) = \frac{27}{16} - 1 = \frac{11}{16}$ $\checkmark$ and $F\!\left(\frac{16}{11}\right) = \frac{27}{16} - \frac{11}{16} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 3: Determine $U$-intervals for each piece.</strong></p>
+    <p>From the CDF boundary values:</p>
+    <ul>
+      <li>Piece 1: $F$ runs from $0$ to $\frac{7}{16}$ &ensp;$\Rightarrow$&ensp; $U \in \left[0,\;\frac{7}{16}\right)$</li>
+      <li>Piece 2: $F$ runs from $\frac{7}{16}$ to $\frac{11}{16}$ &ensp;$\Rightarrow$&ensp; $U \in \left[\frac{7}{16},\;\frac{11}{16}\right)$</li>
+      <li>Piece 3: $F$ runs from $\frac{11}{16}$ to $1$ &ensp;$\Rightarrow$&ensp; $U \in \left[\frac{11}{16},\;1\right]$</li>
+    </ul>
+
+    <p><strong>Step 4: Invert each piece to get $X = F^{-1}(U)$.</strong></p>
+    <p><em>Piece 1</em> ($U \in [0, 7/16)$): Set $U = \frac{x^3 + 8}{16}$</p>
+    <p>$$x^3 = 16U - 8 \quad\Longrightarrow\quad X = (16U - 8)^{1/3}$$</p>
+
+    <p><em>Piece 2</em> ($U \in [7/16, 11/16)$): Set $U = \frac{7}{16} + \frac{x^5 + 1}{8}$</p>
+    <p>$$x^5 + 1 = 8U - \frac{7}{2} \quad\Longrightarrow\quad x^5 = 8U - \frac{9}{2} \quad\Longrightarrow\quad X = \left(8U - \frac{9}{2}\right)^{1/5}$$</p>
+
+    <p><em>Piece 3</em> ($U \in [11/16, 1]$): Set $U = \frac{27}{16} - \frac{1}{x}$</p>
+    <p>$$\frac{1}{x} = \frac{27}{16} - U \quad\Longrightarrow\quad X = \frac{16}{27 - 16U}$$</p>
+
+    <div class="box box-blue">
+      <strong>Algorithm (Inverse Transform):</strong>
+      <ol>
+        <li>Generate $U \sim U(0,1)$.</li>
+        <li>If $U < \frac{7}{16}$: return $X = (16U - 8)^{1/3}$.</li>
+        <li>Else if $U < \frac{11}{16}$: return $X = \left(8U - \frac{9}{2}\right)^{1/5}$.</li>
+        <li>Else: return $X = \dfrac{16}{27 - 16U}$.</li>
+      </ol>
     </div>
   </div>
 </details>
@@ -1581,108 +1624,269 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   <div class="detail-body">
     <p><strong>Problem:</strong> Design an acceptance-rejection algorithm to generate samples from $f(x) = \frac{1}{2}\cos(x)$ on $[-\pi/2, \pi/2]$. <span class="fs-ref" title="Antiderivatives for cos/sin">FS: Derivatives Table</span></p>
 
-    <p><strong>Step 1:</strong> Verify $f(x)$ is a valid PDF.<br>
+    <p><strong>Step 1: Verify $f(x)$ is a valid PDF.</strong><br>
     $$\int_{-\pi/2}^{\pi/2} \frac{1}{2}\cos(x)\, dx = \frac{1}{2}[\sin(x)]_{-\pi/2}^{\pi/2} = \frac{1}{2}(1 - (-1)) = 1 \checkmark$$</p>
 
-    <p><strong>Step 2:</strong> Choose a majorising function $t(x)$.<br>
-    Since $f(x) = \frac{1}{2}\cos(x) \leq \frac{1}{2}$ on $[-\pi/2, \pi/2]$, we can use the constant $t(x) = \frac{1}{2}$.<br>
-    Alternatively, use $t(x) = 1$ (also valid, slightly less efficient). Let's use $t(x) = 1$.</p>
+    <p><strong>Step 2: Choose a majorising function $t(x)$.</strong><br>
+    We need a function $t(x) \geq f(x)$ for all $x$ in the support, whose shape is easy to sample from. Since $f(x) = \frac{1}{2}\cos(x) \leq \frac{1}{2}$ on $[-\pi/2, \pi/2]$, a simple choice is the constant $t(x) = \frac{1}{2}$.<br>
+    We could also use $t(x) = 1$ (valid since $1 \geq f(x)$ everywhere, but less efficient because it covers more "wasted" area above $f$). Let's use $t(x) = \frac{1}{2}$ for better efficiency.</p>
 
-    <p><strong>Step 3:</strong> Derive the proposal density $r(x)$.<br>
-    The proposal density is proportional to $t(x)$: $r(x) = \frac{t(x)}{\int_{-\pi/2}^{\pi/2} t(x)\,dx} = \frac{1}{\pi}$ on $[-\pi/2, \pi/2]$.<br>
-    This is $U(-\pi/2, \pi/2)$. To generate $Y \sim r$: $Y = \pi(U_1 - \tfrac{1}{2})$ where $U_1 \sim U(0,1)$.</p>
+    <p><strong>Step 3: Derive the proposal density $r(x)$.</strong><br>
+    The proposal density is proportional to $t(x)$:
+    $$r(x) = \frac{t(x)}{\int_{-\pi/2}^{\pi/2} t(x)\,dx} = \frac{1/2}{\pi/2} = \frac{1}{\pi} \quad\text{on } [-\pi/2, \pi/2]$$
+    This is $U(-\pi/2, \pi/2)$. To generate a proposal $Y \sim r$: $Y = \pi(U_1 - \tfrac{1}{2})$ where $U_1 \sim U(0,1)$.</p>
 
-    <p><strong>Step 4:</strong> Acceptance condition.<br>
-    Accept if $U_2 \leq \frac{f(Y)}{t(Y)} = \frac{\frac{1}{2}\cos(Y)}{1} = \frac{1}{2}\cos(Y)$.</p>
+    <p><strong>Step 4: Acceptance condition.</strong><br>
+    Accept $Y$ if $U_2 \leq \frac{f(Y)}{t(Y)}$. Since $t(Y) = \frac{1}{2}$:
+    $$U_2 \leq \frac{f(Y)}{t(Y)} = \frac{\frac{1}{2}\cos(Y)}{\frac{1}{2}} = \cos(Y)$$</p>
 
-    <p><strong>Step 5:</strong> Write the algorithm.</p>
+    <p><strong>Step 5: Write the algorithm.</strong></p>
     <div class="box box-blue">
       <strong>Algorithm:</strong>
       <ol>
         <li>Generate $U_1 \sim U(0,1)$.</li>
         <li>Set $Y = \pi(U_1 - \frac{1}{2})$ &mdash; a sample from $U(-\pi/2, \pi/2)$.</li>
         <li>Generate $U_2 \sim U(0,1)$, independent of $U_1$.</li>
-        <li>If $U_2 \leq \frac{1}{2}\cos(Y)$: return $X = Y$. Otherwise go to step 1.</li>
+        <li>If $U_2 \leq \cos(Y)$: return $X = Y$. Otherwise go to step 1.</li>
       </ol>
     </div>
 
-    <p><strong>Step 6:</strong> Acceptance probability.<br>
-    $$P(\text{accept}) = \frac{\int f(x)\,dx}{\int t(x)\,dx} = \frac{1}{\pi} \approx 0.318 = 31.8\%$$</p>
+    <p><strong>Step 6: Acceptance probability.</strong><br>
+    $$P(\text{accept}) = \frac{\int f(x)\,dx}{\int t(x)\,dx} = \frac{1}{\pi/2} = \frac{2}{\pi} \approx 0.637 = 63.7\%$$
+    On average, $\frac{\pi}{2} \approx 1.57$ proposals are needed per accepted sample.</p>
 
     <div class="box box-green">
-      <strong>Conclusion:</strong> The algorithm uses a uniform proposal on $[-\pi/2, \pi/2]$ with acceptance condition $U_2 \leq \frac{1}{2}\cos(Y)$. On average, $\pi \approx 3.14$ proposals are needed per accepted sample.
+      <strong>Conclusion:</strong> Using $t(x) = \frac{1}{2}$ gives acceptance condition $U_2 \leq \cos(Y)$ with acceptance probability $2/\pi \approx 63.7\%$. This is more efficient than using $t(x) = 1$ (which would give only $1/\pi \approx 31.8\%$).
     </div>
   </div>
 </details>
 
 <details>
-  <summary>Exercise 23: Piecewise PDF with sin, polynomial, exponential</summary>
+  <summary>Exercise 23: Inverse Transform &mdash; Piecewise PDF with $-\tfrac{1}{4}\sin(x)$, $\tfrac{1}{6}x^3$, $\tfrac{1}{x}$</summary>
   <div class="detail-body">
-    <p>Three pieces with cumulative probability boundaries at $1/4$, $11/12$, and $1$.</p>
-    <p><strong>Inverse transforms by piece:</strong></p>
+    <p><strong>Problem:</strong> Apply the inverse transform method to the piecewise PDF: <span class="fs-ref" title="Antiderivatives for sin, x^3, 1/x">FS: Derivatives Table</span></p>
+    <p>$$f(x) = \begin{cases} -\dfrac{1}{4}\sin(x) & -\dfrac{\pi}{2} \leq x < 0 \\[6pt] \dfrac{1}{6}x^3 & 0 \leq x < 2 \\[6pt] \dfrac{1}{x} & 2 \leq x \leq 2e^{1/12} \\[6pt] 0 & \text{otherwise} \end{cases}$$</p>
+    <p>(Note: $-\sin(x) \geq 0$ on $[-\pi/2, 0]$ since $\sin(x) \leq 0$ there, so each piece is non-negative.)</p>
+
+    <p><strong>Step 1: Verify $f(x)$ is a valid PDF</strong> &mdash; check each piece integrates to give total = 1.</p>
+    <p>$$\text{Piece 1: } \int_{-\pi/2}^{0} -\frac{1}{4}\sin(x)\,dx = -\frac{1}{4}\Big[-\cos(x)\Big]_{-\pi/2}^{0} = \frac{1}{4}\Big[\cos(x)\Big]_{-\pi/2}^{0} = \frac{1}{4}(1 - 0) = \frac{1}{4}$$</p>
+    <p>$$\text{Piece 2: } \int_{0}^{2}\frac{1}{6}x^3\,dx = \frac{1}{6}\cdot\frac{x^4}{4}\bigg|_0^2 = \frac{1}{6}\cdot\frac{16}{4} = \frac{1}{6}\cdot 4 = \frac{2}{3}$$</p>
+    <p>$$\text{Piece 3: } \int_{2}^{2e^{1/12}}\frac{1}{x}\,dx = \Big[\ln(x)\Big]_2^{2e^{1/12}} = \ln(2e^{1/12}) - \ln(2) = \frac{1}{12}$$</p>
+    <p>$$\text{Total: } \frac{1}{4} + \frac{2}{3} + \frac{1}{12} = \frac{3}{12} + \frac{8}{12} + \frac{1}{12} = 1 \;\checkmark$$</p>
+
+    <p><strong>Step 2: Build the CDF $F(x)$ for each piece.</strong></p>
+    <p>For $-\frac{\pi}{2} \leq x < 0$:</p>
+    <p>$$F(x) = \int_{-\pi/2}^{x} -\frac{1}{4}\sin(t)\,dt = \frac{1}{4}\Big[\cos(t)\Big]_{-\pi/2}^{x} = \frac{1}{4}\Big[\cos(x) - 0\Big] = \frac{\cos(x)}{4}$$</p>
+    <p>Check: $F(-\pi/2) = \frac{\cos(-\pi/2)}{4} = 0$ $\checkmark$, &ensp; $F(0) = \frac{1}{4}$ $\checkmark$</p>
+
+    <p>For $0 \leq x < 2$:</p>
+    <p>$$F(x) = \frac{1}{4} + \int_{0}^{x}\frac{1}{6}t^3\,dt = \frac{1}{4} + \frac{x^4}{24}$$</p>
+    <p>Check: $F(0) = \frac{1}{4}$ $\checkmark$, &ensp; $F(2) = \frac{1}{4} + \frac{16}{24} = \frac{1}{4} + \frac{2}{3} = \frac{11}{12}$ $\checkmark$</p>
+
+    <p>For $2 \leq x \leq 2e^{1/12}$:</p>
+    <p>$$F(x) = \frac{11}{12} + \int_{2}^{x}\frac{1}{t}\,dt = \frac{11}{12} + \ln\!\left(\frac{x}{2}\right)$$</p>
+    <p>Check: $F(2) = \frac{11}{12}$ $\checkmark$, &ensp; $F(2e^{1/12}) = \frac{11}{12} + \frac{1}{12} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 3: Determine $U$-intervals for each piece.</strong></p>
     <ul>
-      <li>$u \in [0, 1/4)$: $X = \arccos(1 - 4u)$ (from $\sin$ piece, using $F(x) = \frac{1-\cos x}{4}$)</li>
-      <li>$u \in [1/4, 11/12)$: $X = (24u - 6)^{1/4}$ (from polynomial piece)</li>
-      <li>$u \in [11/12, 1]$: $X = 2e^{u - 11/12}$ (from exponential piece, $f(x) = 1/(2x)$ gives $F(x) = \frac{\ln(x/2)}{?}$... simplified: $X = 2e^{u-11/12}$)</li>
+      <li>Piece 1: $U \in \left[0,\;\frac{1}{4}\right)$</li>
+      <li>Piece 2: $U \in \left[\frac{1}{4},\;\frac{11}{12}\right)$</li>
+      <li>Piece 3: $U \in \left[\frac{11}{12},\;1\right]$</li>
     </ul>
-    <div class="box box-green">Each $U$-interval maps to exactly one piece. Continuity at boundaries must be verified.</div>
+
+    <p><strong>Step 4: Invert each piece.</strong></p>
+    <p><em>Piece 1</em> ($U \in [0, 1/4)$): Set $U = \frac{\cos(x)}{4}$</p>
+    <p>$$\cos(x) = 4U \quad\Longrightarrow\quad X = -\arccos(4U)$$</p>
+    <p>(We use $-\arccos$ because $x \in [-\pi/2, 0]$ and $\arccos$ returns values in $[0, \pi/2]$ for inputs in $[0,1]$.)</p>
+    <p>Check: $U=0 \Rightarrow X = -\arccos(0) = -\pi/2$ $\checkmark$; &ensp; $U=1/4 \Rightarrow X = -\arccos(1) = 0$ $\checkmark$</p>
+
+    <p><em>Piece 2</em> ($U \in [1/4, 11/12)$): Set $U = \frac{1}{4} + \frac{x^4}{24}$</p>
+    <p>$$x^4 = 24U - 6 \quad\Longrightarrow\quad X = (24U - 6)^{1/4}$$</p>
+    <p>Check: $U=1/4 \Rightarrow X = 0^{1/4} = 0$ $\checkmark$; &ensp; $U=11/12 \Rightarrow X = (22-6)^{1/4} = 16^{1/4} = 2$ $\checkmark$</p>
+
+    <p><em>Piece 3</em> ($U \in [11/12, 1]$): Set $U = \frac{11}{12} + \ln\!\left(\frac{x}{2}\right)$</p>
+    <p>$$\ln\!\left(\frac{x}{2}\right) = U - \frac{11}{12} \quad\Longrightarrow\quad X = 2e^{\,U - 11/12}$$</p>
+    <p>Check: $U=11/12 \Rightarrow X = 2e^0 = 2$ $\checkmark$; &ensp; $U=1 \Rightarrow X = 2e^{1/12}$ $\checkmark$</p>
+
+    <div class="box box-blue">
+      <strong>Algorithm (Inverse Transform):</strong>
+      <ol>
+        <li>Generate $U \sim U(0,1)$.</li>
+        <li>If $U < \frac{1}{4}$: return $X = -\arccos(4U)$.</li>
+        <li>Else if $U < \frac{11}{12}$: return $X = (24U - 6)^{1/4}$.</li>
+        <li>Else: return $X = 2e^{\,U - 11/12}$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-green">
+      <strong>Summary:</strong> The CDF is continuous at all boundary points ($F(-\pi/2)=0$, $F(0)=1/4$, $F(2)=11/12$, $F(2e^{1/12})=1$), confirming a valid piecewise inversion.
+    </div>
   </div>
 </details>
 
 <details>
-  <summary>Exercise 25: PDF with $x^3/3$, $1/(3x)$, $x$ pieces</summary>
+  <summary>Exercise 24: Acceptance-Rejection &mdash; Piecewise PDF with $\tfrac{1}{3}x^2$ and $\tfrac{8}{9}\cos(x-1)$</summary>
   <div class="detail-body">
-    <p>$f(x) = \begin{cases} x^3/3 & 0 \leq x < 1 \\ 1/(3x) & 1 \leq x < e \\ x & e \leq x \leq p \end{cases}$</p>
-    <p><strong>Find $p$:</strong> <span class="fs-ref" title="Antiderivatives for x^3, 1/x, x">FS: Derivatives Table</span></p>
-    <p>$\int_0^1 x^3/3\,dx = 1/12$, $\int_1^e 1/(3x)\,dx = 1/3$, $\int_e^p x\,dx = (p^2 - e^2)/2$.</p>
-    <p>$1/12 + 1/3 + (p^2 - e^2)/2 = 1 \Rightarrow (p^2 - e^2)/2 = 7/12 \Rightarrow p^2 = 7/6 + e^2$</p>
-    <div class="box box-green">$p = \sqrt{7/6 + e^2}$. Then apply inverse transform or composition to each piece.</div>
+    <p><strong>Problem:</strong> Design an acceptance-rejection algorithm for: <span class="fs-ref" title="Antiderivatives for x^2, cos">FS: Derivatives Table</span></p>
+    <p>$$f(x) = \begin{cases} \dfrac{1}{3}x^2 & 0 \leq x \leq 1 \\[6pt] \dfrac{8}{9}\cos(x-1) & 1 < x \leq \dfrac{\pi}{2}+1 \\[6pt] 0 & \text{otherwise} \end{cases}$$</p>
+
+    <p><strong>Step 1: Verify $f(x)$ is a valid PDF.</strong></p>
+    <p>$$\text{Piece 1: } \int_0^1 \frac{1}{3}x^2\,dx = \frac{1}{3}\cdot\frac{x^3}{3}\bigg|_0^1 = \frac{1}{9}$$</p>
+    <p>$$\text{Piece 2: } \int_1^{\pi/2+1} \frac{8}{9}\cos(x-1)\,dx = \frac{8}{9}\Big[\sin(x-1)\Big]_1^{\pi/2+1} = \frac{8}{9}\Big[\sin(\pi/2) - \sin(0)\Big] = \frac{8}{9}$$</p>
+    <p>$$\text{Total: } \frac{1}{9} + \frac{8}{9} = 1 \;\checkmark$$</p>
+
+    <p><strong>Step 2: Find the maximum of $f(x)$ over the entire support.</strong></p>
+    <p>Piece 1: $f(x) = \frac{1}{3}x^2$ is increasing on $[0,1]$. Maximum at $x=1$: $f(1) = \frac{1}{3}$.</p>
+    <p>Piece 2: $f(x) = \frac{8}{9}\cos(x-1)$. Since $\cos$ is decreasing on $[0, \pi/2]$, the maximum is at $x=1$: $f(1) = \frac{8}{9}\cos(0) = \frac{8}{9}$.</p>
+    <p>$$\max_x f(x) = \frac{8}{9} \quad\text{(at } x = 1\text{)}$$</p>
+
+    <p><strong>Step 3: Choose proposal distribution and find constant $c$.</strong></p>
+    <p>Use a uniform proposal $g(x) = \frac{1}{\pi/2 + 1} = \frac{2}{\pi + 2}$ on $[0,\;\pi/2+1]$.</p>
+    <p>We need $c$ such that $f(x) \leq c\,g(x)$ for all $x$, i.e., $c = \max_x \frac{f(x)}{g(x)}$:</p>
+    <p>$$c = \frac{8/9}{2/(\pi+2)} = \frac{8}{9} \cdot \frac{\pi+2}{2} = \frac{4(\pi+2)}{9} \approx 2.285$$</p>
+    <p>The majorising envelope is $c\,g(x) = \frac{4(\pi+2)}{9} \cdot \frac{2}{\pi+2} = \frac{8}{9}$ (a constant).</p>
+
+    <p><strong>Step 4: Derive the acceptance condition.</strong></p>
+    <p>Accept $Y$ if $U_2 \leq \frac{f(Y)}{c\,g(Y)} = \frac{f(Y)}{8/9} = \frac{9\,f(Y)}{8}$:</p>
+    <ul>
+      <li>If $Y \in [0, 1]$: accept when $U_2 \leq \frac{9}{8}\cdot\frac{1}{3}Y^2 = \frac{3Y^2}{8}$</li>
+      <li>If $Y \in (1, \pi/2+1]$: accept when $U_2 \leq \frac{9}{8}\cdot\frac{8}{9}\cos(Y-1) = \cos(Y-1)$</li>
+    </ul>
+
+    <p><strong>Step 5: Write the algorithm.</strong></p>
+    <div class="box box-blue">
+      <strong>Algorithm:</strong>
+      <ol>
+        <li>Generate $U_1 \sim U(0,1)$. Set $Y = \left(\frac{\pi}{2}+1\right)U_1$ &mdash; a sample from $U\!\left(0,\;\frac{\pi}{2}+1\right)$.</li>
+        <li>Generate $U_2 \sim U(0,1)$, independent of $U_1$.</li>
+        <li>If $Y \leq 1$ and $U_2 \leq \dfrac{3Y^2}{8}$: return $X = Y$.</li>
+        <li>Else if $Y > 1$ and $U_2 \leq \cos(Y - 1)$: return $X = Y$.</li>
+        <li>Otherwise go to step 1.</li>
+      </ol>
+    </div>
+
+    <p><strong>Step 6: Acceptance probability.</strong></p>
+    <p>$$P(\text{accept}) = \frac{1}{c} = \frac{9}{4(\pi+2)} \approx \frac{9}{20.566} \approx 0.438 = 43.8\%$$</p>
+    <p>On average, $c \approx 2.29$ proposals are needed per accepted sample.</p>
+
+    <div class="box box-green">
+      <strong>Conclusion:</strong> The acceptance-rejection algorithm uses a uniform proposal on $[0, \pi/2+1]$ with the piecewise acceptance condition above. The acceptance probability is $\frac{9}{4(\pi+2)} \approx 43.8\%$.
+    </div>
+  </div>
+</details>
+
+<details>
+  <summary>Exercise 25: Inverse Transform + Composition &mdash; $f(x)$ with $\tfrac{1}{3}x^3$, $\tfrac{1}{3x}$, $x$ pieces</summary>
+  <div class="detail-body">
+    <p><strong>Problem:</strong> Given the piecewise PDF below, find $p$, then generate variates using (a) the inverse transform method and (b) the composition method. <span class="fs-ref" title="Antiderivatives for x^3, 1/x, x">FS: Derivatives Table</span></p>
+    <p>$$f(x) = \begin{cases} \dfrac{1}{3}x^3 & 0 < x < 1 \\[6pt] \dfrac{1}{3x} & 1 < x < e \\[6pt] x & e \leq x \leq p \\[6pt] 0 & \text{otherwise} \end{cases}$$</p>
+
+    <p><strong>Step 1: Find $p$ by requiring total probability = 1.</strong></p>
+    <p>$$\text{Piece 1: } \int_0^1 \frac{x^3}{3}\,dx = \frac{1}{3}\cdot\frac{x^4}{4}\bigg|_0^1 = \frac{1}{12}$$</p>
+    <p>$$\text{Piece 2: } \int_1^e \frac{1}{3x}\,dx = \frac{1}{3}\Big[\ln(x)\Big]_1^e = \frac{1}{3}(1 - 0) = \frac{1}{3}$$</p>
+    <p>$$\text{Piece 3: } \int_e^p x\,dx = \frac{x^2}{2}\bigg|_e^p = \frac{p^2 - e^2}{2}$$</p>
+    <p>$$\frac{1}{12} + \frac{1}{3} + \frac{p^2 - e^2}{2} = 1 \quad\Longrightarrow\quad \frac{5}{12} + \frac{p^2 - e^2}{2} = 1 \quad\Longrightarrow\quad \frac{p^2 - e^2}{2} = \frac{7}{12}$$</p>
+    <div class="box box-green">$$\boxed{p = \sqrt{\frac{7}{6} + e^2}}$$</div>
+
+    <h4>Part (a): Inverse Transform Method</h4>
+
+    <p><strong>Step 2a: Build the CDF $F(x)$ piecewise.</strong></p>
+    <p>For $0 < x < 1$: &ensp; $F(x) = \dfrac{x^4}{12}$</p>
+    <p>Check: $F(0) = 0$, $F(1) = \frac{1}{12}$ $\checkmark$</p>
+    <p>For $1 < x < e$: &ensp; $F(x) = \dfrac{1}{12} + \dfrac{\ln(x)}{3}$</p>
+    <p>Check: $F(1) = \frac{1}{12}$ $\checkmark$, $F(e) = \frac{1}{12} + \frac{1}{3} = \frac{5}{12}$ $\checkmark$</p>
+    <p>For $e \leq x \leq p$: &ensp; $F(x) = \dfrac{5}{12} + \dfrac{x^2 - e^2}{2}$</p>
+    <p>Check: $F(e) = \frac{5}{12}$ $\checkmark$, $F(p) = \frac{5}{12} + \frac{7}{12} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 3a: $U$-intervals and inversions.</strong></p>
+    <ul>
+      <li>Piece 1 ($U \in [0, 1/12)$): &ensp; $U = \frac{x^4}{12}$ &ensp;$\Rightarrow$&ensp; $X = (12U)^{1/4}$</li>
+      <li>Piece 2 ($U \in [1/12, 5/12)$): &ensp; $U = \frac{1}{12} + \frac{\ln x}{3}$ &ensp;$\Rightarrow$&ensp; $\ln x = 3U - \frac{1}{4}$ &ensp;$\Rightarrow$&ensp; $X = e^{3U - 1/4}$</li>
+      <li>Piece 3 ($U \in [5/12, 1]$): &ensp; $U = \frac{5}{12} + \frac{x^2 - e^2}{2}$ &ensp;$\Rightarrow$&ensp; $X = \sqrt{2U - \frac{5}{6} + e^2}$</li>
+    </ul>
+
+    <div class="box box-blue">
+      <strong>Algorithm (Inverse Transform):</strong>
+      <ol>
+        <li>Generate $U \sim U(0,1)$.</li>
+        <li>If $U < \frac{1}{12}$: return $X = (12U)^{1/4}$.</li>
+        <li>Else if $U < \frac{5}{12}$: return $X = e^{\,3U - 1/4}$.</li>
+        <li>Else: return $X = \sqrt{2U - \frac{5}{6} + e^2}$.</li>
+      </ol>
+    </div>
+
+    <h4>Part (b): Composition Method</h4>
+
+    <p><strong>Step 2b: Identify the weights</strong> (the integrals found in Step 1).</p>
+    <p>$$p_1 = \frac{1}{12}, \qquad p_2 = \frac{1}{3} = \frac{4}{12}, \qquad p_3 = \frac{7}{12}$$</p>
+
+    <p><strong>Step 3b: Normalise each sub-density</strong> by dividing $f_i^*(x)$ by $p_i$.</p>
+    <p>$$g_1(x) = \frac{x^3/3}{1/12} = 4x^3 \;\text{ on } (0,1) \qquad g_2(x) = \frac{1/(3x)}{1/3} = \frac{1}{x} \;\text{ on } (1,e) \qquad g_3(x) = \frac{x}{7/12} = \frac{12x}{7} \;\text{ on } [e,p]$$</p>
+
+    <p><strong>Step 4b: Find CDF and inverse for each normalised density.</strong></p>
+    <p><em>Component 1:</em> $G_1(x) = x^4$ on $(0,1)$ &ensp;$\Rightarrow$&ensp; $X = U^{1/4}$</p>
+    <p><em>Component 2:</em> $G_2(x) = \ln(x)$ on $(1,e)$ &ensp;$\Rightarrow$&ensp; $X = e^U$</p>
+    <p><em>Component 3:</em> $G_3(x) = \frac{6(x^2 - e^2)}{7}$ on $[e,p]$ &ensp;$\Rightarrow$&ensp; $X = \sqrt{\frac{7U}{6} + e^2}$</p>
+
+    <div class="box box-blue">
+      <strong>Algorithm (Composition):</strong>
+      <ol>
+        <li>Generate $U_1 \sim U(0,1)$.</li>
+        <li>If $U_1 < \frac{1}{12}$: generate $U_2 \sim U(0,1)$, return $X = U_2^{1/4}$.</li>
+        <li>Else if $U_1 < \frac{5}{12}$: generate $U_2 \sim U(0,1)$, return $X = e^{U_2}$.</li>
+        <li>Else: generate $U_2 \sim U(0,1)$, return $X = \sqrt{\frac{7U_2}{6} + e^2}$.</li>
+      </ol>
+    </div>
+
+    <div class="box box-green">
+      <strong>Key difference:</strong> In inverse transform, a single $U$ determines both which piece and where within it. In composition, $U_1$ selects the component and a fresh $U_2$ generates within it.
+    </div>
   </div>
 </details>
 
 <details>
   <summary>Exercise 26: Composition from Vertical Split &mdash; $f(x) = (x^2 + \tfrac{1}{2})/c$ on $[-1, \pi/3]$</summary>
   <div class="detail-body">
-    <p><strong>Problem:</strong> Given $f(x) = \frac{x^2 + \frac{1}{2}}{c}$ on $[-1, \pi/3]$ where $c = \frac{\pi^3}{81} + \frac{\pi}{6} + \frac{5}{6} \approx 1.740$. Split vertically into two sub-densities and design a composition algorithm. <span class="fs-ref" title="Antiderivatives reference">FS: Derivatives Table</span></p>
+    <p><strong>Problem:</strong> Given $f(x) = \frac{x^2 + \frac{1}{2}}{c}$ on $[-1, \pi/3]$, find $c$, split vertically into two sub-densities, and design a composition algorithm. <span class="fs-ref" title="Antiderivatives for x^2, constants">FS: Derivatives Table</span></p>
 
-    <p><strong>Step 1:</strong> Vertical decomposition.<br>
-    Split $f(x) = \frac{1}{2c} + \frac{x^2}{c} = f_1^*(x) + f_2^*(x)$ where:
-    <ul>
-      <li>$f_1^*(x) = \frac{1}{2c}$ (the constant part)</li>
-      <li>$f_2^*(x) = \frac{x^2}{c}$ (the quadratic part)</li>
-    </ul></p>
+    <p><strong>Step 1: Find the normalising constant $c$.</strong></p>
+    <p>$$c = \int_{-1}^{\pi/3}\!\left(x^2 + \tfrac{1}{2}\right)dx = \left[\frac{x^3}{3} + \frac{x}{2}\right]_{-1}^{\pi/3} = \left(\frac{\pi^3}{81} + \frac{\pi}{6}\right) - \left(-\frac{1}{3} - \frac{1}{2}\right) = \frac{\pi^3}{81} + \frac{\pi}{6} + \frac{5}{6} \approx 1.740$$</p>
 
-    <p><strong>Step 2:</strong> Compute the weights (areas under each part).<br>
-    $$p_1 = \int_{-1}^{\pi/3} \frac{1}{2c}\,dx = \frac{1}{2c}\left(\frac{\pi}{3} + 1\right) = \frac{\pi/3 + 1}{2c} = \frac{\pi + 3}{6c}$$
-    With $c \approx 1.740$: $p_1 = \frac{4.1416}{10.440} \approx 0.397$.<br><br>
-    $$p_2 = \int_{-1}^{\pi/3} \frac{x^2}{c}\,dx = \frac{1}{c}\left[\frac{x^3}{3}\right]_{-1}^{\pi/3} = \frac{1}{c}\left(\frac{\pi^3}{81} + \frac{1}{3}\right) \approx \frac{0.717}{1.740} \approx 0.412$$<br><br>
-    We can verify: $p_1 + p_2 = 1$ (since $\int f(x)\,dx = 1$). Actually: $p_1 \approx 0.588$ and $p_2 \approx 0.412$. Let me recompute:<br>
-    $p_1 = \frac{1}{2 \times 1.740}(\frac{\pi}{3} + 1) = \frac{1}{3.480} \times 2.0472 = 0.588$<br>
-    $p_2 = 1 - p_1 = 0.412$ $\checkmark$</p>
+    <p><strong>Step 2: Vertical decomposition.</strong></p>
+    <p>Split $f(x)$ into its constant and quadratic parts:</p>
+    <p>$$f(x) = \underbrace{\frac{1}{2c}}_{f_1^*(x)} + \underbrace{\frac{x^2}{c}}_{f_2^*(x)}$$</p>
 
-    <p><strong>Step 3:</strong> Normalise each sub-density.<br>
-    $g_1(x) = \frac{f_1^*(x)}{p_1} = \frac{1}{2c \cdot p_1} = \frac{1}{\pi/3 + 1} \approx \frac{1}{2.047}$ on $[-1, \pi/3]$ &mdash; this is $U(-1, \pi/3)$.<br><br>
-    $g_2(x) = \frac{f_2^*(x)}{p_2} = \frac{x^2}{c \cdot p_2} = \frac{x^2}{\pi^3/81 + 1/3}$ on $[-1, \pi/3]$.</p>
+    <p><strong>Step 3: Compute the weights</strong> (area under each part).</p>
+    <p>$$p_1 = \int_{-1}^{\pi/3} \frac{1}{2c}\,dx = \frac{1}{2c}\!\left(\frac{\pi}{3} + 1\right) = \frac{\pi + 3}{6c} \approx \frac{6.142}{10.440} \approx 0.588$$</p>
+    <p>$$p_2 = 1 - p_1 \approx 0.412$$</p>
+    <p>(Verify directly: $p_2 = \frac{1}{c}\!\left(\frac{\pi^3}{81} + \frac{1}{3}\right) \approx \frac{0.717}{1.740} \approx 0.412$ $\checkmark$)</p>
 
-    <p><strong>Step 4:</strong> Derive inverse CDFs for sampling.<br>
-    <strong>Component 1 ($g_1$):</strong> $X = -1 + (\frac{\pi}{3} + 1) U = -1 + 2.047 U$<br><br>
-    <strong>Component 2 ($g_2$):</strong> CDF: $G_2(x) = \frac{x^3/3 + 1/3}{\pi^3/81 + 1/3}$. Set $G_2(x) = U$ and solve:<br>
-    $x = \left[(\frac{\pi^3}{81} + \frac{1}{3})U - \frac{1}{3}\right]^{1/3} \times 3^{1/3}$<br>
-    i.e., $x = \left[3(\frac{\pi^3}{81} + \frac{1}{3})U - 1\right]^{1/3}$</p>
+    <p><strong>Step 4: Normalise each sub-density.</strong></p>
+    <p><em>Component 1:</em> $g_1(x) = \frac{f_1^*(x)}{p_1} = \frac{1}{\pi/3 + 1}$ on $[-1, \pi/3]$. This is $U(-1,\;\pi/3)$.</p>
+    <p>Generate: $X = -1 + \!\left(\frac{\pi}{3} + 1\right)\!U_2$</p>
+    <p><em>Component 2:</em> $g_2(x) = \frac{f_2^*(x)}{p_2} = \frac{x^2}{c\,p_2}$. Let $\alpha = c\,p_2 = \frac{\pi^3}{81} + \frac{1}{3}$.</p>
+    <p>$$g_2(x) = \frac{x^2}{\alpha} \quad\text{on } [-1, \pi/3]$$</p>
 
-    <p><strong>Step 5:</strong> Write the composition algorithm.</p>
+    <p><strong>Step 5: Derive the inverse CDF for component 2.</strong></p>
+    <p>$$G_2(x) = \int_{-1}^{x}\frac{t^2}{\alpha}\,dt = \frac{1}{\alpha}\cdot\frac{x^3 + 1}{3} = \frac{x^3 + 1}{3\alpha}$$</p>
+    <p>Set $G_2(x) = U$ and solve for $x$:</p>
+    <p>$$x^3 + 1 = 3\alpha U \quad\Longrightarrow\quad x = (3\alpha U - 1)^{1/3}$$</p>
+    <p>Check: $G_2(-1) = 0$ $\checkmark$, &ensp; $G_2(\pi/3) = \frac{\pi^3/27 + 1}{3\alpha} = \frac{\pi^3/27 + 1}{3(\pi^3/81 + 1/3)} = \frac{\pi^3/27 + 1}{\pi^3/27 + 1} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 6: Write the composition algorithm.</strong></p>
     <div class="box box-blue">
       <strong>Algorithm:</strong>
       <ol>
         <li>Generate $U_1 \sim U(0,1)$.</li>
-        <li>If $U_1 \leq p_1 \approx 0.588$: generate $X$ from $g_1$ (uniform on $[-1, \pi/3]$).</li>
-        <li>Else: generate $X$ from $g_2$ using inverse CDF.</li>
-        <li>Return $X$.</li>
+        <li>If $U_1 \leq p_1 \approx 0.588$:
+          <br>Generate $U_2 \sim U(0,1)$. Return $X = -1 + \!\left(\frac{\pi}{3} + 1\right)\!U_2$.</li>
+        <li>Else:
+          <br>Generate $U_2 \sim U(0,1)$. Return $X = \!\left(3\alpha\, U_2 - 1\right)^{1/3}$ where $\alpha = \frac{\pi^3}{81} + \frac{1}{3}$.</li>
       </ol>
     </div>
 
     <div class="box box-green">
-      <strong>Conclusion:</strong> Composition weights: $p_1 \approx 0.588$ (uniform), $p_2 \approx 0.412$ (cubic). The vertical split separates the constant and quadratic contributions of the original density.
+      <strong>Conclusion:</strong> Composition weights: $p_1 = \frac{\pi+3}{6c} \approx 0.588$ (uniform component), $p_2 \approx 0.412$ (cubic-root component). The vertical split separates the constant and quadratic contributions of the original density.
     </div>
   </div>
 </details>
@@ -1690,17 +1894,44 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <details>
   <summary>Exercise 27: Composition &mdash; $f(x) = \frac{1}{96}x + \frac{1}{64}x^3$ on $[2,4]$</summary>
   <div class="detail-body">
-    <p><strong>Step 1: Split.</strong> $f(x) = \frac{1}{96}x + \frac{1}{64}x^3$.</p>
-    <p>Integrate each: $\int_2^4 \frac{x}{96}\,dx = \frac{1}{96}\cdot\frac{16-4}{2} = \frac{12}{192} = \frac{1}{16}$</p>
-    <p>$\int_2^4 \frac{x^3}{64}\,dx = \frac{1}{64}\cdot\frac{256-16}{4} = \frac{240}{256} = \frac{15}{16}$</p>
-    <p><strong>Step 2: Weights.</strong> $p_1 = 1/16$, $p_2 = 15/16$.</p>
-    <p><strong>Step 3: Normalize.</strong></p>
-    <p>$f_1(x) = \frac{x/96}{1/16} = \frac{x}{6}$ on $[2,4]$. CDF: $F_1(x) = \frac{x^2 - 4}{12}$. Inverse: $X = \sqrt{12U_2 + 4}$.</p>
-    <p>$f_2(x) = \frac{x^3/64}{15/16} = \frac{x^3}{60}$ on $[2,4]$. CDF: $F_2(x) = \frac{x^4 - 16}{240}$. Inverse: $X = (240U_2 + 16)^{1/4}$.</p>
+    <p><strong>Problem:</strong> Use the composition method to generate from $f(x) = \frac{1}{96}x + \frac{1}{64}x^3$ on $[2,4]$. <span class="fs-ref" title="Antiderivatives for x, x^3">FS: Derivatives Table</span></p>
+
+    <p><strong>Step 1: Identify the two natural components.</strong></p>
+    <p>$$f(x) = \underbrace{\frac{x}{96}}_{f_1^*(x)} \;+\; \underbrace{\frac{x^3}{64}}_{f_2^*(x)}$$</p>
+
+    <p><strong>Step 2: Integrate each to find the weights.</strong></p>
+    <p>$$p_1 = \int_2^4 \frac{x}{96}\,dx = \frac{1}{96}\cdot\frac{x^2}{2}\bigg|_2^4 = \frac{1}{96}\cdot\frac{16-4}{2} = \frac{12}{192} = \frac{1}{16}$$</p>
+    <p>$$p_2 = \int_2^4 \frac{x^3}{64}\,dx = \frac{1}{64}\cdot\frac{x^4}{4}\bigg|_2^4 = \frac{1}{64}\cdot\frac{256-16}{4} = \frac{240}{256} = \frac{15}{16}$$</p>
+    <p>Check: $p_1 + p_2 = \frac{1}{16} + \frac{15}{16} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 3: Normalise each sub-density</strong> by dividing by its weight.</p>
+    <p>$$g_1(x) = \frac{f_1^*(x)}{p_1} = \frac{x/96}{1/16} = \frac{16x}{96} = \frac{x}{6} \quad\text{on } [2,4]$$</p>
+    <p>$$g_2(x) = \frac{f_2^*(x)}{p_2} = \frac{x^3/64}{15/16} = \frac{16x^3}{64 \cdot 15} = \frac{x^3}{60} \quad\text{on } [2,4]$$</p>
+
+    <p><strong>Step 4: Derive the CDF and inverse for each normalised density.</strong></p>
+    <p><em>Component 1 ($g_1$):</em></p>
+    <p>$$G_1(x) = \int_2^x \frac{t}{6}\,dt = \frac{1}{6}\cdot\frac{t^2}{2}\bigg|_2^x = \frac{x^2 - 4}{12}$$</p>
+    <p>Set $G_1(x) = U$: &ensp; $x^2 = 12U + 4$ &ensp;$\Rightarrow$&ensp; $X = \sqrt{12U + 4}$</p>
+    <p>Check: $G_1(2) = 0$ $\checkmark$, $G_1(4) = \frac{12}{12} = 1$ $\checkmark$</p>
+
+    <p><em>Component 2 ($g_2$):</em></p>
+    <p>$$G_2(x) = \int_2^x \frac{t^3}{60}\,dt = \frac{1}{60}\cdot\frac{t^4}{4}\bigg|_2^x = \frac{x^4 - 16}{240}$$</p>
+    <p>Set $G_2(x) = U$: &ensp; $x^4 = 240U + 16$ &ensp;$\Rightarrow$&ensp; $X = (240U + 16)^{1/4}$</p>
+    <p>Check: $G_2(2) = 0$ $\checkmark$, $G_2(4) = \frac{240}{240} = 1$ $\checkmark$</p>
+
+    <p><strong>Step 5: Write the composition algorithm.</strong></p>
+    <div class="box box-blue">
+      <strong>Algorithm:</strong>
+      <ol>
+        <li>Generate $U_1 \sim U(0,1)$.</li>
+        <li>Generate $U_2 \sim U(0,1)$ (independent).</li>
+        <li>If $U_1 < \frac{1}{16}$: return $X = \sqrt{12U_2 + 4}$ &ensp;(from $g_1$).</li>
+        <li>Else: return $X = (240U_2 + 16)^{1/4}$ &ensp;(from $g_2$).</li>
+      </ol>
+    </div>
+
     <div class="box box-green">
-      <strong>Algorithm:</strong><br>
-      1. Generate $U_1$. If $U_1 < 1/16$, use $f_1$; else use $f_2$.<br>
-      2. Generate $U_2$. If $f_1$: $X = \sqrt{12U_2 + 4}$. If $f_2$: $X = (240U_2 + 16)^{1/4}$.
+      <strong>Conclusion:</strong> Weights $p_1 = 1/16$ and $p_2 = 15/16$. The linear component is selected rarely (6.25% of the time); the cubic component dominates (93.75%).
     </div>
   </div>
 </details>
