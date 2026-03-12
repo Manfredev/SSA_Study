@@ -238,12 +238,12 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     </div>
     <div class="vg-step" data-step="3">
       <div class="vg-title">Select the Test</div>
-      <div class="vg-desc"><strong>One-sample:</strong> $T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}$, d.f. $= n-1$. <strong>Paired:</strong> same formula on differences $\bar{D}$. <strong>Welch:</strong> $T = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}}$ with Welch d.f. formula.</div>
+      <div class="vg-desc"><strong>One-sample:</strong> $T = \frac{\bar{X} - \mu_0}{S/\sqrt{n}}$, d.f. $= n-1$. <strong>Paired:</strong> same formula on differences $\bar{D}$. <strong>Welch:</strong> $T = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_1^2/n_1 + S_2^2/n_2}}$ with Welch d.f. formula. <span class="fs-ref" title="Empirical Tests + System Comparison sections">FS: Empirical Tests / System Comparison</span></div>
     </div>
     <div class="vg-step" data-step="4">
       <div class="vg-title">Compute the Test Statistic</div>
       <div class="vg-desc">Plug in sample means, standard deviations, and sizes. For Welch, also compute the degrees of freedom using the Satterthwaite formula (round down to integer).</div>
-      <div class="vg-formula">$\nu \approx \frac{(S_1^2/n_1 + S_2^2/n_2)^2}{\frac{(S_1^2/n_1)^2}{n_1-1} + \frac{(S_2^2/n_2)^2}{n_2-1}}$</div>
+      <div class="vg-formula">$\nu \approx \frac{(S_1^2/n_1 + S_2^2/n_2)^2}{\frac{(S_1^2/n_1)^2}{n_1-1} + \frac{(S_2^2/n_2)^2}{n_2-1}}$ <span class="fs-ref" title="Welch degrees of freedom formula">FS: System Comparison</span></div>
     </div>
     <div class="vg-step" data-step="5">
       <div class="vg-title">Compare to Critical Value</div>
@@ -273,6 +273,44 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <div class="box box-blue">
   <h4>Welch t-test (Unpaired, Unequal Variances)</h4>
   <p>The default for comparing two independent samples when you <strong>cannot assume equal variances</strong>: <span class="fs-ref" title="See formula sheet for Welch df formula">FS: System Comparison</span></p>
+
+  <details class="bg-knowledge">
+    <summary>How to build this from the formula sheet</summary>
+    <div class="detail-body">
+      <div class="vg-steps">
+        <div class="vg-step" data-step="1">
+          <div class="vg-title">Start with the one-sample t-test <span class="fs-ref" title="t-test formula on formula sheet">FS: Empirical Tests</span></div>
+          <div class="vg-desc">The formula sheet gives you:
+            $$t = \frac{\bar{X}(n) - \mu_0}{SE}$$
+            This tests "is a sample mean different from a known value $\mu_0$?"</div>
+        </div>
+        <div class="vg-step" data-step="2">
+          <div class="vg-title">Adapt for two samples</div>
+          <div class="vg-desc">We want to test $H_0: \mu_1 = \mu_2$, i.e., $\mu_1 - \mu_2 = 0$. The "sample mean" becomes the difference $\bar{X}_1 - \bar{X}_2$, and the "known value" is $\mu_0 = 0$:
+            $$t = \frac{(\bar{X}_1 - \bar{X}_2) - 0}{SE_{\text{difference}}}$$</div>
+        </div>
+        <div class="vg-step" data-step="3">
+          <div class="vg-title">Find the SE of the difference using the variance sum law <span class="fs-ref" title="Variance sum law on formula sheet page 1">FS: Basic Statistics</span></div>
+          <div class="vg-desc">The formula sheet gives: $\text{Var}[X \pm Y] = \text{Var}[X] + \text{Var}[Y] \pm 2\text{Cov}(X,Y)$.<br><br>
+            Since the two samples are <strong>independent</strong>, $\text{Cov} = 0$:
+            $$\text{Var}(\bar{X}_1 - \bar{X}_2) = \text{Var}(\bar{X}_1) + \text{Var}(\bar{X}_2) = \frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}$$
+            Take the square root to get the SE:</div>
+          <div class="vg-formula">$SE = \sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}$</div>
+        </div>
+        <div class="vg-step" data-step="4">
+          <div class="vg-title">Plug back in</div>
+          <div class="vg-desc">Substituting the SE into the t-statistic from Step 2:</div>
+          <div class="vg-formula">$t = \dfrac{\bar{X}_1 - \bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}$</div>
+          <div class="vg-tip">This is exactly the Welch t-statistic below &mdash; built entirely from formula sheet ingredients.</div>
+        </div>
+        <div class="vg-step" data-step="5">
+          <div class="vg-title">The df comes directly from the formula sheet <span class="fs-ref" title="Welch df on formula sheet page 3">FS: System Comparison</span></div>
+          <div class="vg-desc">The Welch&ndash;Satterthwaite $\hat{f}$ formula is given explicitly on the formula sheet (page 3, "Comparing Alternative System Configurations") &mdash; no derivation needed, just plug in $S_1^2, S_2^2, n_1, n_2$.</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   $$t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}$$
   <p>Degrees of freedom (Welch&ndash;Satterthwaite approximation):</p>
   $$\hat{f} = \frac{\left(\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}\right)^2}{\dfrac{\left(S_1^2/n_1\right)^2}{n_1 - 1} + \dfrac{\left(S_2^2/n_2\right)^2}{n_2 - 1}}$$
@@ -696,6 +734,34 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <div class="box box-blue">
   <h4>Welch CI for Difference of Means</h4>
   <p>For two independent samples, the $100(1-\alpha)\%$ CI for $\mu_1 - \mu_2$: <span class="fs-ref" title="Welch approximation">FS: System Comparison</span></p>
+
+  <details class="bg-knowledge">
+    <summary>How to build this from the formula sheet</summary>
+    <div class="detail-body">
+      <div class="vg-steps">
+        <div class="vg-step" data-step="1">
+          <div class="vg-title">Start with the t-CI from the formula sheet <span class="fs-ref" title="CI formula on formula sheet page 1">FS: Basic Statistics</span></div>
+          <div class="vg-desc">The formula sheet gives the one-sample CI:
+            $$\bar{X}(n) \pm t_{n-1,\; 1-\alpha/2} \cdot SE$$</div>
+        </div>
+        <div class="vg-step" data-step="2">
+          <div class="vg-title">Make three substitutions for two independent samples</div>
+          <div class="vg-desc">
+            <strong>Point estimate:</strong> replace $\bar{X}(n)$ with the difference $\bar{X}_1 - \bar{X}_2$.<br>
+            <strong>Standard error:</strong> replace $SE$ with the two-sample SE (derived from the variance sum law, see Welch t-test derivation above):
+            $\sqrt{S_1^2/n_1 + S_2^2/n_2}$.<br>
+            <strong>Degrees of freedom:</strong> replace $n - 1$ with the Welch df $\hat{f}$ from the formula sheet. <span class="fs-ref" title="Welch df on formula sheet page 3">FS: System Comparison</span></div>
+        </div>
+        <div class="vg-step" data-step="3">
+          <div class="vg-title">Result</div>
+          <div class="vg-desc">After substitution you get:</div>
+          <div class="vg-formula">$(\bar{X}_1 - \bar{X}_2) \pm t_{\hat{f},\; 1-\alpha/2} \cdot \sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}$</div>
+          <div class="vg-tip">Same pattern as one-sample CI &mdash; just swap in two-sample versions of point estimate, SE, and df.</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   $$(\bar{X}_1 - \bar{X}_2) \pm t_{\hat{f}, 1-\alpha/2} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}$$
   <p>If the CI contains 0, we <strong>cannot</strong> detect a significant difference.</p>
 </div>
@@ -715,7 +781,7 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 </div>
 
 <div class="box box-blue">
-  <h4>D&amp;D Table (Selected Values)</h4>
+  <h4>D&amp;D Table (Selected Values) <span class="fs-ref" title="Dudewicz and Dalal table on formula sheet">FS: System Comparison</span></h4>
   <table>
     <tr><th>$P^*$</th><th>$n_0$</th><th>$k=2$</th><th>$k=3$</th><th>$k=4$</th></tr>
     <tr><td>0.90</td><td>20</td><td>1.896</td><td>2.342</td><td>2.583</td></tr>
@@ -946,7 +1012,7 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 
 <div class="box box-blue">
   <h4>Monte Carlo Integration</h4>
-  <p>To estimate $I = \int_a^b g(x)\,dx$, generate $U_1, \ldots, U_n \sim U(0,1)$ and compute: <span class="fs-ref" title="Antiderivatives reference">FS: Derivatives Table</span></p>
+  <p>To estimate $I = \int_a^b g(x)\,dx$, generate $U_1, \ldots, U_n \sim U(0,1)$ and compute: <span class="fs-ref" title="Use (Anti)derivatives table to verify analytical solutions">FS: (Anti)derivatives Table</span></p>
   $$\hat{I} = (b-a) \cdot \frac{1}{n}\sum_{i=1}^n g\!\left(a + (b-a)U_i\right)$$
   <p>For multi-dimensional integrals $\int_{a_1}^{b_1}\!\int_{a_2}^{b_2} g(x,y)\,dx\,dy$:</p>
   $$\hat{I} = (b_1 - a_1)(b_2 - a_2) \cdot \frac{1}{n}\sum_{i=1}^n g\!\left(a_1 + (b_1-a_1)U_i,\; a_2 + (b_2-a_2)V_i\right)$$
