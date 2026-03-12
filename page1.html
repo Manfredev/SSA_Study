@@ -2467,14 +2467,29 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
       <div class="vg-step">
         <div class="vg-number">2</div>
         <div class="vg-content">
-          <h5>Think about what quartiles mean for a normal distribution</h5>
-          <div class="vg-desc">For any normal distribution $N(\mu, \sigma^2)$, the quartiles are symmetric around the mean:</div>
+          <h5>Connect quartiles to the normal distribution</h5>
+          <div class="vg-desc">A boxplot shows $Q_1$ (25th percentile) and $Q_3$ (75th percentile). The key idea: if we <em>know</em> the data is normal, we can write these quartiles in terms of $\mu$ and $\sigma$.</div>
+
+          <p>Recall that any normal value $X \sim N(\mu, \sigma^2)$ can be written as $X = \mu + z \cdot \sigma$, where $z$ is the corresponding standard normal value. So:</p>
           <ul>
-            <li>$Q_1 = \mu - z_{0.75} \cdot \sigma$ &nbsp;(the 25th percentile)</li>
-            <li>$Q_3 = \mu + z_{0.75} \cdot \sigma$ &nbsp;(the 75th percentile)</li>
+            <li>The 25th percentile: $Q_1 = \mu + z_{0.25} \cdot \sigma$</li>
+            <li>The 75th percentile: $Q_3 = \mu + z_{0.75} \cdot \sigma$</li>
           </ul>
-          <p>So: $\text{IQR} = Q_3 - Q_1 = 2 \times z_{0.75} \times \sigma$</p>
-          <div class="vg-tip">The $\mu$ cancels out! You don't need the mean to estimate $\sigma$ &mdash; just the IQR and normality.</div>
+
+          <p>Now, the normal distribution is symmetric around 0, so $z_{0.25} = -z_{0.75}$. That gives us:</p>
+          <ul>
+            <li>$Q_1 = \mu - z_{0.75} \cdot \sigma$</li>
+            <li>$Q_3 = \mu + z_{0.75} \cdot \sigma$</li>
+          </ul>
+
+          <p>Now subtract $Q_1$ from $Q_3$ to get the IQR:</p>
+          <p>$$\text{IQR} = Q_3 - Q_1 = (\mu + z_{0.75}\,\sigma) - (\mu - z_{0.75}\,\sigma)$$</p>
+          <p>Expand the brackets:</p>
+          <p>$$= \mu + z_{0.75}\,\sigma - \mu + z_{0.75}\,\sigma$$</p>
+          <p>The $\mu$ terms cancel ($+\mu - \mu = 0$), and the two $z_{0.75}\,\sigma$ terms add up:</p>
+          <p>$$= 2 \times z_{0.75} \times \sigma$$</p>
+
+          <div class="vg-tip">This is the crucial trick: the mean $\mu$ drops out completely! You don't need to know the mean to estimate $\sigma$ &mdash; you only need the IQR and the fact that the data is normal.</div>
         </div>
       </div>
       <div class="vg-step">
