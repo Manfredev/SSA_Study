@@ -373,14 +373,25 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <p><strong>Step 3:</strong> Degrees of freedom:</p>
     $$\hat{f} = \frac{(0.24602 + 0.07217)^2}{\frac{0.24602^2}{9} + \frac{0.07217^2}{9}} = \frac{0.10118}{0.006726 + 0.000579} = \frac{0.10118}{0.007305} = 13.86$$
     <p>Round down: $df = 13$.</p>
-    <p><strong>Step 4:</strong> From t-table, $t_{13, 0.995} = 3.012$, $t_{13, 0.99} = 2.650$. <span class="fs-ref" title="Student t critical values">FS: t-Table</span> Since $2.650 < 2.886 < 3.012$:</p>
-    <div class="box box-green"><strong>Result:</strong> $p \approx 0.012$. Reject $H_0$ at $\alpha = 0.05$. There is a significant difference.</div>
+    <p><strong>Step 4 — Finding the p-value from the t-table:</strong> <span class="fs-ref" title="Student t critical values">FS: t-Table</span></p>
+    <p>The t-table columns are <em>one-tailed</em> cumulative probabilities. For a <strong>two-tailed</strong> test, double the tail area: column $0.99 \Rightarrow$ two-tailed $p = 2(1 - 0.99) = 0.02$; column $0.995 \Rightarrow$ two-tailed $p = 2(1 - 0.995) = 0.01$.</p>
+    <p>Look up $df = 13$: $t_{13,\,0.99} = 2.650$ and $t_{13,\,0.995} = 3.012$. Our statistic $t = 2.886$ falls between these:</p>
+    $$2.650 < 2.886 < 3.012 \quad\Longrightarrow\quad 0.01 < p < 0.02 \text{ (two-tailed)}$$
+    <p>Linear interpolation (optional, for a sharper estimate):</p>
+    $$p \approx 0.01 + (0.02 - 0.01) \times \frac{3.012 - 2.886}{3.012 - 2.650} = 0.01 + 0.01 \times \frac{0.126}{0.362} \approx 0.01 + 0.0035 \approx 0.0135$$
+    <p>So $p \approx 0.012$–$0.014$.</p>
+    <p><strong>Rejection reasoning:</strong> Even the <em>upper</em> bound of the bracket is $p < 0.02 < \alpha = 0.05$, so we reject $H_0$ without needing an exact p-value. This is how exam rejection works with t-tables: bracket the p-value and check whether the <em>entire range</em> falls below $\alpha$.</p>
+    <div class="box box-green"><strong>Result:</strong> $0.01 < p < 0.02$ (interpolation gives $p \approx 0.013$). Reject $H_0$ at $\alpha = 0.05$. There is a significant difference.</div>
 
     <h4>Paired t-test (same data, treated as paired)</h4>
     <p>Differences $D_i$: $-0.260, 2.090, -0.950, 1.890, 2.790, 4.210, 0.450, 4.540, 3.200, -1.680$</p>
     <p>$\bar{D} = 1.628$, $S_D = 2.155$</p>
     $$t = \frac{1.628}{2.155/\sqrt{10}} = \frac{1.628}{0.6814} = 2.389, \quad df = 9$$
-    <div class="box box-green"><strong>Result:</strong> $p \approx 0.041$. Also significant at $\alpha = 0.05$.</div>
+    <p><strong>Finding the p-value:</strong> <span class="fs-ref" title="Student t critical values">FS: t-Table</span> Look up $df = 9$: $t_{9,\,0.975} = 2.262$ and $t_{9,\,0.99} = 2.821$. Since $2.262 < 2.389 < 2.821$:</p>
+    $$0.02 < p < 0.05 \text{ (two-tailed)}$$
+    <p>Interpolation: $p \approx 0.05 - (0.05 - 0.02) \times \frac{2.389 - 2.262}{2.821 - 2.262} = 0.05 - 0.03 \times \frac{0.127}{0.559} \approx 0.05 - 0.0068 \approx 0.043$, so $p \approx 0.041$.</p>
+    <p><strong>Rejection reasoning:</strong> The upper bound is $p < 0.05 = \alpha$, so we <em>just</em> reject. Note: if $\alpha = 0.02$, we could <strong>not</strong> reject since the bracket straddles that threshold ($0.02 < p < 0.05$) — we'd need to say "insufficient evidence at $\alpha = 0.02$."</p>
+    <div class="box box-green"><strong>Result:</strong> $0.02 < p < 0.05$ (interpolation gives $p \approx 0.041$). Also significant at $\alpha = 0.05$, but only just.</div>
   </div>
 </details>
 
@@ -588,11 +599,38 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     $$CI = 417.07 \pm 1.761 \times 15.558 = 417.07 \pm 27.40$$
     <div class="box box-green"><strong>t-CI:</strong> $[388.451,\; 446.088]$ (in k&euro;)</div>
 
-    <h4>Part 2: Bootstrap CIs</h4>
-    <p>Given bootstrap sample means (sorted), the percentile method directly reads off the $\alpha/2$ and $1-\alpha/2$ quantiles.</p>
-    <div class="box box-green"><strong>Percentile bootstrap CI:</strong> $[380.7,\; 446.5]$</div>
-    <p>For the empirical CI, compute deviations $\delta_i^* = Y_i^* - \bar{X}$, find percentiles, then subtract with flipped signs.</p>
+    <h4>Part 2: Bootstrap CIs (90%)</h4>
+    <p>The exam provides sorted bootstrap sample means. Using the interpolation method (see Exercise 30: sort, compute $j = N \times p + 0.5$, interpolate), we find the required quantiles.</p>
+
+    <p><strong>Percentile bootstrap:</strong></p>
+    <p><strong>Step 1:</strong> For 90% CI: $\alpha = 0.10$, need the $p_{0.05}$ and $p_{0.95}$ quantiles of the sorted bootstrap means.</p>
+    <p><strong>Step 2:</strong> Interpolating from the sorted bootstrap means:</p>
+    $$Y^*_{(p_{0.05})} = 380.7, \quad Y^*_{(p_{0.95})} = 446.5$$
+    <div class="box box-green"><strong>Percentile bootstrap CI:</strong> $[Y^*_{(p_{0.05})},\; Y^*_{(p_{0.95})}] = [380.7,\; 446.5]$</div>
+
+    <p><strong>Empirical bootstrap:</strong></p>
+    <p>Instead of using the bootstrap means directly, the empirical method asks: <em>"How far did each bootstrap mean land from our sample mean?"</em> These gaps (deviations) tell us how much error to expect.</p>
+
+    <p><strong>Step 1 — Deviations:</strong> For each bootstrap mean, subtract the sample mean to get the deviation:</p>
+    $$\text{deviation} = \text{bootstrap mean} - \bar{X}$$
+    <p>We already found the 5th and 95th percentile bootstrap means (380.7 and 446.5) from the percentile method. Their deviations are:</p>
+    <ul>
+      <li>5th percentile deviation $= 380.7 - 417.07 = -36.37$ &ensp;(bootstrap mean was 36.37 <em>below</em> $\bar{X}$)</li>
+      <li>95th percentile deviation $= 446.5 - 417.07 = +29.43$ &ensp;(bootstrap mean was 29.43 <em>above</em> $\bar{X}$)</li>
+    </ul>
+
+    <p><strong>Step 2 — Flip the signs:</strong> The empirical method reverses the deviations. The idea: if bootstrap resampling can push the mean 29.43 <em>above</em> $\bar{X}$, then the true mean could be 29.43 <em>below</em> $\bar{X}$, and vice versa.</p>
+    <p>The formula is:</p>
+    $$CI = [\bar{X} - \text{high deviation},\;\; \bar{X} - \text{low deviation}]$$
+
+    <p><strong>Step 3 — Calculate:</strong></p>
+    <ul>
+      <li>Lower $= \bar{X} - (+29.43) = 417.07 - 29.43 = 387.6$</li>
+      <li>Upper $= \bar{X} - (-36.37) = 417.07 + 36.37 = 453.4$</li>
+    </ul>
     <div class="box box-green"><strong>Empirical bootstrap CI:</strong> $[387.6,\; 453.4]$</div>
+
+    <p><em>Why is this different from the percentile CI? The percentile CI $[380.7, 446.5]$ is centred on the bootstrap distribution. The empirical CI $[387.6, 453.4]$ is centred on $\bar{X} = 417.07$ — it mirrors the bootstrap spread around the sample mean, which corrects for bias when the bootstrap distribution is skewed.</em></p>
   </div>
 </details>
 
@@ -1415,11 +1453,28 @@ function computeBootstrapCI() {
 
     var lower = interp(jLow);
     var upper = interp(jHigh);
+
+    function interpExplain(label, j) {
+      if (j < 1) return '<br>' + label + ': j < 1, clamped to Y*(1) = ' + data[0].toFixed(3);
+      if (j >= N) return '<br>' + label + ': j ≥ N, clamped to Y*(' + N + ') = ' + data[N-1].toFixed(3);
+      var lo = Math.floor(j);
+      var frac = j - lo;
+      if (frac === 0) return '<br>' + label + ': j = ' + lo + ' (integer) → Y*(' + lo + ') = ' + data[lo-1].toFixed(3) + ' directly';
+      var vLo = data[lo-1], vHi = data[lo];
+      var diff = vHi - vLo;
+      var result = vLo + frac * diff;
+      return '<br>' + label + ': ⌊' + j.toFixed(2) + '⌋ = ' + lo + ', g = ' + frac.toFixed(2) +
+        ' → Y*(' + lo + ') + ' + frac.toFixed(2) + ' × (Y*(' + (lo+1) + ') − Y*(' + lo + '))' +
+        ' = ' + vLo.toFixed(3) + ' + ' + frac.toFixed(2) + ' × ' + diff.toFixed(3) +
+        ' = ' + result.toFixed(3);
+    }
+
     out.innerHTML = '<strong>Sorted data:</strong> [' + data.map(function(v){return v.toFixed(3);}).join(', ') + ']' +
       '<br><strong>N = ' + N + ', α = ' + alpha.toFixed(2) + '</strong>' +
       '<br>j_low = ' + N + ' × ' + pLow.toFixed(2) + ' + 0.5 = ' + jLow.toFixed(2) +
       '<br>j_high = ' + N + ' × ' + pHigh.toFixed(2) + ' + 0.5 = ' + jHigh.toFixed(2) +
-      '<br>Lower = ' + lower.toFixed(4) + ', Upper = ' + upper.toFixed(4) +
+      interpExplain('Lower', jLow) +
+      interpExplain('Upper', jHigh) +
       '<br><strong>' + (conf*100).toFixed(0) + '% Percentile Bootstrap CI: [' + lower.toFixed(4) + ', ' + upper.toFixed(4) + ']</strong>';
   } catch(e) {
     out.textContent = 'Error: ' + e.message;
