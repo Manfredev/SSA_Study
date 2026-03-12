@@ -653,12 +653,34 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   <div class="detail-body">
     <p><strong>Context:</strong> Flip simulates mean throughput per 10 minutes. He divides output into 11 batches with means:</p>
     <p>13.95, 11.01, 10.41, 12.87, 12.36, 11.17, 13.50, 11.89, 10.09, 10.28, 12.70</p>
-    <p><strong>Step 1:</strong> Grand mean: $\bar{Y} = \frac{1}{11}\sum Y_i = \frac{130.23}{11} = 11.839$</p>
-    <p><strong>Step 2:</strong> Sample variance of batch means: $S^2 = 1.636$, $SE = \sqrt{1.636/11} = 0.3857$</p>
-    <p><strong>Step 3:</strong> 90% CI with $t_{10, 0.95} = 1.812$:</p>
-    $$CI = 11.839 \pm 1.812 \times 0.3857 = 11.839 \pm 0.699$$
+    <p><strong>Step 1 — Grand mean:</strong></p>
+    $$\bar{Y} = \frac{1}{k}\sum_{i=1}^{k} Y_i = \frac{130.23}{11} = 11.839$$
+
+    <p><strong>Step 2 — Sample variance of the batch means:</strong> Treat the $k = 11$ batch means as independent observations and compute their sample variance (divide by $k - 1$, not $k$):</p>
+    $$S^2 = \frac{1}{k-1}\sum_{i=1}^{k}(Y_i - \bar{Y})^2$$
+    <p>Squared deviations from $\bar{Y} = 11.839$:</p>
+    <ul style="columns:2;column-gap:2em;">
+      <li>$(13.95 - 11.839)^2 = 4.456$</li>
+      <li>$(11.01 - 11.839)^2 = 0.687$</li>
+      <li>$(10.41 - 11.839)^2 = 2.042$</li>
+      <li>$(12.87 - 11.839)^2 = 1.063$</li>
+      <li>$(12.36 - 11.839)^2 = 0.271$</li>
+      <li>$(11.17 - 11.839)^2 = 0.448$</li>
+      <li>$(13.50 - 11.839)^2 = 2.759$</li>
+      <li>$(11.89 - 11.839)^2 = 0.003$</li>
+      <li>$(10.09 - 11.839)^2 = 3.059$</li>
+      <li>$(10.28 - 11.839)^2 = 2.431$</li>
+      <li>$(12.70 - 11.839)^2 = 0.741$</li>
+    </ul>
+    $$\sum(Y_i - \bar{Y})^2 = 17.960, \quad S^2 = \frac{17.960}{10} = 1.796$$
+
+    <p><strong>Step 3 — Standard error:</strong></p>
+    $$SE = \sqrt{\frac{S^2}{k}} = \sqrt{\frac{1.796}{11}} = \sqrt{0.1633} = 0.4041$$
+
+    <p><strong>Step 4 — 90% CI:</strong> With $k - 1 = 10$ degrees of freedom, $t_{10,\,0.95} = 1.812$: <span class="fs-ref" title="Student t critical values">FS: t-Table</span></p>
+    $$CI = \bar{Y} \pm t_{10,\,0.95} \times SE = 11.839 \pm 1.812 \times 0.4041 = 11.839 \pm 0.732$$
     <div class="box box-green"><strong>90% CI:</strong> $[11.11,\; 12.57]$</div>
-    <p><em>Note: Batch means method is valid because the batches are large enough for approximate independence.</em></p>
+    <p><em>Note: The batch means method works because the batches are large enough that the batch means are approximately independent — so we can treat them like i.i.d. observations and apply a standard t-CI.</em></p>
   </div>
 </details>
 
@@ -882,16 +904,31 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <details>
   <summary>Exercise 31: D&amp;D Sample Size &mdash; Three Algorithms</summary>
   <div class="detail-body">
-    <p><strong>Setup:</strong> 3 algorithms, $n_0 = 20$ initial series each. $P^* = 0.95$, $d^* = 5$ seconds $= 5/3600$ hours.</p>
-    <p>Variances: $S_1^2 = 0.7961$, $S_2^2 = 0.0264$, $S_3^2 = 0.2401$ (in hours$^2$)</p>
-    <p><strong>Step 1:</strong> From D&amp;D table: $k = 3$, $n_0 = 20$, $P^* = 0.95$ &rarr; $h = 2.872$</p>
-    <p><strong>Step 2:</strong> Compute $N_i$: ($d^* = 5/3600 = 0.001389$ hours)</p>
-    $$N_1 = \left\lceil \frac{2.872^2 \times 0.7961}{0.001389^2} \right\rceil = \left\lceil \frac{6.5644}{1.929 \times 10^{-6}} \right\rceil = 3{,}404{,}094$$
-    $$N_2 = \left\lceil \frac{2.872^2 \times 0.0264}{0.001389^2} \right\rceil = 112{,}886$$
-    $$N_3 = \left\lceil \frac{2.872^2 \times 0.2401}{0.001389^2} \right\rceil = 1{,}026{,}659$$
-    <p>Additional replications: $N_i - 20$:</p>
-    <div class="box box-green"><strong>Additional replications needed:</strong> 3,404,074; 112,866; 1,026,639</div>
-    <p><em>These huge numbers show that detecting a 5-second difference in hourly data requires enormous sample sizes due to high variance!</em></p>
+    <p><strong>Setup:</strong> 3 algorithms, $n_0 = 20$ initial replications each. $P^* = 0.95$.</p>
+    <p>Variances (from Stage 1): $S_1^2 = 0.7961$, $S_2^2 = 0.0264$, $S_3^2 = 0.2401$ (in hours$^2$)</p>
+
+    <p><strong>Step 1 — Choose $d^*$ (indifference zone):</strong> $d^*$ is the smallest difference between system means that you care about detecting. If two systems are within $d^*$ of each other, you're happy calling them "equally good."</p>
+    <p>Here: $d^* = 5$ seconds. But the variances are in <strong>hours²</strong>, so $d^*$ must be in hours too:</p>
+    $$d^* = \frac{5}{3600} = 0.001389 \text{ hours}$$
+    <p><em>Unit mismatch is a common exam trap — $d^*$ must match the units of $S_i^2$.</em></p>
+
+    <p><strong>Step 2 — Look up $h$:</strong> From the D&amp;D table with $k = 3$ systems, $f = n_0 - 1 = 19$ degrees of freedom, $P^* = 0.95$:</p>
+    $$h = 2.872$$
+
+    <p><strong>Step 3 — Compute $N_i$:</strong> Using the formula $N_i = \max\!\left(n_0 + 1,\; \left\lceil \frac{h^2 \cdot S_i^2}{(d^*)^2} \right\rceil\right)$:</p>
+    <p>First compute the shared values:</p>
+    <ul>
+      <li>$h^2 = 2.872^2 = 8.248$</li>
+      <li>$(d^*)^2 = 0.001389^2 = 1.929 \times 10^{-6}$</li>
+    </ul>
+    <p>Then for each system — numerator $= h^2 \times S_i^2$, divide by $(d^*)^2$:</p>
+    $$N_1 = \left\lceil \frac{8.248 \times 0.7961}{1.929 \times 10^{-6}} \right\rceil = \left\lceil \frac{6.564}{1.929 \times 10^{-6}} \right\rceil = \left\lceil 3{,}402{,}800 \right\rceil = 3{,}402{,}800$$
+    $$N_2 = \left\lceil \frac{8.248 \times 0.0264}{1.929 \times 10^{-6}} \right\rceil = \left\lceil \frac{0.2178}{1.929 \times 10^{-6}} \right\rceil = \left\lceil 112{,}907 \right\rceil = 112{,}907$$
+    $$N_3 = \left\lceil \frac{8.248 \times 0.2401}{1.929 \times 10^{-6}} \right\rceil = \left\lceil \frac{1.9804}{1.929 \times 10^{-6}} \right\rceil = \left\lceil 1{,}026{,}645 \right\rceil = 1{,}026{,}645$$
+
+    <p><strong>Step 4 — Additional replications:</strong> We already ran $n_0 = 20$, so we need $N_i - 20$ more:</p>
+    <div class="box box-green"><strong>Additional replications needed:</strong> $\approx$ 3,402,780 &ensp;|&ensp; 112,887 &ensp;|&ensp; 1,026,625</div>
+    <p><em>These huge numbers show that detecting a 5-second difference in hourly data requires enormous sample sizes — $d^*$ is tiny relative to the variance. On an exam, don't panic about exact rounding; the method and order of magnitude are what matter.</em></p>
   </div>
 </details>
 
