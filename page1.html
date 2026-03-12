@@ -2100,6 +2100,18 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   </ul>
 </div>
 
+<div class="box box-blue">
+  <h4>Statistical Accumulators</h4>
+  <p>Four running totals are maintained alongside the state variables. They are updated at <strong>every event</strong>, using the state <em>before</em> the event and the elapsed time $\Delta t$ since the previous event.</p>
+  <ul>
+    <li><strong>Number delayed</strong> &mdash; count of customers whose delay has been recorded (i.e., who have entered service). Incremented each time a customer moves from queue to server. A customer served immediately still counts (with delay $D_i = 0$).</li>
+    <li><strong>Total delay</strong> &mdash; running sum $\sum D_i$ where $D_i = \text{time service begins} - \text{arrival time}$. Used to compute mean delay: $\bar{D} = \frac{\sum D_i}{n}$.</li>
+    <li><strong>Area under $Q(t)$</strong> &mdash; $\int_0^t Q(\tau)\,d\tau$. At each event add $Q_{\text{old}} \times \Delta t$ (queue length <em>before</em> the event $\times$ time since last event). Gives mean queue length: $\bar{Q} = \frac{\text{Area under } Q(t)}{T}$.</li>
+    <li><strong>Area under $B(t)$</strong> &mdash; $\int_0^t B(\tau)\,d\tau$ where $B(t) \in \{0,1\}$ is server-busy indicator. At each event add $B_{\text{old}} \times \Delta t$. Gives server utilisation: $\hat{\rho} = \frac{\text{Area under } B(t)}{T}$.</li>
+  </ul>
+  <p><strong>Key rule:</strong> Update areas <em>before</em> changing state &mdash; use the old $Q$ and $B$ values with the new $\Delta t$.</p>
+</div>
+
 <div class="box box-red">
   <h4>Common Mistakes</h4>
   <ul>
@@ -2111,6 +2123,48 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 </div>
 
 <h3>Worked Example</h3>
+
+<details>
+  <summary>Worked Example: Tracking Statistical Accumulators</summary>
+  <div class="detail-body">
+    <p>Using the same 5-customer simulation from the interactive above ($A = \{0.9, 2.7, 0.3, 0.3, 4.3\}$, $S = \{1.6, 1.3, 2.0, 1.3, 1.7\}$), we trace how the four accumulators build up at each event.</p>
+    <p>At every event: compute $\Delta t$, add $Q_{\text{old}} \times \Delta t$ to Area $Q$ and $B_{\text{old}} \times \Delta t$ to Area $B$ <em>before</em> changing state. Record delay only when a customer <strong>enters service</strong>.</p>
+
+    <div style="overflow-x:auto;">
+    <table>
+      <tr>
+        <th>Event</th><th>$t$</th><th>$\Delta t$</th>
+        <th>$Q_{\text{old}}$</th><th>$B_{\text{old}}$</th>
+        <th>$+$Area $Q$</th><th>$+$Area $B$</th>
+        <th>Delay</th>
+        <th>NumDel</th><th>TotDel</th><th>Area $Q$</th><th>Area $B$</th>
+      </tr>
+      <tr><td>Init</td><td>0</td><td>&mdash;</td><td>0</td><td>0</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>A1</td><td>0.9</td><td>0.9</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+      <tr><td>D1</td><td>2.5</td><td>1.6</td><td>0</td><td>1</td><td>0</td><td>1.6</td><td>&mdash;</td><td>1</td><td>0</td><td>0</td><td>1.6</td></tr>
+      <tr><td>A2</td><td>3.6</td><td>1.1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>1.6</td></tr>
+      <tr><td>A3</td><td>3.9</td><td>0.3</td><td>0</td><td>1</td><td>0</td><td>0.3</td><td>&mdash;</td><td>2</td><td>0</td><td>0</td><td>1.9</td></tr>
+      <tr><td>A4</td><td>4.2</td><td>0.3</td><td>1</td><td>1</td><td>0.3</td><td>0.3</td><td>&mdash;</td><td>2</td><td>0</td><td>0.3</td><td>2.2</td></tr>
+      <tr><td>D2</td><td>4.9</td><td>0.7</td><td>2</td><td>1</td><td>1.4</td><td>0.7</td><td>1.0</td><td>3</td><td>1.0</td><td>1.7</td><td>2.9</td></tr>
+      <tr><td>D3</td><td>6.9</td><td>2.0</td><td>1</td><td>1</td><td>2.0</td><td>2.0</td><td>2.7</td><td>4</td><td>3.7</td><td>3.7</td><td>4.9</td></tr>
+      <tr><td>D4</td><td>8.2</td><td>1.3</td><td>0</td><td>1</td><td>0</td><td>1.3</td><td>&mdash;</td><td>4</td><td>3.7</td><td>3.7</td><td>6.2</td></tr>
+      <tr><td>A5</td><td>8.5</td><td>0.3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>5</td><td>3.7</td><td>3.7</td><td>6.2</td></tr>
+      <tr><td>D5</td><td>10.2</td><td>1.7</td><td>0</td><td>1</td><td>0</td><td>1.7</td><td>&mdash;</td><td>5</td><td>3.7</td><td>3.7</td><td>7.9</td></tr>
+    </table>
+    </div>
+
+    <p><strong>Reading the table:</strong> At A3 ($t = 3.9$) and A4 ($t = 4.2$), customers arrive while the server is busy &mdash; they join the queue. No delay is recorded because delay is only measured when a customer <em>begins service</em>. Customer 3's delay is recorded at D2 ($4.9 - 3.9 = 1.0$) and customer 4's at D3 ($6.9 - 4.2 = 2.7$).</p>
+
+    <div class="box box-green">
+      <h4>Final Statistics ($T = 10.2$)</h4>
+      <ul>
+        <li>Mean delay: $\bar{D} = \dfrac{3.7}{5} = 0.74$</li>
+        <li>Mean queue length: $\bar{Q} = \dfrac{3.7}{10.2} \approx 0.363$</li>
+        <li>Server utilisation: $\hat{\rho} = \dfrac{7.9}{10.2} \approx 0.775$</li>
+      </ul>
+    </div>
+  </div>
+</details>
 
 <details>
   <summary>Exercise 35: Single-Server Queue &mdash; Process the Next Event</summary>
@@ -2145,21 +2199,29 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     $\Delta t = 18.6 - 18.1 = 0.5$. Clock: $18.1 \to 18.6$.</p>
 
     <p><strong>Step 3 &mdash; Update statistical accumulators</strong> (before changing state).<br>
+    These use the state <em>before</em> the departure ($L_Q = 3$, $B = 1$) because the system was in that state for the entire $\Delta t$ interval.<br>
     Area under $Q(t)$: $42.6 + L_Q \times \Delta t = 42.6 + 3 \times 0.5 = 42.6 + 1.5 = 44.1$<br>
     Area under $B(t)$: $33.2 + B \times \Delta t = 33.2 + 1 \times 0.5 = 33.2 + 0.5 = 33.7$</p>
 
     <p><strong>Step 4 &mdash; Execute the departure event routine.</strong></p>
-    <ul>
-      <li>Customer who arrived at 13.2 <strong>departs</strong>.</li>
-      <li>Queue is non-empty &rarr; next customer (arrived at 13.6) <strong>begins service</strong>.</li>
-      <li>Delay for this customer: $d = 18.6 - 13.6 = 5.0$.</li>
-      <li>Number delayed: $9 \to 10$. Total delay: $24.2 + 5.0 = 29.2$.</li>
-      <li>Number in queue: $3 \to 2$.</li>
-    </ul>
+    <ol>
+      <li><strong>Who departs?</strong> The customer currently being served (arrived at 13.2) finishes service and leaves the system.</li>
+      <li><strong>Is the queue empty?</strong> No &mdash; $L_Q = 3$ (customers who arrived at 13.6, 14.9, 18.1 are waiting). So the server does <em>not</em> go idle.</li>
+      <li><strong>Move first-in-queue to server.</strong> The customer who arrived at 13.6 leaves the queue and begins service.</li>
+      <li><strong>Record this customer's delay.</strong> &ldquo;Number delayed&rdquo; counts customers who have <em>begun service</em> (i.e.&nbsp;whose delay is now known). This customer&rsquo;s delay is $d = 18.6 - 13.6 = 5.0$ (current clock minus their arrival time). So:
+        <ul>
+          <li>Number delayed: $9 + 1 = 10$ (one more customer has now entered service)</li>
+          <li>Total delay: $24.2 + 5.0 = 29.2$</li>
+        </ul>
+      </li>
+      <li><strong>Update queue length.</strong> $L_Q: 3 - 1 = 2$ (customer 13.6 left the queue). Remaining in queue: 14.9, 18.1.</li>
+      <li><strong>Server status stays 1</strong> (busy) &mdash; the server immediately started serving the next customer.</li>
+    </ol>
 
     <p><strong>Step 5 &mdash; Schedule new events.</strong><br>
-    New departure: $18.6 + S_1 = 18.6 + 1.6 = 20.2$.<br>
-    Next arrival unchanged: $A = 19.5$.<br>
+    The new customer in service needs service time $S_1 = 1.6$ (the first unused service time from the list).<br>
+    New departure: $18.6 + 1.6 = 20.2$.<br>
+    Next arrival unchanged: $A = 19.5$ (no arrival was processed, so the arrival list is not consumed).<br>
     Updated event list: $A = 19.5$, $D = 20.2$.</p>
 
     <p><strong>Step 6 &mdash; Update time of last event.</strong><br>
@@ -2180,31 +2242,224 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
         <tr><td>Area under $Q(t)$</td><td>44.1</td></tr>
         <tr><td>Area under $B(t)$</td><td>33.7</td></tr>
       </table>
+      <p style="margin-top:0.5em; font-size:0.95em;">Note: The unused service-time list shifts &mdash; $S$ becomes $\{1.3, 2.0, 1.3, 1.7\}$ (first value $1.6$ was consumed by the new service). $A$ is unchanged because no arrival was processed this step.</p>
     </div>
   </div>
 </details>
 
 <h3>Practice: True/False Questions</h3>
 
+<details class="bg-knowledge">
+  <summary>Background Knowledge: Concepts for Exercises 36 &amp; 37</summary>
+  <div class="detail-body">
+    <div class="bk-concept">
+      <h5>Statistical vs Practical Significance</h5>
+      <p>A <strong>p-value</strong> tells you whether an observed effect is unlikely under $H_0$ &mdash; it says nothing about <em>how large</em> the effect is. With a large enough sample, even a tiny, irrelevant difference (e.g., 0.01 L/100 km in fuel consumption) can yield $p &lt; 0.01$. Always check the <strong>effect size</strong> and ask: "Is this difference meaningful in practice?"</p>
+      <div class="bk-example">Two cars differ by 0.02 L/100 km. With $n = 100\,000$ measurements the Welch t-test gives $p &lt; 0.001$, yet no driver would ever notice 0.02 L/100 km in daily use.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>AS-IS Simulation (Baseline Validation)</h5>
+      <p>Before comparing alternative system designs, you must simulate the <em>current</em> (AS-IS) system and verify that its output matches real-world data. This is <strong>validation</strong>: if your model can't reproduce known results, you can't trust its predictions for alternatives. Even if you already know the real-world cost, you still need to confirm the simulation agrees with it.</p>
+      <div class="bk-example">You know inventory costs are &euro;50k/year. Your simulation says &euro;48k &mdash; close enough, model validated. Now you can trust it when it says Policy B costs &euro;42k.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>DES Components: Timing vs Event Routine</h5>
+      <p>In a discrete-event simulation program there are two key routines:</p>
+      <ul style="margin-top:6px;">
+        <li><strong>Timing routine:</strong> scans the Future Event List (FEL) and selects the event with the smallest scheduled time &mdash; it determines <em>what happens next</em>.</li>
+        <li><strong>Event routine:</strong> <em>processes</em> that event &mdash; updates state variables, collects statistics, and may schedule new future events.</li>
+      </ul>
+      <div class="bk-example">FEL = {Arrival@12.3, Departure@14.1}. Timing routine picks Arrival@12.3. Event routine then increments $L_Q$, schedules the next arrival, etc.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Common Random Numbers (CRN) + Paired t-Test</h5>
+      <p>To compare two system configurations, use the <strong>same</strong> $U(0,1)$ random number stream (generated via inverse transform) for both. This creates <strong>positively correlated</strong> outputs, so when you take the pairwise difference $D_i = X_{1,i} - X_{2,i}$:</p>
+      <p>$\text{Var}(D) = \text{Var}(X_1) + \text{Var}(X_2) - 2\,\text{Cov}(X_1, X_2)$</p>
+      <p>Positive covariance <em>reduces</em> $\text{Var}(D)$, making the paired t-test on $D$ more powerful (narrower confidence interval).</p>
+      <div class="bk-example">Run System A and System B with the same seed. Both see the same "customer arrivals," so differences in output are due to the system design, not randomness.</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Inventory Policies</h5>
+      <p><strong>Periodic Order Up To $(T, S)$:</strong> Every $T$ days, check inventory level $I$ and order $S - I$ units to bring stock back up to level $S$.</p>
+      <p><strong>Reorder Point / Order Quantity $(R, Q)$:</strong> Continuously monitor inventory. When it drops to $R$, place a fixed order of $Q$ units.</p>
+      <p><strong>Min/Max $(s, S)$:</strong> Continuously monitor. When inventory drops to $s$, order up to $S$ (order quantity = $S - I$). Hybrid of the two above.</p>
+    </div>
+    <div class="bk-concept">
+      <h5>Dynamite Plunger Plots (Bar Charts with Error Bars)</h5>
+      <p>A bar chart where the bar shows the mean and a line ("error bar") extends above it. The problem: <strong>the error bar could represent the standard deviation, the standard error ($\text{SE} = \sigma/\sqrt{n}$), or a confidence interval</strong> &mdash; and there is usually no label telling you which. This ambiguity makes dynamite plunger plots unreliable and widely criticised.</p>
+      <div class="bk-example">Error bar length = 3.95. If it's the SD, then $\sigma = 3.95$. If it's the SE with $n = 1000$, then $\sigma = 3.95 \times \sqrt{1000} \approx 125$ &mdash; a wildly different answer!</div>
+    </div>
+    <div class="bk-concept">
+      <h5>Boxplot Anatomy &amp; Estimating $\sigma$</h5>
+      <p>A boxplot shows: median (line), $Q_1$ and $Q_3$ (box edges), $\text{IQR} = Q_3 - Q_1$, whiskers (typically $\pm 1.5 \times \text{IQR}$), and outliers beyond.</p>
+      <p>For <strong>normally distributed</strong> data, the IQR and $\sigma$ are related: $\text{IQR} = 2 \times z_{0.75} \times \sigma = 2 \times 0.6745 \times \sigma \approx 1.349\,\sigma$. So:</p>
+      <p>$\sigma \approx \dfrac{\text{IQR}}{1.349}$</p>
+      <div class="bk-example">If $Q_1 = 2.76$ and $Q_3 = 9.37$, then $\text{IQR} = 6.61$, so $\sigma \approx 6.61 / 1.349 \approx 4.90$.</div>
+    </div>
+  </div>
+</details>
+
 <div class="card">
-  <h4>Exercise 36 &amp; 37: True/False</h4>
-  <p>For each statement, decide TRUE or FALSE and explain.</p>
+  <h4>Exercise 36: True/False</h4>
+  <p><em>Indicate whether the statement is true or false and argue why. The argument is the most important part of your answer and has the biggest impact on the points earned.</em></p>
 
-  <p><strong>36.1:</strong> "A p-value less than 0.01 means there is a markable (practical) difference."</p>
-  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
-  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> A small p-value means statistical significance, not practical significance. Effect size matters separately.</div></details>
+  <p><strong>36.1:</strong> "If you perform a Welch t-test on the difference in average fuel consumption of two cars, and you find that $p &lt; 0.01$, then you can rest assured that there is a markable difference in fuel consumption in cars that you will definitely notice in daily use."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 36.1</summary><div class="detail-body">
+    <p><strong>FALSE.</strong></p>
+    <p>A small p-value ($p &lt; 0.01$) tells you the observed difference is <strong>statistically significant</strong> &mdash; it is unlikely to have arisen by chance under $H_0$ (no difference). However, it says <strong>nothing about the size</strong> of that difference.</p>
+    <p><strong>Why not?</strong> The Welch t-test statistic is:</p>
+    <p>$t = \dfrac{\bar{X}_1 - \bar{X}_2}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}$</p>
+    <p>As the sample sizes $n_1, n_2$ grow, the denominator shrinks, so even a <em>tiny</em> difference $|\bar{X}_1 - \bar{X}_2|$ (e.g., 0.01 L/100 km) can produce a huge $t$ and a very small $p$.</p>
+    <p><strong>Statistical significance $\neq$ practical significance.</strong> To judge whether you'd "notice it in daily use," you need to look at the <strong>effect size</strong> &mdash; the actual magnitude of the difference in litres per 100 km &mdash; and decide whether that amount matters in practice.</p>
+    <div class="box box-blue" style="margin-top:12px;">
+      <strong>Key concept:</strong> Always report and interpret the <em>effect size</em> alongside the p-value. A statistically significant result can be practically meaningless, and vice versa.
+    </div>
+  </div></details>
 
-  <p><strong>36.2:</strong> "An AS-IS simulation is not needed if we only want to compare alternatives."</p>
-  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
-  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> AS-IS simulation is needed for <em>validation</em> &mdash; to verify the model represents reality before experimenting.</div></details>
+  <p><strong>36.2:</strong> "You are given a task to find the best ordering policy for an inventory system. Currently, the inventory uses a Periodic Order Up To $(T, S)$ policy, meaning that orders are placed like clockwork every $T$ days, and the order quantity is calculated as the difference between the order-up-to level $S$ and the current inventory level. You want to try two standard policies: Reorder Point/Order Quantity $(R, Q)$ and Min/Max $(s, S)$. Is the following statement correct? As you know what the cost of the current policy is, you do not need to run a simulation for this setting."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 36.2</summary><div class="detail-body">
+    <p><strong>FALSE.</strong></p>
+    <p>Even though you know the <em>real-world</em> cost of the current $(T, S)$ policy, you <strong>still need to simulate it</strong>. The reason is <strong>validation</strong>:</p>
+    <ol>
+      <li>You build a simulation model of the inventory system.</li>
+      <li>You run the model with the current $(T, S)$ policy and compare its output cost to the known real-world cost.</li>
+      <li>If they match (approximately), your model is <strong>validated</strong> &mdash; it correctly represents reality.</li>
+      <li>Only then can you trust the model's predictions when you switch to $(R, Q)$ or $(s, S)$.</li>
+    </ol>
+    <p>If you skip the AS-IS simulation, you have no way to know whether your model is accurate. The alternative policies might look better simply because the model is wrong &mdash; garbage in, garbage out.</p>
+    <div class="box box-blue" style="margin-top:12px;">
+      <strong>Key concept:</strong> The AS-IS (baseline) simulation exists for <em>model validation</em>, not to learn the current cost (which you already know). It's the "sanity check" that your model works before you experiment.
+    </div>
+  </div></details>
 
-  <p><strong>36.3:</strong> "The event routine determines the next event to process."</p>
-  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
-  <details><summary>Show Answer</summary><div class="detail-body"><strong>FALSE.</strong> The <em>timing routine</em> determines the next event. The event routine <em>processes</em> the event.</div></details>
+  <p><strong>36.3:</strong> "In a discrete-event simulation model programme, the event routine determines what the next event is that must be executed."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 36.3</summary><div class="detail-body">
+    <p><strong>FALSE.</strong></p>
+    <p>The statement confuses two distinct DES components:</p>
+    <ul>
+      <li><strong>Timing routine:</strong> scans the Future Event List (FEL) and selects the event with the <em>smallest</em> scheduled time. It determines <strong>what the next event is</strong> and advances the simulation clock.</li>
+      <li><strong>Event routine:</strong> once the timing routine has identified the next event, the event routine <strong>processes</strong> it &mdash; updating state variables, collecting statistics, and potentially scheduling new future events on the FEL.</li>
+    </ul>
+    <p>So it is the <em>timing</em> routine, not the <em>event</em> routine, that determines the next event.</p>
+  </div></details>
 
-  <p><strong>36.4:</strong> "A paired t-test combined with inverse transform facilitates variance reduction."</p>
-  <textarea class="practice" placeholder="TRUE or FALSE? Explain..."></textarea>
-  <details><summary>Show Answer</summary><div class="detail-body"><strong>TRUE.</strong> Using the same random number stream (inverse transform with common seeds) for paired comparisons reduces variance via Common Random Numbers (CRN).</div></details>
+  <p><strong>36.4:</strong> "When comparing two system configurations of a simple system, the combination of using a paired t-test and using the inverse transformation method facilitates techniques for reducing variance."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 36.4</summary><div class="detail-body">
+    <p><strong>TRUE.</strong></p>
+    <p>This describes the <strong>Common Random Numbers (CRN)</strong> variance reduction technique:</p>
+    <ol>
+      <li><strong>Inverse transform method</strong> converts $U(0,1)$ random numbers into the desired distribution. By using the <em>same</em> $U(0,1)$ stream (same seed) for both configurations, you ensure both systems experience the same "randomness" (e.g., same customer arrivals).</li>
+      <li>This makes the outputs $X_1$ and $X_2$ <strong>positively correlated</strong>.</li>
+      <li>A <strong>paired t-test</strong> on the differences $D_i = X_{1,i} - X_{2,i}$ then benefits from:</li>
+    </ol>
+    <p>$\text{Var}(D) = \text{Var}(X_1) + \text{Var}(X_2) - 2\,\text{Cov}(X_1, X_2)$</p>
+    <p>Since $\text{Cov}(X_1, X_2) > 0$ (from CRN), $\text{Var}(D)$ is <strong>reduced</strong> compared to independent sampling. The paired t-test therefore gives a narrower confidence interval and more statistical power.</p>
+    <div class="box box-blue" style="margin-top:12px;">
+      <strong>Key concept:</strong> CRN works because inverse transform is a <em>monotone</em> mapping &mdash; the same $U$ value always produces the same quantile. Other methods (e.g., acceptance-rejection) don't guarantee this synchronisation.
+    </div>
+  </div></details>
+</div>
+
+<div class="card">
+  <h4>Exercise 37: True/False</h4>
+  <p><em>Indicate whether the statement is true or false and argue why. The argument is the most important part of your answer and has the biggest impact on the points earned.</em></p>
+  <p>Given are two datasets, each with 1000 samples, for which it is known that they originate from a normal distribution, though perhaps different ones. Of dataset 1 a bar graph with error bars (dynamite plunger plot) is shown; of dataset 2 a boxplot is shown.</p>
+
+  <!-- Dataset 1: Dynamite plunger plot representation -->
+  <div style="display:flex; gap:32px; flex-wrap:wrap; margin:16px 0;">
+    <div style="background:var(--bg); border:1px solid #e2e8f0; border-radius:8px; padding:16px 24px; flex:1; min-width:220px;">
+      <p style="font-weight:700; font-size:0.9rem; margin-bottom:12px; color:var(--text-light);">Dataset 1 &mdash; Dynamite Plunger Plot</p>
+      <div style="position:relative; height:180px; display:flex; align-items:flex-end; justify-content:center; border-bottom:2px solid #cbd5e1; border-left:2px solid #cbd5e1; padding:0 40px;">
+        <!-- Y-axis labels -->
+        <span style="position:absolute; left:-8px; bottom:168px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">10</span>
+        <span style="position:absolute; left:-8px; bottom:86px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">5</span>
+        <span style="position:absolute; left:-8px; bottom:0; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">0</span>
+        <!-- Bar -->
+        <div style="position:relative; width:60px;">
+          <div style="width:60px; height:104px; background:linear-gradient(to top, #93c5fd, #3b82f6); border-radius:4px 4px 0 0;"></div>
+          <!-- Error bar -->
+          <div style="position:absolute; left:50%; bottom:104px; width:2px; height:71px; background:#1e293b; transform:translateX(-50%);"></div>
+          <div style="position:absolute; left:50%; bottom:175px; width:14px; height:2px; background:#1e293b; transform:translateX(-50%);"></div>
+          <!-- Labels -->
+          <div style="position:absolute; right:-70px; bottom:98px; font-size:0.75rem; color:var(--primary); font-weight:600;">mean = 5.80</div>
+          <div style="position:absolute; right:-70px; bottom:170px; font-size:0.75rem; color:var(--danger); font-weight:600;">top = 9.75</div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--text-light); margin-top:8px; text-align:center;">Error bar length = $9.746 - 5.800 = 3.946$</p>
+    </div>
+
+    <!-- Dataset 2: Boxplot representation -->
+    <div style="background:var(--bg); border:1px solid #e2e8f0; border-radius:8px; padding:16px 24px; flex:1; min-width:220px;">
+      <p style="font-weight:700; font-size:0.9rem; margin-bottom:12px; color:var(--text-light);">Dataset 2 &mdash; Boxplot</p>
+      <div style="position:relative; height:180px; display:flex; align-items:center; justify-content:center; border-bottom:2px solid #cbd5e1; border-left:2px solid #cbd5e1;">
+        <!-- Y-axis labels -->
+        <span style="position:absolute; left:-8px; bottom:168px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">25</span>
+        <span style="position:absolute; left:-8px; bottom:120px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">15</span>
+        <span style="position:absolute; left:-8px; bottom:86px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">10</span>
+        <span style="position:absolute; left:-8px; bottom:52px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">5</span>
+        <span style="position:absolute; left:-8px; bottom:18px; font-size:0.7rem; color:var(--text-light); transform:translateX(-100%);">0</span>
+        <div style="position:relative; width:50px;">
+          <!-- Lower whisker -->
+          <div style="position:absolute; left:50%; bottom:-20px; width:2px; height:38px; background:#1e293b; transform:translateX(-50%);"></div>
+          <div style="position:absolute; left:50%; bottom:-20px; width:20px; height:2px; background:#1e293b; transform:translateX(-50%);"></div>
+          <!-- Box -->
+          <div style="position:absolute; left:0; bottom:18px; width:50px; height:46px; border:2px solid #3b82f6; background:rgba(59,130,246,0.1); border-radius:3px;"></div>
+          <!-- Median line -->
+          <div style="position:absolute; left:0; bottom:41px; width:50px; height:2px; background:#dc2626;"></div>
+          <!-- Upper whisker -->
+          <div style="position:absolute; left:50%; bottom:64px; width:2px; height:56px; background:#1e293b; transform:translateX(-50%);"></div>
+          <div style="position:absolute; left:50%; bottom:120px; width:20px; height:2px; background:#1e293b; transform:translateX(-50%);"></div>
+          <!-- Outliers -->
+          <div style="position:absolute; left:50%; bottom:148px; width:8px; height:8px; border-radius:50%; background:var(--primary); transform:translate(-50%,50%);"></div>
+          <div style="position:absolute; left:50%; bottom:160px; width:8px; height:8px; border-radius:50%; background:var(--primary); transform:translate(-50%,50%);"></div>
+          <!-- Labels -->
+          <div style="position:absolute; left:60px; bottom:14px; font-size:0.7rem; color:var(--text-light); white-space:nowrap;">$Q_1 = 2.76$</div>
+          <div style="position:absolute; left:60px; bottom:37px; font-size:0.7rem; color:var(--danger); white-space:nowrap; font-weight:600;">med = 6.08</div>
+          <div style="position:absolute; left:60px; bottom:58px; font-size:0.7rem; color:var(--text-light); white-space:nowrap;">$Q_3 = 9.37$</div>
+          <div style="position:absolute; left:60px; bottom:148px; font-size:0.7rem; color:var(--text-light); white-space:nowrap;">outliers</div>
+        </div>
+      </div>
+      <p style="font-size:0.8rem; color:var(--text-light); margin-top:8px; text-align:center;">IQR = $Q_3 - Q_1 = 9.373 - 2.758 = 6.615$</p>
+    </div>
+  </div>
+
+  <p><strong>37.1:</strong> "The standard deviation of dataset 1 is 3.9461."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 37.1</summary><div class="detail-body">
+    <p><strong>TRUE (most likely) &mdash; but the ambiguity is the key exam point.</strong></p>
+    <p>The error bar extends from the mean ($5.7999$) to $9.746$, a distance of:</p>
+    <p>$9.746 - 5.800 = 3.946$</p>
+    <p>Now, what does the error bar represent? There are three possibilities:</p>
+    <table>
+      <tr><th>Error bar meaning</th><th>Implied $\sigma$</th><th>Plausible?</th></tr>
+      <tr><td>$\pm 1$ standard deviation</td><td>$\sigma = 3.9461$</td><td>Yes &mdash; reasonable value</td></tr>
+      <tr><td>$\pm 1$ standard error ($\text{SE} = \sigma / \sqrt{n}$)</td><td>$\sigma = 3.9461 \times \sqrt{1000} \approx 124.8$</td><td>No &mdash; absurdly large</td></tr>
+      <tr><td>95% confidence interval ($\pm 1.96 \times \text{SE}$)</td><td>$\sigma = 3.9461 \times \sqrt{1000} / 1.96 \approx 63.7$</td><td>No &mdash; still absurd</td></tr>
+    </table>
+    <p>Since the data is normal with $n = 1000$ samples, an SD of ~3.95 (giving a range of roughly mean $\pm 3\sigma \approx [-6, 18]$) is perfectly plausible. The SE and CI interpretations give absurd standard deviations, so the error bars almost certainly represent $\pm 1$ SD.</p>
+    <p><strong>The exam point:</strong> dynamite plunger plots are problematic precisely because the error bars are unlabelled. You should recognise and state this ambiguity, then reason through which interpretation makes sense.</p>
+  </div></details>
+
+  <p><strong>37.2:</strong> "We cannot estimate the standard deviation of dataset 2 using this information."</p>
+  <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
+  <details><summary>Show Answer 37.2</summary><div class="detail-body">
+    <p><strong>FALSE.</strong></p>
+    <p>From the boxplot we can read:</p>
+    <p>$\text{IQR} = Q_3 - Q_1 = 9.3725 - 2.7575 = 6.615$</p>
+    <p>We are told the data comes from a normal distribution. For a normal distribution, the theoretical relationship between IQR and $\sigma$ is:</p>
+    <p>$\text{IQR} = 2 \times z_{0.75} \times \sigma = 2 \times 0.6745 \times \sigma = 1.349\,\sigma$</p>
+    <p>where $z_{0.75} = \Phi^{-1}(0.75) = 0.6745$ is the 75th percentile of the standard normal.</p>
+    <p>Solving for $\sigma$:</p>
+    <p>$\sigma = \dfrac{\text{IQR}}{1.349} = \dfrac{6.615}{1.349} \approx 4.90$</p>
+    <p>So we <em>can</em> estimate $\sigma$ from the boxplot &mdash; as long as we know the underlying distribution is normal.</p>
+    <div class="box box-blue" style="margin-top:12px;">
+      <strong>Key concept:</strong> For a general (non-normal) distribution, the IQR and $\sigma$ are not simply related, so you genuinely could not estimate $\sigma$ from a boxplot alone. The crucial detail here is that we're <em>told</em> the data is normal, which unlocks the $\text{IQR} = 1.349\,\sigma$ relationship.
+    </div>
+  </div></details>
 </div>
 
 <h3>Quick Quizzes</h3>
