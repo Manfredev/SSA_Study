@@ -2452,16 +2452,64 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   <textarea class="practice" placeholder="TRUE or FALSE? Argue why..."></textarea>
   <details><summary>Show Answer 37.2</summary><div class="detail-body">
     <p><strong>FALSE.</strong></p>
-    <p>From the boxplot we can read:</p>
-    <p>$\text{IQR} = Q_3 - Q_1 = 9.3725 - 2.7575 = 6.615$</p>
-    <p>We are told the data comes from a normal distribution. For a normal distribution, the theoretical relationship between IQR and $\sigma$ is:</p>
-    <p>$\text{IQR} = 2 \times z_{0.75} \times \sigma = 2 \times 0.6745 \times \sigma = 1.349\,\sigma$</p>
-    <p>where $z_{0.75} = \Phi^{-1}(0.75) = 0.6745$ is the 75th percentile of the standard normal.</p>
-    <p>Solving for $\sigma$:</p>
-    <p>$\sigma = \dfrac{\text{IQR}}{1.349} = \dfrac{6.615}{1.349} \approx 4.90$</p>
-    <p>So we <em>can</em> estimate $\sigma$ from the boxplot &mdash; as long as we know the underlying distribution is normal.</p>
+
+    <p>At first glance this looks true &mdash; a boxplot only shows Q1, median, Q3, and whiskers, not $\sigma$ directly. But the question tells us the data is <strong>normal</strong>, and that changes everything. Here's how to get $\sigma$ using just the formula sheet.</p>
+
+    <div class="visual-guide">
+      <div class="vg-step">
+        <div class="vg-number">1</div>
+        <div class="vg-content">
+          <h5>Read the boxplot</h5>
+          <div class="vg-desc">Extract the quartiles from the boxplot: $Q_1 = 2.7575$ and $Q_3 = 9.3725$. Compute the interquartile range:</div>
+          <p>$\text{IQR} = Q_3 - Q_1 = 9.3725 - 2.7575 = 6.615$</p>
+        </div>
+      </div>
+      <div class="vg-step">
+        <div class="vg-number">2</div>
+        <div class="vg-content">
+          <h5>Think about what quartiles mean for a normal distribution</h5>
+          <div class="vg-desc">For any normal distribution $N(\mu, \sigma^2)$, the quartiles are symmetric around the mean:</div>
+          <ul>
+            <li>$Q_1 = \mu - z_{0.75} \cdot \sigma$ &nbsp;(the 25th percentile)</li>
+            <li>$Q_3 = \mu + z_{0.75} \cdot \sigma$ &nbsp;(the 75th percentile)</li>
+          </ul>
+          <p>So: $\text{IQR} = Q_3 - Q_1 = 2 \times z_{0.75} \times \sigma$</p>
+          <div class="vg-tip">The $\mu$ cancels out! You don't need the mean to estimate $\sigma$ &mdash; just the IQR and normality.</div>
+        </div>
+      </div>
+      <div class="vg-step">
+        <div class="vg-number">3</div>
+        <div class="vg-content">
+          <h5>Look up $z_{0.75}$ in the normal distribution table</h5>
+          <div class="vg-desc">Open the formula sheet to the <strong>Normal distribution</strong> table (page 5). You need to find which $z$ value gives $\Phi(z) = 0.75$.</div>
+          <p>Scan the table body for values near 0.75:</p>
+          <ul>
+            <li>Row $z = 0.6$, column $0.07$ &rarr; $\Phi(0.67) = 0.74857$</li>
+            <li>Row $z = 0.6$, column $0.08$ &rarr; $\Phi(0.68) = 0.75175$</li>
+          </ul>
+          <p>So $0.75$ falls between $z = 0.67$ and $z = 0.68$. Interpolating:</p>
+          <p>$z_{0.75} \approx 0.67 + \dfrac{0.75 - 0.74857}{0.75175 - 0.74857} \times 0.01 = 0.67 + \dfrac{0.00143}{0.00318} \times 0.01 \approx 0.6745$</p>
+          <div class="vg-tip">In practice, $z_{0.75} = 0.6745$ is a standard value you'll see often. But on the exam, you can always recover it from the table like this.</div>
+        </div>
+      </div>
+      <div class="vg-step">
+        <div class="vg-number">4</div>
+        <div class="vg-content">
+          <h5>Solve for $\sigma$</h5>
+          <div class="vg-desc">Rearrange $\text{IQR} = 2 \times z_{0.75} \times \sigma$:</div>
+          <p>$$\sigma = \frac{\text{IQR}}{2 \times z_{0.75}} = \frac{6.615}{2 \times 0.6745} = \frac{6.615}{1.349} \approx 4.90$$</p>
+        </div>
+      </div>
+    </div>
+
+    <p>So we <em>can</em> estimate $\sigma$ from the boxplot &mdash; the statement is <strong>FALSE</strong>.</p>
+
     <div class="box box-blue" style="margin-top:12px;">
-      <strong>Key concept:</strong> For a general (non-normal) distribution, the IQR and $\sigma$ are not simply related, so you genuinely could not estimate $\sigma$ from a boxplot alone. The crucial detail here is that we're <em>told</em> the data is normal, which unlocks the $\text{IQR} = 1.349\,\sigma$ relationship.
+      <strong>Key concept:</strong> For a general (non-normal) distribution, the IQR and $\sigma$ are <em>not</em> simply related, so you genuinely could not estimate $\sigma$ from a boxplot alone. The crucial detail here is that we're <em>told</em> the data is normal, which unlocks the $\text{IQR} = 2 z_{0.75}\,\sigma$ relationship. Without that assumption, the answer would be TRUE.
+    </div>
+
+    <div class="box box-red" style="margin-top:12px;">
+      <strong>Exam trap:</strong> Don't memorise $1.349$ as a magic number &mdash; the examiner wants to see that you <em>derive</em> it from the normal table. Show the table lookup step explicitly to earn full marks.
     </div>
   </div></details>
 </div>
