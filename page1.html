@@ -2502,9 +2502,25 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
             <li>Row $z = 0.6$, column $0.07$ &rarr; $\Phi(0.67) = 0.74857$</li>
             <li>Row $z = 0.6$, column $0.08$ &rarr; $\Phi(0.68) = 0.75175$</li>
           </ul>
-          <p>So $0.75$ falls between $z = 0.67$ and $z = 0.68$. Interpolating:</p>
-          <p>$z_{0.75} \approx 0.67 + \dfrac{0.75 - 0.74857}{0.75175 - 0.74857} \times 0.01 = 0.67 + \dfrac{0.00143}{0.00318} \times 0.01 \approx 0.6745$</p>
-          <div class="vg-tip">In practice, $z_{0.75} = 0.6745$ is a standard value you'll see often. But on the exam, you can always recover it from the table like this.</div>
+          <p>So $0.75$ sits between these two entries. We need to interpolate &mdash; i.e., estimate how far between $0.67$ and $0.68$ our answer lies.</p>
+
+          <p><strong>The idea behind interpolation:</strong> we know the answer is somewhere between $z = 0.67$ and $z = 0.68$. We figure out what <em>fraction</em> of the way from the lower value to the upper value our target (0.75) is, then move that same fraction of the way from 0.67 to 0.68.</p>
+
+          <p><strong>Step A &mdash; How far is 0.75 from the lower table value?</strong></p>
+          <p>$$0.75 - 0.74857 = 0.00143$$</p>
+
+          <p><strong>Step B &mdash; How far apart are the two table values?</strong></p>
+          <p>$$0.75175 - 0.74857 = 0.00318$$</p>
+
+          <p><strong>Step C &mdash; What fraction of the way are we?</strong></p>
+          <p>$$\text{fraction} = \frac{0.00143}{0.00318} = 0.4497 \approx 0.45$$</p>
+          <p>So we're about 45% of the way from $\Phi(0.67)$ to $\Phi(0.68)$.</p>
+
+          <p><strong>Step D &mdash; Move that fraction from 0.67 towards 0.68:</strong></p>
+          <p>The gap between the $z$ values is $0.68 - 0.67 = 0.01$. Take 45% of that gap:</p>
+          <p>$$z_{0.75} \approx 0.67 + 0.45 \times 0.01 = 0.67 + 0.0045 = 0.6745$$</p>
+
+          <div class="vg-tip">In practice, $z_{0.75} = 0.6745$ is a standard value you'll see often. But on the exam you can always recover it from the table using this interpolation. Even rounding to $z_{0.75} \approx 0.67$ or $0.68$ would give a close enough answer.</div>
         </div>
       </div>
       <div class="vg-step">
