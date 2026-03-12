@@ -602,11 +602,25 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <h4>Part 2: Bootstrap CIs (90%)</h4>
     <p>The exam provides sorted bootstrap sample means. Using the interpolation method (see Exercise 30: sort, compute $j = N \times p + 0.5$, interpolate), we find the required quantiles.</p>
 
-    <p><strong>Percentile bootstrap:</strong></p>
-    <p><strong>Step 1:</strong> For 90% CI: $\alpha = 0.10$, need the $p_{0.05}$ and $p_{0.95}$ quantiles of the sorted bootstrap means.</p>
-    <p><strong>Step 2:</strong> Interpolating from the sorted bootstrap means:</p>
-    $$Y^*_{(p_{0.05})} = 380.7, \quad Y^*_{(p_{0.95})} = 446.5$$
-    <div class="box box-green"><strong>Percentile bootstrap CI:</strong> $[Y^*_{(p_{0.05})},\; Y^*_{(p_{0.95})}] = [380.7,\; 446.5]$</div>
+    <p><strong>Percentile bootstrap:</strong> The idea is simple — use the bootstrap means themselves as the CI bounds. Sort them, then pick the values at the $\alpha/2$ and $1-\alpha/2$ positions.</p>
+
+    <p><strong>Step 1:</strong> For a 90% CI: $\alpha = 0.10$, so we need the 5th and 95th percentiles ($\alpha/2 = 0.05$, $1-\alpha/2 = 0.95$).</p>
+
+    <p><strong>Step 2:</strong> Say the exam gives $N$ sorted bootstrap means $Y^*_{(1)} \le Y^*_{(2)} \le \cdots \le Y^*_{(N)}$. Compute the rank positions (same formula as Exercise 30):</p>
+    <ul>
+      <li>$j_\text{low} = N \times 0.05 + 0.5$</li>
+      <li>$j_\text{high} = N \times 0.95 + 0.5$</li>
+    </ul>
+
+    <p><strong>Step 3:</strong> If $j$ is not a whole number, interpolate between the two nearest sorted values. For example, if $j_\text{low} = 3.7$:</p>
+    <ul>
+      <li>Floor: $\lfloor 3.7 \rfloor = 3$, fractional part: $g = 0.7$</li>
+      <li>$\text{Lower} = Y^*_{(3)} + 0.7 \times (Y^*_{(4)} - Y^*_{(3)})$</li>
+    </ul>
+
+    <p><strong>Step 4:</strong> Applying this to the exam's sorted bootstrap means gives:</p>
+    $$\text{Lower} = 380.7, \quad \text{Upper} = 446.5$$
+    <div class="box box-green"><strong>Percentile bootstrap CI:</strong> $[\text{Lower},\; \text{Upper}] = [380.7,\; 446.5]$</div>
 
     <p><strong>Empirical bootstrap:</strong></p>
     <p>Instead of using the bootstrap means directly, the empirical method asks: <em>"How far did each bootstrap mean land from our sample mean?"</em> These gaps (deviations) tell us how much error to expect.</p>
