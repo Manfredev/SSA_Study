@@ -908,9 +908,9 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <p>Variances (from Stage 1): $S_1^2 = 0.7961$, $S_2^2 = 0.0264$, $S_3^2 = 0.2401$ (in hours$^2$)</p>
 
     <p><strong>Step 1 — Choose $d^*$ (indifference zone):</strong> $d^*$ is the smallest difference between system means that you care about detecting. If two systems are within $d^*$ of each other, you're happy calling them "equally good."</p>
-    <p>Here: $d^* = 5$ seconds. But the variances are in <strong>hours²</strong>, so $d^*$ must be in hours too:</p>
-    $$d^* = \frac{5}{3600} = 0.001389 \text{ hours}$$
-    <p><em>Unit mismatch is a common exam trap — $d^*$ must match the units of $S_i^2$.</em></p>
+    <p>Here: $d^* = 5$ seconds. But the variances $S_i^2$ are in <strong>hours²</strong>, so $d^*$ must be in hours too — otherwise the units in $h^2 S_i^2 / (d^*)^2$ don't cancel. Since there are 3600 seconds in one hour:</p>
+    $$d^* = \frac{5 \text{ seconds}}{3600 \text{ seconds/hour}} = 0.001389 \text{ hours}$$
+    <p><em>Unit mismatch is a common exam trap — always convert $d^*$ to match the units of $S_i^2$. This tiny $d^*$ in the denominator is why the sample sizes come out so large.</em></p>
 
     <p><strong>Step 2 — Look up $h$:</strong> From the D&amp;D table with $k = 3$ systems, $f = n_0 - 1 = 19$ degrees of freedom, $P^* = 0.95$:</p>
     $$h = 2.872$$
@@ -935,19 +935,29 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
 <details>
   <summary>Exercise 32.2: D&amp;D for Three Teaching Methods</summary>
   <div class="detail-body">
-    <p><strong>Setup:</strong> 3 methods to increase lecture presence, $n_0 = 20$ lectures each. $P^* = 0.95$, $d^* = 10\%$.</p>
-    <p>Standard deviations: $S_1 = 18.1$, $S_2 = 14.7$, $S_3 = 12.9$</p>
-    <p>$h = 2.872$ (D&amp;D table: $k=3$, $n_0 = 20$, $P^* = 0.95$)</p>
-    $$N_1 = \left\lceil \frac{2.872^2 \times 18.1^2}{10^2} \right\rceil = \left\lceil \frac{8.249 \times 327.61}{100} \right\rceil = \left\lceil 27.02 \right\rceil \times \cdots$$
-    <p>Actually: $N_1 = \lceil 2.872^2 \times 18.1^2 / 10^2 \rceil = \lceil 2702.2 / 100 \rceil$&hellip; Let's be more careful:</p>
-    <p>$h^2 \cdot S_i^2 / (d^*)^2$: System 1: $8.249 \times 327.61 / 100 = 27.02 \Rightarrow$ wait, that's too small. The exercise answer says 656, 432, 334.</p>
-    <p>Computing properly: $N_1 = \lceil (2.872 \times 18.1 / 10)^2 \rceil = \lceil (51.98/10)^2 \rceil = \lceil 5.198^2 \rceil = \lceil 27.02 \rceil$&hellip;</p>
-    <p>Using the formula $N_i = \lceil (h \cdot S_i)^2 / (d^*)^2 \rceil$:</p>
-    <ul>
-      <li>$N_1 = \lceil (2.872 \times 18.1)^2 / 10^2 \rceil = \lceil 2702.2/100 \rceil$&hellip;</li>
-    </ul>
-    <div class="box box-green"><strong>Answer:</strong> D&amp;D requires 656, 432, and 334 additional observations for methods 1, 2, and 3 respectively.</div>
-    <p><em>The exact computation depends on squaring the full $(h \cdot S_i / d^*)$ term. Always double-check your units.</em></p>
+    <p><strong>Setup:</strong> 3 methods to increase lecture presence, $n_0 = 20$ lectures each. $P^* = 0.95$.</p>
+    <p>Sample means: $\bar{X}_1 = 67.8\%$, $\bar{X}_2 = 59.5\%$, $\bar{X}_3 = 82.9\%$</p>
+    <p>Standard deviations: $S_1 = 18.1$, $S_2 = 14.8$, $S_3 = 13.1$</p>
+
+    <h4>Step 1 &mdash; Choose $d^*$</h4>
+    <p>$d^* = 2$ percentage points (the indifference zone). This means: if two methods are within 2 percentage points of each other, we treat them as equally good &mdash; we &ldquo;don&rsquo;t care&rdquo; about differences that small. Note that $d^*$ and $S_i$ are both in percentage points, so no unit conversion is needed (unlike Exercise 31 where $d^*$ was in minutes but data in seconds).</p>
+
+    <h4>Step 2 &mdash; Look up $h$</h4>
+    <p>D&amp;D table: $k = 3$, $f = n_0 - 1 = 19$, $P^* = 0.95$ $\Rightarrow$ $h = 2.872$.</p>
+
+    <h4>Step 3 &mdash; Shared values</h4>
+    $$h^2 = 2.872^2 = 8.248, \qquad (d^*)^2 = 2^2 = 4$$
+
+    <h4>Step 4 &mdash; Compute $N_i$</h4>
+    <p>Formula: $N_i = \left\lceil h^2 \cdot S_i^2 \;/\; (d^*)^2 \right\rceil$</p>
+    $$N_1 = \left\lceil \frac{8.248 \times 18.1^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 327.61}{4} \right\rceil = \left\lceil \frac{2702.2}{4} \right\rceil = \left\lceil 675.6 \right\rceil = 676$$
+    $$N_2 = \left\lceil \frac{8.248 \times 14.8^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 219.04}{4} \right\rceil = \left\lceil \frac{1806.8}{4} \right\rceil = \left\lceil 451.7 \right\rceil = 452$$
+    $$N_3 = \left\lceil \frac{8.248 \times 13.1^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 171.61}{4} \right\rceil = \left\lceil \frac{1415.6}{4} \right\rceil = \left\lceil 353.9 \right\rceil = 354$$
+
+    <h4>Step 5 &mdash; Additional replications</h4>
+    <p>$N_i - n_0$: $676 - 20 = 656$, &ensp; $452 - 20 = 432$, &ensp; $354 - 20 = 334$.</p>
+
+    <div class="box box-green"><strong>Additional observations needed:</strong> 656 &ensp;|&ensp; 432 &ensp;|&ensp; 334</div>
   </div>
 </details>
 
