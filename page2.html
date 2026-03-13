@@ -846,6 +846,33 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
   <p><strong>Stage 1:</strong> Run $n_0$ initial replications for each system $i$. Compute $S_i^2(n_0)$.</p>
   <p><strong>Compute required replications:</strong></p>
   $$N_i = \max\left(n_0 + 1, \;\left\lceil \frac{h_i^2 \cdot S_i^2(n_0)}{(d^*)^2} \right\rceil\right)$$
+
+  <details class="bg-knowledge">
+    <summary>How to build this from the formula sheet</summary>
+    <div class="detail-body">
+      <div class="vg-steps">
+        <div class="vg-step" data-step="1">
+          <div class="vg-title">Start with the formula sheet <span class="fs-ref" title="D&amp;D formula on formula sheet">FS: System Comparison</span></div>
+          <div class="vg-desc">The formula sheet gives:
+            $$N_i = \max\!\left(n_0 + 1,\; \left\lceil \frac{h_i^2 \cdot S_i^2(n_0)}{(d^*)^2} \right\rceil\right)$$
+            Identify three pieces: the $\max$ safety floor, the $h_i$ table lookup, and $S_i^2(n_0)$ the stage-1 variance.</div>
+        </div>
+        <div class="vg-step" data-step="2">
+          <div class="vg-title">Decode the notation</div>
+          <div class="vg-desc">
+            <strong>$S_i^2(n_0)$</strong> = the sample variance of system $i$ from the $n_0$ pilot runs. This is just $S_i^2$ &mdash; the $(n_0)$ reminds you it comes from stage 1 only.<br>
+            <strong>$h_i = h(f_i, P^*, k)$</strong> from the D&amp;D table. Since every system uses the same $n_0$ pilot runs, $f_i = n_0 - 1$ is identical for all systems, so you do <strong>one</strong> table lookup and get a single $h$.</div>
+        </div>
+        <div class="vg-step" data-step="3">
+          <div class="vg-title">Drop the max (in practice)</div>
+          <div class="vg-desc">The $\max(n_0 + 1, \ldots)$ ensures you always collect at least one extra observation (stage 2 needs data). In exam exercises the ceiling term is almost always much larger than $n_0 + 1$, so the max has no effect and you compute just:</div>
+          <div class="vg-formula">$N_i = \left\lceil \dfrac{h^2 \cdot S_i^2}{(d^*)^2} \right\rceil$</div>
+          <div class="vg-tip">Verify $N_i > n_0$ at the end &mdash; if not, the $\max$ would have mattered.</div>
+        </div>
+      </div>
+    </div>
+  </details>
+
   <p>where $h_i = h(f_i, P^*, k)$ is read from the D&amp;D table with $f_i = n_0 - 1$ and $k$ = number of systems.</p>
   <p><strong>Stage 2:</strong> Run $N_i - n_0$ additional replications for system $i$.</p>
   <p><strong>Compute weighted means:</strong></p>
@@ -915,7 +942,7 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <p><strong>Step 2 — Look up $h$:</strong> From the D&amp;D table with $k = 3$ systems, $f = n_0 - 1 = 19$ degrees of freedom, $P^* = 0.95$:</p>
     $$h = 2.872$$
 
-    <p><strong>Step 3 — Compute $N_i$:</strong> Using the formula $N_i = \max\!\left(n_0 + 1,\; \left\lceil \frac{h^2 \cdot S_i^2}{(d^*)^2} \right\rceil\right)$:</p>
+    <p><strong>Step 3 — Compute $N_i$:</strong> Using the formula $N_i = \max\!\left(n_0 + 1,\; \left\lceil \frac{h^2 \cdot S_i^2}{(d^*)^2} \right\rceil\right)$: <em>(This is the formula-sheet formula after simplification &mdash; see &ldquo;How to build from the formula sheet&rdquo; in the theory box above.)</em></p>
     <p>First compute the shared values:</p>
     <ul>
       <li>$h^2 = 2.872^2 = 8.248$</li>
@@ -949,7 +976,7 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     $$h^2 = 2.872^2 = 8.248, \qquad (d^*)^2 = 2^2 = 4$$
 
     <h4>Step 4 &mdash; Compute $N_i$</h4>
-    <p>Formula: $N_i = \left\lceil h^2 \cdot S_i^2 \;/\; (d^*)^2 \right\rceil$</p>
+    <p>Formula: $N_i = \left\lceil h^2 \cdot S_i^2 \;/\; (d^*)^2 \right\rceil$ <em>(formula-sheet formula after simplification &mdash; see &ldquo;How to build from the formula sheet&rdquo; in the theory box above)</em></p>
     $$N_1 = \left\lceil \frac{8.248 \times 18.1^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 327.61}{4} \right\rceil = \left\lceil \frac{2702.2}{4} \right\rceil = \left\lceil 675.6 \right\rceil = 676$$
     $$N_2 = \left\lceil \frac{8.248 \times 14.8^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 219.04}{4} \right\rceil = \left\lceil \frac{1806.8}{4} \right\rceil = \left\lceil 451.7 \right\rceil = 452$$
     $$N_3 = \left\lceil \frac{8.248 \times 13.1^2}{4} \right\rceil = \left\lceil \frac{8.248 \times 171.61}{4} \right\rceil = \left\lceil \frac{1415.6}{4} \right\rceil = \left\lceil 353.9 \right\rceil = 354$$
