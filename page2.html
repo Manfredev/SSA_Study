@@ -994,15 +994,77 @@ details.bg-knowledge .detail-body { border-color: #e9d5ff; }
     <p><strong>Dutch contractor data</strong> ($n_1 = 20$): 2699, 2778, 3037, 902, 5285, 4172, 3092, 5217, 2135, 3744, 3605, 4166, 4159, 2982, 3816, 3682, 4474, 4940, 4956, 2983</p>
     <p><strong>American contractor data</strong> ($n_2 = 20$): 4151, 3211, 4297, 2638, 2007, 1981, 3891, 3225, 3206, 4823, 3694, 3600, 4990, 2598, 4099, 4238, 3159, 3618, 2237, 2255</p>
 
-    <h4>Part 1: Welch CI</h4>
-    <p>Compute means and variances, then apply Welch CI formula.</p>
-    <div class="box box-green"><strong>95% Welch CI for $\mu_1 - \mu_2$:</strong> $[-323.41,\; 814.01]$</div>
-    <p>Since 0 is in the interval, we <strong>cannot detect</strong> a significant difference between the contractors.</p>
+    <h4>Part 1 &mdash; The Secretary&rsquo;s Conclusion</h4>
+    <p><strong>Question:</strong> The secretary computed averages and concluded the Dutch contractor is best. The CEO&rsquo;s son (a knowledge engineer) says this isn&rsquo;t a proper analysis. What arguments does he have?</p>
+    <p><strong>Answer:</strong> Comparing sample means alone ignores <em>variability</em>. With standard deviations $S_1 \approx 1103$ and $S_2 \approx 904$ and only $n = 20$ observations each, the observed difference of 245.3 liters could easily be due to chance. A proper statistical procedure &mdash; such as a confidence interval or hypothesis test &mdash; is needed to determine whether the difference is statistically significant.</p>
 
-    <h4>Part 2: D&amp;D</h4>
-    <p>To determine which is truly better, apply D&amp;D with appropriate $d^*$.</p>
-    <div class="box box-green"><strong>D&amp;D required additional samples:</strong> 712 (Dutch) and 472 (American)</div>
-    <p>After collecting these, compute weighted means and select the best contractor.</p>
+    <h4>Part 2 &mdash; 90% Welch Confidence Interval</h4>
+    <p><strong>Question:</strong> Can you determine using a 90% confidence interval which company is best?</p>
+
+    <p><strong>Step 1 &mdash; Compute means:</strong></p>
+    $$\bar{X}_1 = \frac{72{,}824}{20} = 3641.20, \qquad \bar{X}_2 = \frac{67{,}918}{20} = 3395.90$$
+    $$\bar{X}_1 - \bar{X}_2 = 245.30$$
+
+    <p><strong>Step 2 &mdash; Compute variances:</strong></p>
+    $$S_1^2 = 1{,}215{,}942.06, \qquad S_2^2 = 817{,}405.46$$
+
+    <p><strong>Step 3 &mdash; Standard error of the difference:</strong></p>
+    $$SE = \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}} = \sqrt{\frac{1{,}215{,}942.06}{20} + \frac{817{,}405.46}{20}} = \sqrt{60{,}797.10 + 40{,}870.27} = \sqrt{101{,}667.38} = 318.85$$
+
+    <p><strong>Step 4 &mdash; Welch degrees of freedom:</strong> <span class="fs-ref" title="Welch-Satterthwaite df formula">FS: Welch df</span></p>
+    $$\hat{f} = \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{(S_1^2/n_1)^2}{n_1 - 1} + \frac{(S_2^2/n_2)^2}{n_2 - 1}} = \frac{(101{,}667.38)^2}{\frac{(60{,}797.10)^2}{19} + \frac{(40{,}870.27)^2}{19}} = \frac{1.0336 \times 10^{10}}{1.9452 \times 10^{8} + 8.789 \times 10^{7}} = 36.59$$
+    <p>Round down: $df = 36$.</p>
+
+    <p><strong>Step 5 &mdash; t critical value:</strong> <span class="fs-ref" title="Student t critical values">FS: t-Table</span></p>
+    <p>For a 90% CI we need $t_{df,\,0.95}$ (each tail is 5%). The t-table may not have $df = 36$ exactly. Using $df = 30$: $t_{30,\,0.95} = 1.697$, and $df = 40$: $t_{40,\,0.95} = 1.684$. We use $df = 30$ conservatively (larger critical value &rarr; wider interval).</p>
+    <p><em>If the table has $df = 36$: $t_{36,\,0.95} = 1.688$. Using this value:</em></p>
+
+    <p><strong>Step 6 &mdash; Construct the interval:</strong></p>
+    $$\text{Half-width} = t \times SE = 1.688 \times 318.85 = 538.22$$
+    $$\text{90% CI} = (245.30 - 538.22,\; 245.30 + 538.22) = (-292.92,\; 783.52)$$
+
+    <p><strong>Step 7 &mdash; Interpretation:</strong> Since 0 is inside the interval, we <strong>cannot detect</strong> a statistically significant difference between the two contractors at the 90% confidence level.</p>
+
+    <div class="box box-green"><strong>90% Welch CI for $\mu_1 - \mu_2$:</strong> $[-292.92,\; 783.52]$. Contains 0 &mdash; no significant difference detected.</div>
+
+    <h4>Part 3 &mdash; D&amp;D Sample Sizes</h4>
+    <p><strong>Question:</strong> The CEO wants to determine with $P^* = 95\%$ confidence which contractor cleans up more oil (maximization). Indifference zone $d^* = 100$ liters. How many additional samples are needed?</p>
+
+    <p><strong>Step 1 &mdash; Setup:</strong> $k = 2$ systems, $n_0 = 20$, $P^* = 0.95$, $d^* = 100$ liters. Both $S_i$ and $d^*$ are in liters, so no unit conversion needed.</p>
+    <p><em>Note: this is a maximization problem, but the D&amp;D formula is the same &mdash; we select the system with the largest weighted mean at the end.</em></p>
+
+    <p><strong>Step 2 &mdash; Look up $h$:</strong> <span class="fs-ref" title="D&amp;D table">FS: D&amp;D Table</span> With $k = 2$, $f = n_0 - 1 = 19$, $P^* = 0.95$:</p>
+    $$h = 2.453$$
+
+    <p><strong>Step 3 &mdash; Shared values:</strong></p>
+    $$h^2 = 2.453^2 = 6.0172, \qquad (d^*)^2 = 100^2 = 10{,}000$$
+
+    <p><strong>Step 4 &mdash; Compute $N_i$:</strong></p>
+    <p>Formula: $N_i = \max\!\left(n_0 + 1,\; \left\lceil h^2 \cdot S_i^2 / (d^*)^2 \right\rceil\right)$</p>
+    $$N_1 = \left\lceil \frac{6.0172 \times 1{,}215{,}942.06}{10{,}000} \right\rceil = \left\lceil \frac{7{,}316{,}589}{10{,}000} \right\rceil = \left\lceil 731.66 \right\rceil = 732$$
+    $$N_2 = \left\lceil \frac{6.0172 \times 817{,}405.46}{10{,}000} \right\rceil = \left\lceil \frac{4{,}918{,}467}{10{,}000} \right\rceil = \left\lceil 491.85 \right\rceil = 492$$
+
+    <p><strong>Step 5 &mdash; Additional replications:</strong></p>
+    <p>$N_1 - n_0 = 732 - 20 = 712$, &ensp; $N_2 - n_0 = 492 - 20 = 472$.</p>
+
+    <div class="box box-green"><strong>Additional samples needed:</strong> 712 (Dutch) &ensp;|&ensp; 472 (American)</div>
+
+    <h4>Part 4 &mdash; D&amp;D Weighted Means &amp; Selection</h4>
+    <p><strong>Question:</strong> After collecting the additional data, the stage-2 means are $\bar{X}_{\text{Dutch}}^{(2)} = 3847$ and $\bar{X}_{\text{USA}}^{(2)} = 3403$. Can the CEO now select the best contractor?</p>
+
+    <p><strong>Step 1 &mdash; Compute weights:</strong></p>
+    <p>The weight for the stage-1 mean is $W_{i1} = n_0 / N_i$:</p>
+    $$W_{1,1} = \frac{20}{732} = 0.0273, \qquad W_{2,1} = \frac{20}{492} = 0.0407$$
+    <p>The stage-2 weight is $1 - W_{i1}$: $W_{1,2} = 0.9727$, $W_{2,2} = 0.9593$.</p>
+
+    <p><strong>Step 2 &mdash; Compute weighted means:</strong></p>
+    $$\bar{X}_{\text{Dutch}}^{(W)} = 0.0273 \times 3641.20 + 0.9727 \times 3847 = 99.4 + 3742.0 = 3841.4$$
+    $$\bar{X}_{\text{USA}}^{(W)} = 0.0407 \times 3395.90 + 0.9593 \times 3403 = 138.2 + 3264.5 = 3402.7$$
+    <p><em>Since $N_i \gg n_0$, the stage-2 means dominate the weighted averages &mdash; the initial 20 observations carry very little weight.</em></p>
+
+    <p><strong>Step 3 &mdash; Select the best:</strong> This is a maximization problem (more oil cleaned up = better). $\bar{X}_{\text{Dutch}}^{(W)} = 3841.4 > \bar{X}_{\text{USA}}^{(W)} = 3402.7$, so we select the Dutch contractor.</p>
+
+    <div class="box box-green"><strong>Select the Dutch contractor</strong> (weighted mean 3841 vs 3403). With $P^* = 95\%$ confidence, the Dutch company cleans up more oil.</div>
   </div>
 </details>
 
